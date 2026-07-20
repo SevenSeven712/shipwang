@@ -275,6 +275,9 @@
             flex: 1;
             max-width: 420px;
             position: relative;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
         }
         .header-search input {
             width: 100%;
@@ -288,10 +291,8 @@
             outline: none;
             transition: border-color 0.2s, box-shadow 0.2s;
             box-shadow: var(--shadow);
-        }
-        .header-search input:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px var(--accent-dim);
+            cursor: pointer;
+            pointer-events: none;
         }
         .header-search input::placeholder {
             color: var(--text3);
@@ -304,6 +305,10 @@
             color: var(--text3);
             width: 15px;
             height: 15px;
+            pointer-events: none;
+        }
+        .header-search {
+            cursor: pointer;
         }
 
         .header-actions {
@@ -444,6 +449,441 @@
             }
         }
 
+        /* ============================================================
+           搜索页面（新样式）
+           ============================================================ */
+        .page-search {
+            padding: 16px;
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text2);
+            transition: all 0.2s;
+            margin-bottom: 16px;
+        }
+        .search-back-btn:hover {
+            background: var(--surface-hover);
+            color: var(--text);
+        }
+        .search-back-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .search-header {
+            margin-bottom: 20px;
+        }
+        .search-header .keyword {
+            font-family: var(--font-d);
+            font-size: 24px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .search-header .keyword .count {
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--text2);
+            font-family: var(--font-m);
+        }
+        .search-header .sub {
+            font-size: 13px;
+            color: var(--text2);
+            margin-top: 2px;
+        }
+
+        .search-input-wrap {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+        .search-input-wrap input {
+            flex: 1;
+            height: 40px;
+            padding: 0 14px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text);
+            font-size: 13px;
+            outline: none;
+            transition: border-color 0.2s;
+            box-shadow: var(--shadow);
+        }
+        .search-input-wrap input:focus {
+            border-color: var(--accent);
+        }
+        .search-input-wrap button {
+            padding: 0 20px;
+            border-radius: 20px;
+            background: var(--accent);
+            color: #1e1e2a;
+            font-weight: 700;
+            font-size: 13px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .search-input-wrap button:hover {
+            box-shadow: 0 0 16px var(--accent-glow);
+        }
+
+        /* 热搜词排行（保留原有样式，但调整位置） */
+        .hot-tags-section {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            padding: 16px 18px;
+            margin-bottom: 20px;
+        }
+        .hot-tags-title {
+            font-family: var(--font-d);
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .hot-tags-title .badge {
+            background: #ff4757;
+            color: #fff;
+            font-size: 10px;
+            padding: 0 10px;
+            border-radius: 12px;
+            line-height: 20px;
+        }
+        .hot-tags-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .hot-tag-item {
+            padding: 4px 14px;
+            border-radius: 16px;
+            font-size: 12px;
+            background: var(--bg);
+            color: var(--text2);
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+        .hot-tag-item:hover {
+            background: var(--accent-dim);
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+        .hot-tag-item .count {
+            font-size: 10px;
+            color: var(--text3);
+            margin-left: 4px;
+        }
+        .hot-tag-item .rank {
+            font-weight: 700;
+            margin-right: 4px;
+        }
+        .hot-tag-item .rank.gold {
+            color: #ffb800;
+        }
+        .hot-tag-item .rank.silver {
+            color: #c0c0c0;
+        }
+        .hot-tag-item .rank.bronze {
+            color: #cd7f32;
+        }
+
+        .all-tags-section {
+            margin-bottom: 20px;
+        }
+        .all-tags-title {
+            font-family: var(--font-d);
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .all-tags-scroll {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            max-height: 200px;
+            overflow-y: auto;
+            padding: 4px 0;
+        }
+        .all-tags-scroll .tag-item {
+            padding: 4px 14px;
+            border-radius: 16px;
+            font-size: 12px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text2);
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: var(--shadow);
+            white-space: nowrap;
+        }
+        .all-tags-scroll .tag-item:hover {
+            background: var(--accent-dim);
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        /* 相关创作者 */
+        .section-title {
+            font-family: var(--font-d);
+            font-size: 18px;
+            font-weight: 700;
+            margin: 24px 0 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .section-title .badge {
+            background: var(--accent);
+            color: #1e1e2a;
+            font-size: 10px;
+            padding: 0 10px;
+            border-radius: 12px;
+            line-height: 20px;
+            font-weight: 700;
+        }
+
+        .creator-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .creator-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 16px;
+            background: var(--surface);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .creator-item:hover {
+            transform: translateX(4px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        }
+        .creator-item .avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: #e8eaef;
+        }
+        .creator-item .info {
+            flex: 1;
+            min-width: 0;
+        }
+        .creator-item .info .name {
+            font-weight: 700;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .creator-item .info .handle {
+            font-size: 12px;
+            color: var(--text2);
+        }
+        .creator-item .info .stats {
+            font-size: 11px;
+            color: var(--text3);
+        }
+        .creator-item .arrow {
+            color: var(--text3);
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        .creator-item .badge-tag {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 0 8px;
+            border-radius: 10px;
+            color: #fff;
+            line-height: 20px;
+        }
+        .badge-tag.gold {
+            background: #ffb800;
+        }
+        .badge-tag.blue {
+            background: #3b8cff;
+        }
+        .badge-tag.white {
+            background: #b0b0b0;
+        }
+
+        /* 相关视频网格（与首页卡片风格统一） */
+        .search-results-title {
+            font-family: var(--font-d);
+            font-size: 18px;
+            font-weight: 700;
+            margin: 24px 0 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .search-results-title .badge {
+            background: var(--accent);
+            color: #1e1e2a;
+            font-size: 10px;
+            padding: 0 10px;
+            border-radius: 12px;
+            line-height: 20px;
+            font-weight: 700;
+        }
+
+        .search-results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 16px;
+        }
+        .search-result-item {
+            cursor: pointer;
+            border-radius: var(--radius);
+            overflow: hidden;
+            background: var(--surface);
+            box-shadow: var(--shadow);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .search-result-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+        .search-result-item img {
+            width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            background: #e8eaef;
+        }
+        .search-result-item .info {
+            padding: 10px 12px 12px;
+        }
+        .search-result-item .info .title {
+            font-family: var(--font-d);
+            font-size: 13px;
+            font-weight: 600;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            margin-bottom: 2px;
+        }
+        .search-result-item .info .author {
+            font-size: 11px;
+            color: var(--text2);
+        }
+        .search-result-item .info .tags {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+            margin-top: 4px;
+        }
+        .search-result-item .info .tags .tag {
+            font-size: 9px;
+            padding: 1px 8px;
+            border-radius: 10px;
+            background: var(--bg);
+            color: var(--text3);
+        }
+        .search-result-item .thumb-wrap {
+            position: relative;
+            aspect-ratio: 16/9;
+            overflow: hidden;
+            background: #e8eaef;
+        }
+        .search-result-item .thumb-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        .search-result-item:hover .thumb-wrap img {
+            transform: scale(1.04);
+        }
+        .search-result-item .thumb-wrap .dur {
+            position: absolute;
+            bottom: 6px;
+            right: 6px;
+            background: rgba(0, 0, 0, 0.75);
+            color: #fff;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 500;
+            z-index: 2;
+        }
+        .search-result-item .thumb-wrap .paid-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: #ff4757;
+            color: #fff;
+            font-size: 9px;
+            padding: 1px 8px;
+            border-radius: 10px;
+            font-weight: 700;
+            z-index: 2;
+        }
+        .search-result-item .thumb-wrap .tags {
+            position: absolute;
+            bottom: 32px;
+            left: 6px;
+            display: flex;
+            gap: 4px;
+            z-index: 2;
+            flex-wrap: wrap;
+        }
+        .search-result-item .thumb-wrap .tags .tag {
+            font-size: 8px;
+            padding: 1px 6px;
+            border-radius: 6px;
+            background: rgba(0, 0, 0, 0.65);
+            color: #fff;
+            backdrop-filter: blur(4px);
+            white-space: nowrap;
+        }
+
+        .search-empty {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text3);
+        }
+        .search-empty .icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+        .search-empty p {
+            font-size: 14px;
+        }
+        .search-empty .hint {
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
         /* ==================== 通用返回按钮 ==================== */
         .back-btn {
             position: fixed;
@@ -533,18 +973,6 @@
             line-height: 20px;
             vertical-align: middle;
             white-space: nowrap;
-        }
-        .pp-badge.gold {
-            background: #ffb800;
-            color: #fff;
-        }
-        .pp-badge.blue {
-            background: #3b8cff;
-            color: #fff;
-        }
-        .pp-badge.white {
-            background: #b0b0b0;
-            color: #fff;
         }
 
         .pp-bio {
@@ -700,7 +1128,6 @@
             color: var(--text3);
         }
 
-        /* 分类标签 + 汉堡菜单 */
         .cat-tabs-wrapper {
             display: flex;
             align-items: center;
@@ -806,6 +1233,8 @@
             box-shadow: var(--shadow);
             transition: transform 0.2s, box-shadow 0.2s;
             position: relative;
+            will-change: transform;
+            contain: layout style paint;
         }
         .v-card:hover {
             transform: translateY(-4px);
@@ -819,13 +1248,40 @@
             aspect-ratio: 16 / 9;
             background: var(--surface-hover);
             overflow: hidden;
+            background-color: #e8eaef;
         }
         .v-card-img img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: transform 0.4s;
+            background-color: #e8eaef;
         }
+        .v-card-img .img-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, #e8eaef 25%, #f0f2f8 50%, #e8eaef 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            z-index: 1;
+        }
+        .v-card-img .img-placeholder.loaded {
+            opacity: 0;
+            pointer-events: none;
+            animation: none;
+        }
+        @keyframes shimmer {
+            0% {
+                background-position: -200% 0;
+            }
+            100% {
+                background-position: 200% 0;
+            }
+        }
+
         .v-card-dur {
             position: absolute;
             bottom: 6px;
@@ -836,6 +1292,7 @@
             border-radius: 4px;
             font-size: 10px;
             font-weight: 500;
+            z-index: 2;
         }
         .v-card-play {
             position: absolute;
@@ -851,6 +1308,7 @@
             justify-content: center;
             transition: transform 0.3s;
             backdrop-filter: blur(4px);
+            z-index: 2;
         }
         .v-card:hover .v-card-play {
             transform: translate(-50%, -50%) scale(1);
@@ -880,6 +1338,28 @@
             z-index: 2;
             text-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
         }
+
+        /* ========== 标签固定在左下底部 ========== */
+        .v-card-tags {
+            position: absolute;
+            bottom: 6px;
+            left: 6px;
+            display: flex;
+            gap: 4px;
+            z-index: 2;
+            flex-wrap: wrap;
+            max-width: 80%;
+        }
+        .v-card-tags .tag {
+            font-size: 8px;
+            padding: 1px 6px;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.65);
+            color: #fff;
+            backdrop-filter: blur(4px);
+            white-space: nowrap;
+        }
+
         .v-card-info {
             display: flex;
             gap: 10px;
@@ -894,6 +1374,7 @@
             border-radius: 50%;
             object-fit: cover;
             cursor: pointer;
+            background-color: #e8eaef;
         }
         .v-card-meta {
             flex: 1;
@@ -978,7 +1459,6 @@
             transform: scale(1.05);
         }
 
-        /* 试看遮罩 */
         .preview-overlay {
             position: absolute;
             bottom: 80px;
@@ -998,48 +1478,51 @@
             display: block;
         }
 
-        /* 播放结束推荐覆盖层 */
         .ended-recommend {
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.75);
+            background: rgba(0, 0, 0, 0.82);
             color: #fff;
-            z-index: 5;
+            z-index: 10;
             display: none;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             padding: 20px;
             overflow-y: auto;
+            backdrop-filter: blur(10px);
         }
         .ended-recommend.show {
             display: flex;
         }
         .ended-recommend .title {
             font-family: var(--font-d);
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 700;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
+            letter-spacing: 0.5px;
         }
         .ended-recommend .grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 12px;
             width: 100%;
-            max-width: 600px;
+            max-width: 640px;
         }
         .ended-recommend .item {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.08);
             border-radius: var(--radius);
             overflow: hidden;
             cursor: pointer;
             transition: transform 0.2s;
+            border: 1px solid rgba(255, 255, 255, 0.06);
         }
         .ended-recommend .item:hover {
-            transform: scale(1.05);
+            transform: scale(1.04);
+            background: rgba(255, 255, 255, 0.15);
         }
         .ended-recommend .item img {
             width: 100%;
@@ -1047,10 +1530,10 @@
             object-fit: cover;
         }
         .ended-recommend .item .info {
-            padding: 4px 6px;
+            padding: 6px 8px;
         }
         .ended-recommend .item .info .title {
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 500;
             display: -webkit-box;
             -webkit-line-clamp: 2;
@@ -1059,11 +1542,10 @@
             font-family: var(--font-d);
         }
         .ended-recommend .item .info .views {
-            font-size: 9px;
-            color: rgba(255, 255, 255, 0.6);
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.5);
         }
 
-        /* 合集菜单 */
         .collection-menu-btn {
             position: absolute;
             top: 12px;
@@ -1141,6 +1623,7 @@
             padding: 40px 14px 10px;
             opacity: 0;
             transition: opacity 0.3s;
+            z-index: 8;
         }
         .pc.show {
             opacity: 1;
@@ -1373,7 +1856,6 @@
             box-shadow: 0 0 12px var(--accent-glow);
         }
 
-        /* 视频信息 */
         .wi {
             padding: 16px;
             max-width: 900px;
@@ -1447,18 +1929,6 @@
             vertical-align: middle;
             white-space: nowrap;
         }
-        .verify-badge.gold {
-            background: #ffb800;
-            color: #fff;
-        }
-        .verify-badge.blue {
-            background: #3b8cff;
-            color: #fff;
-        }
-        .verify-badge.white {
-            background: #b0b0b0;
-            color: #fff;
-        }
 
         .wi-usub {
             font-size: 11px;
@@ -1484,7 +1954,6 @@
             color: var(--text2);
         }
 
-        /* ----- 合作区域 ----- */
         .wi-collab {
             margin-top: 14px;
             padding-top: 14px;
@@ -1532,7 +2001,6 @@
             color: var(--text3);
         }
 
-        /* ----- 推荐视频（信息区下方） ----- */
         .wi-recommend {
             margin-top: 16px;
             padding-top: 12px;
@@ -1618,7 +2086,6 @@
             color: var(--text3);
         }
 
-        /* 合集详情 */
         .collection-detail {
             padding: 16px;
             max-width: 900px;
@@ -1687,9 +2154,15 @@
             line-height: 20px;
             white-space: nowrap;
         }
-        .tag-vip { background: #ff4757; }
-        .tag-free { background: #2ecc71; }
-        .tag-preview { background: #f39c12; }
+        .tag-vip {
+            background: #ff4757;
+        }
+        .tag-free {
+            background: #2ecc71;
+        }
+        .tag-preview {
+            background: #f39c12;
+        }
 
         /* ==================== 使用说明页面 ==================== */
         .page-help {
@@ -1708,7 +2181,6 @@
             color: var(--text2);
             margin-bottom: 20px;
         }
-        /* 二级导航 */
         .help-nav {
             display: flex;
             gap: 6px;
@@ -1744,7 +2216,6 @@
             color: #1e1e2a;
             border-color: var(--accent);
         }
-        /* 内容区 */
         .help-content {
             background: var(--surface);
             border-radius: var(--radius-lg);
@@ -1936,7 +2407,6 @@
             cursor: pointer;
         }
 
-        /* ==================== Toast ==================== */
         .toast {
             position: fixed;
             bottom: calc(var(--bottom-h) + 14px);
@@ -1982,6 +2452,9 @@
             .help-content {
                 padding: 28px 32px;
             }
+            .search-results-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            }
         }
         @media (min-width: 1024px) {
             .main {
@@ -2006,11 +2479,35 @@
                 grid-template-columns: repeat(3, 1fr);
                 max-width: 700px;
             }
+            .search-results-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            }
         }
         @media (min-width: 1280px) {
             .v-grid {
                 grid-template-columns: repeat(4, 1fr);
             }
+            .search-results-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .loading-spinner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            display: none;
+            width: 48px;
+            height: 48px;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        .loading-spinner.show {
+            display: block;
         }
     </style>
 </head>
@@ -2037,17 +2534,17 @@
         </div>
     </div>
 
-    <!-- ==================== 顶部导航 ==================== -->
+    <!-- ==================== 顶部导航（搜索框为入口，点击跳转） ==================== -->
     <header class="header">
         <div class="header-logo" onclick="navigate('home')">
             <span class="dot"></span>七七视频网
         </div>
-        <div class="header-search">
+        <div class="header-search" onclick="navigate('search')">
             <svg class="si" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="11" cy="11" r="8" />
                 <path d="M21 21l-4.35-4.35" />
             </svg>
-            <input type="text" placeholder="搜索视频..." id="searchInput" oninput="onSearch(this.value)">
+            <input type="text" placeholder="搜索视频、UP主、标签..." readonly>
         </div>
         <div class="header-actions"></div>
     </header>
@@ -2130,6 +2627,7 @@
         <section class="page page-collection" id="pageCollection"></section>
         <section class="page page-help" id="pageHelp"></section>
         <section class="page page-settings" id="pageSettings"></section>
+        <section class="page page-search" id="pageSearch"></section>
     </main>
 
     <!-- ==================== 底部导航 (移动端) ==================== -->
@@ -2164,24 +2662,37 @@
 
     <script>
         // ============================================================
-        // 认证徽章文字自定义配置
-        const VERIFY_LABELS = {
-            gold: '热门榜榜首',
-            blue: 'FIFA足球限定徽章',
-            white: '✨'
-        };
+        // 1. 徽章系统配置
         // ============================================================
-
-        // ============================================================
-        // 数据
-        // ============================================================
-        const UPLOADERS = [
-            { id: 1, name: 'Seven戚', handle: '2103686588@qq.com', avatar: 'https://i.ibb.co/Y4rD6F2Y/b-8ee0f1b16f3c823eeff690735ca17e1f.jpg', bio: '你们好，我是Seven戚，网站开发以及小说创作。', followers: 124000, verify: 'gold' },
-            { id: 2, name: '是延不是廷_Yan', handle: '@light_notes', avatar: 'https://i.ibb.co/GZfvfFM/3849bcb84a99582f0d1a242c52993ccf.jpg', bio: '一个喜欢音乐的画渣', followers: 11, verify: '' },
-            { id: 3, name: '双逆足的入', handle: '15755318794', avatar: 'https://i.ibb.co/r2wsHtCw/cf86e4e756a62729abe9244be90ce411.jpg', bio: '做足球视频的入', followers: 56, verify: 'blue' },
-            { id: 4, name: '普通用户', handle: '@normal', avatar: 'https://i.pravatar.cc/150?u=normal', bio: '普通用户，没有认证徽章', followers: 5 },
+        const BADGE_CONFIG = [
+            { id: 'gold', color: '#ffb800', label: '热门榜榜首' },
+            { id: 'blue', color: '#3b8cff', label: 'FIFA足球限定徽章' },
+            { id: 'white', color: '#b0b0b0', label: '✨' },
         ];
 
+        const BADGE_MAP = {};
+        BADGE_CONFIG.forEach(b => { BADGE_MAP[b.id] = b; });
+
+        function getBadgeInfo(badgeId) {
+            return BADGE_MAP[badgeId] || null;
+        }
+
+        // ============================================================
+        // 2. 数据 - UP主
+        // ============================================================
+        const UPLOADERS = [
+            { id: 1, name: 'Seven戚', handle: '2103686588@qq.com', avatar: 'https://i.ibb.co/Y4rD6F2Y/b-8ee0f1b16f3c823eeff690735ca17e1f.jpg', bio: '你们好，我是Seven戚，网站开发以及小说创作。', followers: 6528, verify: 'gold' },
+            { id: 2, name: '是延不是廷_Yan', handle: '@light_notes', avatar: 'https://i.ibb.co/GZfvfFM/3849bcb84a99582f0d1a242c52993ccf.jpg', bio: '一个喜欢音乐的画渣', followers: 876, verify: null },
+            { id: 3, name: '双逆足的入', handle: '15755318794', avatar: 'https://i.ibb.co/r2wsHtCw/cf86e4e756a62729abe9244be90ce411.jpg', bio: '做足球视频的入', followers: 1320, verify: 'blue' },
+            { id: 4, name: '三角洲小剧场', handle: '素材由互联网提供', avatar: 'https://i.ibb.co/Xk7W8FMb/QQ20260719-173437.png', bio: '', followers: 4532, verify: null },
+            { id: 5, name: '凑企鹅', handle: '素材由互联网提供', avatar: 'https://i.ibb.co/5XFFMWmC/QQ20260719-151323.png', bio: '', followers: 238, verify: null },
+            { id: 6, name: '搞笑影视', handle: '素材由互联网提供', avatar: 'https://i.ibb.co/FLqt79T3/QQ20260719-173729.png', bio: '', followers: 2, verify: null },
+            { id: 7, name: '车轱辘二世', handle: '无内容', avatar: 'https://i.ibb.co/N6zrf8g2/707240a8adb7c3e89608704b06153b37.jpg', bio: '', followers: 0, verify: null },
+        ];
+
+        // ============================================================
+        // 3. 视频数据
+        // ============================================================
         const VIDEOS = [{
             id: 1,
             title: '【雾都冥域】第二章·奇怪的规则（上）',
@@ -2194,6 +2705,7 @@
             cat: '书籍',
             paid: false,
             collaborators: [],
+            tags: ['雾都冥域', '小说推文', '奇幻', '悬疑'],
             dm: ['Seven7牛逼！', '画质真好', '循环播放中...', '吓到我了', '你们好', '收藏了', 'BGM叫什么？', '太棒了', '第一', '打卡', '空瓶', '推荐来的',
                 '制作精良', '神作', 'Seven戚的处女座说是',
             ]
@@ -2209,6 +2721,7 @@
             cat: '动画',
             paid: false,
             collaborators: [],
+            tags: ['手书', '描改', '亲友', '治愈'],
             dm: ['恭喜视频上线!!!!', '老师画的好好看！！', '加个wx']
         }, {
             id: 3,
@@ -2222,6 +2735,7 @@
             cat: '书籍',
             paid: false,
             collaborators: [],
+            tags: ['幕后', '推文', '创作过程'],
             dm: ['辛苦了', '正文也很好！', '推荐']
         }, {
             id: 4,
@@ -2235,6 +2749,7 @@
             cat: '书籍',
             paid: true,
             collaborators: [],
+            tags: ['雾都冥域', '小说推文', '奇幻', '悬疑'],
             dm: ['Seven7牛逼！', '画质真好', '循环播放中...', '吓到我了', '你们好', '收藏了', 'BGM叫什么？', '太棒了', '第一', '打卡', '空瓶', '推荐来的',
                 '制作精良', '神作', 'Seven戚的处女座说是', '下一集', '好', '我是Seven7', '乐乐'
             ]
@@ -2250,8 +2765,10 @@
             cat: '书籍',
             paid: false,
             collaborators: [],
+            tags: ['雾都冥域', '小说推文', '奇幻', '冒险', '冰壶'],
             dm: ['Seven7牛逼！', '画质真好', '循环播放中...', '吓到我了', '你们好', '收藏了', 'BGM叫什么？', '太棒了', '第一', '打卡', '空瓶', '推荐来的',
-                '制作精良', '神作', 'Seven戚的处女座说是', '下一集', '好', '我是Seven7', '乐乐'
+                '制作精良', '神作', 'Seven戚的处女座说是', '下一集', '好', '我是Seven7', '乐乐', '第一集', '梦开始的地方', '打卡第一集', '荟萃7班实名', '网差的看着就卡  5G网还好',
+                '网络不行当然卡', '后面就要VIP了', '666', '说啥呢', '3个人出来', '2.9万人', '一万播放量叫我', '百万UP', '火钳刘明', '火钳刘明', '优质',
             ]
         }, {
             id: 6,
@@ -2265,45 +2782,150 @@
             cat: '书籍',
             paid: false,
             collaborators: [],
+            tags: ['雾都冥域', '小说推文', '奇幻', '冒险'],
             dm: ['Seven7牛逼！', '画质真好', '循环播放中...', '吓到我了', '你们好', '收藏了', 'BGM叫什么？', '太棒了', '第一', '打卡', '空瓶', '推荐来的',
                 '制作精良', '神作', 'Seven戚的处女座说是', '下一集', '好', '我是Seven7', '乐乐'
             ]
-        },{
+        }, {
             id: 7,
             title: '英格兰加油 下届世界杯把足球带回家',
             thumb: 'https://i.ibb.co/YBdkPcc7/QQ20260718-140450.png',
             video: 'https://s.snappable.media/aa4a24961947e8fdd70a24dd18a32287.mp4',
             duration: '01:10',
-            views: 193,
+            views: 1943,
             date: '2026-07-18',
             upId: 3,
             cat: '书籍',
             paid: false,
             collaborators: [],
-            dm: ['加油','英格兰必胜','我是皇马粉丝','666','火箭流氓','？','优质！','火箭流氓何意味','？何意味','英格兰也有皇马的别叫'
+            tags: ['足球', '英格兰', '世界杯', '体育'],
+            dm: ['加油', '英格兰必胜', '我是皇马粉丝', '666', '火箭流氓', '？', '优质！', '火箭流氓何意味', '？何意味', '英格兰也有皇马的别叫'
             ]
-        },{
+        }, {
             id: 9,
             title: '如此足球你怎能不爱',
             thumb: 'https://i.ibb.co/3Y14YTWk/QQ20260718-151402.png',
             video: 'https://s.snappable.media/a42ca44fc5cbf88794b60ca1925472ba.mp4',
             duration: '00:19',
-            views: 293,
+            views: 2993,
             date: '2026-07-18',
             upId: 3,
             cat: '书籍',
             paid: false,
             collaborators: [],
-            dm: ['我们阿森纳是不可战胜','曼城NB','火钳刘明','b席要去皇马了[哭😭]'
+            tags: ['足球', '英超', '曼城', '阿森纳', '皇马'],
+            dm: ['我们阿森纳是不可战胜', '曼城NB', '火钳刘明', 'b席要去皇马了[哭😭]'
             ]
-        },];
+        },{
+            id: 10,
+            title: '曼啵来碗忘情牛肉面',
+            thumb: 'https://i.ibb.co/RGfyJkjP/QQ20260719-152007.png',
+            video: 'https://pixhub.ro/i/ryrubw8m.mp4',
+            duration: '00:14',
+            views: 2342,
+            date: '2026-07-19',
+            upId: 5,
+            cat: '书籍',
+            paid: false,
+            collaborators: [],
+            tags: ['抽象', '搞笑', '曼波'],
+            dm: []
+        },{
+            id: 11,
+            title: '野人偷吃保险？',
+            thumb: 'https://i.ibb.co/6JfRPnnQ/QQ20260719-174129.png',
+            video: 'https://pixhub.ro/i/ft0ru8f6.mp4',
+            duration: '00:16',
+            views: 2342,
+            date: '2026-07-19',
+            upId: 4,
+            cat: '书籍',
+            paid: false,
+            collaborators: [],
+            tags: ['抽象', '搞笑', '三角洲'],
+            dm: []
+        },{
+            id: 12,
+            title: '我和兄弟的变脸速度',
+            thumb: 'https://i.ibb.co/dsm3chtf/QQ20260719-174040.png',
+            video: 'https://pixhub.ro/i/fqa9e5fe.mp4',
+            duration: '00:30',
+            views: 2342,
+            date: '2026-07-19',
+            upId: 6,
+            cat: '书籍',
+            paid: false,
+            collaborators: [],
+            tags: ['抽象', '兄弟', '搞笑'],
+            dm: []
+        }, {
+            id: 13,
+            title: '《真·电死小子》',
+            thumb: 'https://i.ibb.co/JW7p2fJb/QQ20260719-153430.png',
+            video: 'https://pixhub.ro/i/rjexdpyj.mp4',
+            duration: '00:33',
+            views: 14,
+            date: '2026-07-19',
+            upId: 6,
+            cat: '书籍',
+            paid: false,
+            collaborators: [],
+            tags: ['电机小子', '影视', ],
+            dm: []
+        }, {
+            id: 14,
+            title: '可怜的鸟撸撸',
+            thumb: 'https://i.ibb.co/7ttcF7sc/QQ20260719-154357.png',
+            video: 'https://pixhub.ro/i/uzeoad8y.mp4',
+            duration: '00:10',
+            views: 8392,
+            date: '2026-07-19',
+            upId: 4,
+            cat: '书籍',
+            paid: false,
+            collaborators: [],
+            tags: ['豆包', '三角洲'],
+            dm: []
+        }, {
+            id: 15,
+            title: '《各显神通》',
+            thumb: 'https://i.ibb.co/qMt5tHw8/QQ20260719-154428.png',
+            video: 'https://pixhub.ro/i/ij1pjoly.mp4',
+            duration: '00:20',
+            views: 4859,
+            date: '2026-07-19',
+            upId: 6,
+            cat: '书籍',
+            paid: false,
+            collaborators: [],
+            tags: ['嘉豪', '逆天', ],
+            dm: []
+        },{
+            id: 16,
+            title: '人民的黄瓜',
+            thumb: 'https://i.ibb.co/kgnC2k4b/QQ20260719-173944.png',
+            video: 'https://pixhub.ro/i/qw5j0fz8.mp4',
+            duration: '00:45',
+            views: 9573,
+            date: '2026-07-19',
+            upId: 4,
+            cat: '书籍',
+            paid: false,
+            collaborators: [],
+            tags: ['抽象', '三角洲', '猛攻'],
+            dm: []
+        }, ];
 
+        // ============================================================
+        // 4. 合集数据
+        // ============================================================
         const COLLECTIONS = [
-            { id: 1, name: '《雾都冥域》推文', cover: VIDEOS[0].thumb, videoIds: [5,6,1, 4], isVip: true, freePreviewDuration: 30 },
+            { id: 1, name: '《雾都冥域》推文', cover: VIDEOS[0].thumb, videoIds: [5, 6, 1, 4], isVip: true,
+                freePreviewDuration: 30 },
         ];
 
         // ============================================================
-        // 使用说明内容
+        // 5. 使用说明内容
         // ============================================================
         const HELP_DATA = {
             'about': {
@@ -2361,7 +2983,7 @@
         const HELP_CATEGORIES = Object.keys(HELP_DATA);
 
         // ============================================================
-        // 全局状态
+        // 6. 全局状态
         // ============================================================
         let curPage = 'home';
         let curVideo = null;
@@ -2375,9 +2997,13 @@
         let currentCollection = null;
         let currentCollectionIndex = -1;
         let welcomeShown = false;
+        let lazyObserver = null;
+        let uiRAFId = null;
+        let lastTimeUpdate = 0;
+        const UI_UPDATE_INTERVAL = 250;
 
         // ============================================================
-        // 工具函数
+        // 7. 工具函数
         // ============================================================
         function fmt(n) {
             if (n >= 10000) return (n / 10000).toFixed(1).replace(/\.0$/, '') + '万';
@@ -2408,6 +3034,24 @@
         function getVideoIndexInCollection(videoId, collection) {
             if (!collection) return -1;
             return collection.videoIds.indexOf(videoId);
+        }
+
+        function getAllTags() {
+            const tagSet = new Set();
+            VIDEOS.forEach(v => {
+                if (v.tags) v.tags.forEach(t => tagSet.add(t));
+            });
+            return Array.from(tagSet);
+        }
+
+        function getTagHeatmap() {
+            const map = {};
+            VIDEOS.forEach(v => {
+                if (v.tags) v.tags.forEach(t => {
+                    map[t] = (map[t] || 0) + 1;
+                });
+            });
+            return map;
         }
 
         function showToast(msg) {
@@ -2469,7 +3113,7 @@
         }
 
         // ============================================================
-        // 启动弹窗
+        // 8. 启动弹窗
         // ============================================================
         function showWelcomeModal() {
             if (welcomeShown) return;
@@ -2490,16 +3134,23 @@
         }
 
         // ============================================================
-        // 页面路由
+        // 9. 页面路由
         // ============================================================
         let isInternalNav = false;
 
         function navigate(page, params = {}, pushHistory = true) {
-            // 清理播放器
-            if (player) { player.pause();
-                player = null; }
-            if (dmEngine) { dmEngine.stop();
-                dmEngine = null; }
+            if (player) {
+                try { player.pause(); } catch (e) {}
+                if (uiRAFId) {
+                    cancelAnimationFrame(uiRAFId);
+                    uiRAFId = null;
+                }
+                player = null;
+            }
+            if (dmEngine) {
+                try { dmEngine.stop(); } catch (e) {}
+                dmEngine = null;
+            }
             clearTimeout(controlsTimer);
             if (window._viewInterval) {
                 clearInterval(window._viewInterval);
@@ -2509,7 +3160,6 @@
             currentCollection = null;
             currentCollectionIndex = -1;
 
-            // 更新 URL hash
             if (pushHistory) {
                 let id = undefined;
                 if (page === 'watch' && params.id) id = params.id;
@@ -2518,15 +3168,19 @@
                 updateHash(page, id);
             }
 
-            // 渲染页面
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.back-btn').forEach(el => el.remove());
+
+            if (page === 'search') {
+                document.getElementById('btmNav').classList.add('hidden');
+            } else {
+                document.getElementById('btmNav').classList.remove('hidden');
+            }
 
             if (page === 'home') {
                 curPage = 'home';
                 document.getElementById('pageHome').classList.add('active');
                 renderHome(params.cat || '');
-                document.getElementById('btmNav').classList.remove('hidden');
             } else if (page === 'watch') {
                 curPage = 'watch';
                 document.getElementById('pageWatch').classList.add('active');
@@ -2559,10 +3213,13 @@
                 curPage = 'settings';
                 document.getElementById('pageSettings').classList.add('active');
                 renderSettings();
-                document.getElementById('btmNav').classList.remove('hidden');
+            } else if (page === 'search') {
+                curPage = 'search';
+                document.getElementById('pageSearch').classList.add('active');
+                renderSearch(params.query || '');
+                addSearchBackButton();
             }
 
-            // 底部导航高亮（仅当显示时）
             if (!document.getElementById('btmNav').classList.contains('hidden')) {
                 document.querySelectorAll('.bni').forEach(b => b.classList.remove('active'));
                 const map = { 'home': 'home', 'collection': 'collection', 'settings': 'settings' };
@@ -2571,6 +3228,28 @@
             }
 
             window.scrollTo(0, 0);
+        }
+
+        function addSearchBackButton() {
+            const existing = document.querySelector('.search-back-btn');
+            if (existing) return;
+            const btn = document.createElement('div');
+            btn.className = 'search-back-btn';
+            btn.innerHTML = `
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                返回
+            `;
+            btn.onclick = function() {
+                if (historyStack.length > 0) {
+                    const prev = historyStack.pop();
+                    navigate(prev || 'home', {}, false);
+                } else {
+                    navigate('home', {}, false);
+                }
+            };
+            document.getElementById('pageSearch').prepend(btn);
         }
 
         function addBackButton() {
@@ -2585,7 +3264,6 @@
             document.body.appendChild(btn);
         }
 
-        // ----- 监听 hash 变化 -----
         function onHashChange() {
             if (isInternalNav) {
                 isInternalNav = false;
@@ -2605,6 +3283,10 @@
                 navigate('help', {}, false);
             } else if (page === 'settings') {
                 navigate('settings', {}, false);
+            } else if (page === 'search') {
+                // 从hash中解析查询词
+                const query = id !== undefined ? id : '';
+                navigate('search', { query: query }, false);
             } else {
                 navigate('home', {}, false);
             }
@@ -2614,29 +3296,72 @@
         window.addEventListener('hashchange', onHashChange);
 
         // ============================================================
-        // 首页渲染
+        // 10. 图片懒加载
+        // ============================================================
+        function initLazyLoading() {
+            if (lazyObserver) {
+                lazyObserver.disconnect();
+                lazyObserver = null;
+            }
+
+            const images = document.querySelectorAll('.lazy-img');
+            if (!images.length) return;
+
+            lazyObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        const src = img.dataset.src;
+                        if (src) {
+                            img.src = src;
+                            img.removeAttribute('data-src');
+                            img.onload = function() {
+                                const placeholder = img.parentElement?.querySelector('.img-placeholder');
+                                if (placeholder) placeholder.classList.add('loaded');
+                            };
+                            img.onerror = function() {
+                                const placeholder = img.parentElement?.querySelector('.img-placeholder');
+                                if (placeholder) placeholder.classList.add('loaded');
+                            };
+                        }
+                        lazyObserver.unobserve(img);
+                    }
+                });
+            }, {
+                rootMargin: '300px',
+                threshold: 0.01
+            });
+
+            images.forEach(img => lazyObserver.observe(img));
+        }
+
+        // ============================================================
+        // 11. 首页渲染
         // ============================================================
         function renderHome(activeCat) {
             const allCats = ['全部', '🔥 热门', '🎬 动画', '🎮 游戏', '📚 书籍', '💻 科技'];
             const currentCat = activeCat || '全部';
 
-            let filtered = VIDEOS;
+            let sorted = [...VIDEOS].sort((a, b) => b.views - a.views);
+
+            let filtered = sorted;
             if (activeCat && activeCat !== '全部') {
                 if (activeCat === '🔥 热门') {
-                    filtered = [...VIDEOS].sort((a, b) => b.views - a.views);
+                    // 热门已经按播放量排好了
                 } else {
-                    filtered = VIDEOS.filter(v => v.cat === activeCat);
+                    filtered = sorted.filter(v => v.cat === activeCat);
                 }
             }
             if (searchQ) {
                 const q = searchQ.toLowerCase();
-                filtered = VIDEOS.filter(v =>
+                filtered = sorted.filter(v =>
                     v.title.toLowerCase().includes(q) ||
-                    getUploader(v.upId).name.toLowerCase().includes(q)
+                    getUploader(v.upId).name.toLowerCase().includes(q) ||
+                    (v.tags && v.tags.some(t => t.toLowerCase().includes(q)))
                 );
             }
 
-            const top3 = [...VIDEOS].sort((a, b) => b.views - a.views).slice(0, 3);
+            const top3 = sorted.slice(0, 3);
 
             let html = '';
             if (top3.length) {
@@ -2650,7 +3375,7 @@
                     html += `
                         <div class="hot-item" onclick="navigate('watch',{id:${v.id}})">
                             <div class="rank-num ${rankClass}">${idx + 1}</div>
-                            <img src="${v.thumb}" alt="">
+                            <img src="${v.thumb}" alt="" style="width:64px;height:36px;object-fit:cover;border-radius:6px;" loading="lazy">
                             <div class="info">
                                 <div class="title">${v.title}</div>
                                 <div class="views">${fmt(v.views)}次观看 · ${u.name}</div>
@@ -2675,47 +3400,86 @@
             const title = searchQ ? '搜索: ' + searchQ : (activeCat || '推荐视频');
             html += `<div style="font-family:var(--font-d);font-size:18px;font-weight:800;margin-bottom:14px">${title}</div>`;
 
-            if (filtered.length === 0) {
-                html += '<div style="text-align:center;padding:60px 0;color:var(--text3)">没有找到相关视频</div>';
-            } else {
-                html += '<div class="v-grid">';
-                filtered.forEach(v => { html += videoCardHTML(v); });
-                html += '</div>';
-            }
+            html += `<div class="v-grid" id="videoGrid"></div>`;
 
             document.getElementById('pageHome').innerHTML = html;
 
-            const tabs = document.getElementById('catTabs');
-            const hamburger = document.getElementById('catHamburger');
-            if (tabs && hamburger) {
-                const wrapper = tabs.parentElement;
-                if (tabs.scrollWidth > wrapper.offsetWidth - 50) {
-                    hamburger.classList.add('show');
-                } else {
-                    hamburger.classList.remove('show');
+            const grid = document.getElementById('videoGrid');
+            if (!grid) return;
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--text3)">没有找到相关视频</div>';
+                return;
+            }
+
+            const DIRECT_LOAD_COUNT = 12;
+            const cardHTMLs = filtered.map((v, index) => {
+                const useLazy = index >= DIRECT_LOAD_COUNT;
+                return videoCardHTML(v, useLazy);
+            });
+
+            const BATCH_SIZE = 8;
+            let idx = 0;
+
+            function renderBatch() {
+                const fragment = document.createDocumentFragment();
+                const end = Math.min(idx + BATCH_SIZE, cardHTMLs.length);
+                const tempDiv = document.createElement('div');
+                for (let i = idx; i < end; i++) {
+                    tempDiv.innerHTML = cardHTMLs[i];
+                    const child = tempDiv.firstElementChild;
+                    if (child) {
+                        fragment.appendChild(child.cloneNode(true));
+                    }
+                    tempDiv.innerHTML = '';
                 }
-                const dropdown = document.getElementById('catDropdown');
-                if (dropdown) {
-                    dropdown.innerHTML = '';
-                    allCats.forEach(c => {
-                        const div = document.createElement('div');
-                        div.className = 'cat-tab' + (currentCat === c ? ' active' : '');
-                        div.textContent = c;
-                        div.onclick = function() {
-                            navigate('home', { cat: c });
-                            document.getElementById('catDropdown').classList.remove('show');
-                        };
-                        dropdown.appendChild(div);
+                grid.appendChild(fragment);
+                idx = end;
+
+                if (idx < cardHTMLs.length) {
+                    requestAnimationFrame(renderBatch);
+                } else {
+                    setTimeout(() => {
+                        initLazyLoading();
+                    }, 50);
+                }
+            }
+
+            requestAnimationFrame(renderBatch);
+
+            setTimeout(() => {
+                const tabs = document.getElementById('catTabs');
+                const hamburger = document.getElementById('catHamburger');
+                if (tabs && hamburger) {
+                    const wrapper = tabs.parentElement;
+                    if (tabs.scrollWidth > wrapper.offsetWidth - 50) {
+                        hamburger.classList.add('show');
+                    } else {
+                        hamburger.classList.remove('show');
+                    }
+                    const dropdown = document.getElementById('catDropdown');
+                    if (dropdown) {
+                        dropdown.innerHTML = '';
+                        allCats.forEach(c => {
+                            const div = document.createElement('div');
+                            div.className = 'cat-tab' + (currentCat === c ? ' active' : '');
+                            div.textContent = c;
+                            div.onclick = function() {
+                                navigate('home', { cat: c });
+                                document.getElementById('catDropdown').classList.remove('show');
+                            };
+                            dropdown.appendChild(div);
+                        });
+                    }
+                    document.addEventListener('click', function closeDropdown(e) {
+                        const wrapper = document.querySelector('.cat-tabs-wrapper');
+                        if (wrapper && !wrapper.contains(e.target)) {
+                            const dd = document.getElementById('catDropdown');
+                            if (dd) dd.classList.remove('show');
+                        }
                     });
                 }
-                document.addEventListener('click', function closeDropdown(e) {
-                    const wrapper = document.querySelector('.cat-tabs-wrapper');
-                    if (wrapper && !wrapper.contains(e.target)) {
-                        const dd = document.getElementById('catDropdown');
-                        if (dd) dd.classList.remove('show');
-                    }
-                });
-            }
+            }, 100);
         }
 
         function toggleCatDropdown() {
@@ -2724,17 +3488,25 @@
         }
 
         // ---------- 视频卡片 ----------
-        function videoCardHTML(v) {
+        function videoCardHTML(v, useLazy = true) {
             const u = getUploader(v.upId);
             const paidBadge = v.paid ? `<div class="v-card-paid">会员专享</div>` : '';
             const collabBadge = (v.collaborators && v.collaborators.length > 0) ?
                 `<div class="v-card-collab">合作</div>` : '';
             const finalBadge = paidBadge || collabBadge;
+
+            const tagsHtml = v.tags && v.tags.length > 0 ?
+                `<div class="v-card-tags">${v.tags.slice(0, 3).map(t => `<span class="tag">${t}</span>`).join('')}</div>` :
+                '';
+
+            const placeholderImg = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360"%3E%3Crect width="640" height="360" fill="%23e8eaef"/%3E%3C/svg%3E';
+
             return `
                 <div class="v-card" onclick="navigate('watch',{id:${v.id}})">
                   <div class="v-card-img">
-                    <img src="${v.thumb}" alt="${v.title}" loading="lazy"
-                         onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22640%22 height=%22360%22%3E%3Crect width=%22640%22 height=%22360%22 fill=%22%23333%22/%3E%3Ctext x=%22320%22 y=%22180%22 font-size=%2220%22 fill=%22%23aaa%22 text-anchor=%22middle%22 dominant-baseline=%22central%22%3E暂无封面%3C/text%3E%3C/svg%3E';">
+                    <div class="img-placeholder" style="position:absolute;top:0;left:0;right:0;bottom:0;background:#e8eaef;z-index:1;"></div>
+                    <img class="${useLazy ? 'lazy-img' : ''}" ${useLazy ? `data-src="${v.thumb}"` : `src="${v.thumb}"`} src="${useLazy ? placeholderImg : v.thumb}" alt="${v.title}" loading="lazy" decoding="async"
+                         style="position:relative;z-index:2;width:100%;height:100%;object-fit:cover;background:#e8eaef;">
                     <div class="v-card-dur">${v.duration}</div>
                     <div class="v-card-play">
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
@@ -2742,11 +3514,13 @@
                       </svg>
                     </div>
                     ${finalBadge}
+                    ${tagsHtml}
                   </div>
                   <div class="v-card-info">
                     <div class="v-card-av-wrap">
                       <img src="${u.avatar}" alt="" class="v-card-av"
-                           onclick="event.stopPropagation();navigate('profile',{id:${u.id}})">
+                           onclick="event.stopPropagation();navigate('profile',{id:${u.id}})"
+                           loading="lazy" decoding="async">
                     </div>
                     <div class="v-card-meta">
                       <div class="v-card-title">${v.title}</div>
@@ -2759,7 +3533,7 @@
         }
 
         // ============================================================
-        // 播放页渲染 —— 核心修改：免费视频（paid:false）不受合集VIP限制
+        // 12. 播放页渲染
         // ============================================================
         function renderWatch(vid) {
             try {
@@ -2778,28 +3552,22 @@
                     currentCollectionIndex = -1;
                 }
 
-                // ----- 关键修改：判断视频是否免费，若免费则无视合集VIP -----
                 let isVipCollection = false;
                 let previewDuration = 0;
 
                 if (v.paid === true) {
-                    // 视频需要会员
                     if (collection && collection.isVip) {
-                        // 合集是VIP，使用合集的试看设置（可能为0）
                         isVipCollection = true;
                         previewDuration = collection.freePreviewDuration || 0;
                     } else {
-                        // 合集非VIP但视频本身付费，仍视为会员内容（无试看）
                         isVipCollection = true;
                         previewDuration = 0;
                     }
                 } else {
-                    // v.paid === false，视频免费，完全不受合集VIP影响
                     isVipCollection = false;
                     previewDuration = 0;
                 }
 
-                // 如果视频付费且无任何试看时长，且用户非会员，则跳转开通会员
                 if (isVipCollection && !isMember && previewDuration === 0) {
                     showToast('该视频为VIP内容，请开通会员');
                     navigate('settings');
@@ -2818,7 +3586,7 @@
                         const cu = getUploader(c.id);
                         if (!cu) return null;
                         return `<div class="wi-collab-item" onclick="navigate('profile',{id:${cu.id}})">
-                            <img src="${cu.avatar}" alt="${cu.name}">
+                            <img src="${cu.avatar}" alt="${cu.name}" loading="lazy">
                             <div class="info">
                                 <span class="name">${cu.name}</span>
                                 <span class="role">${c.role || '合作'}</span>
@@ -2860,7 +3628,7 @@
                             <div class="wi-recommend-grid">
                                 ${recommendVideos.map(rv => `
                                     <div class="wi-recommend-item" onclick="navigate('watch',{id:${rv.id}})">
-                                        <img src="${rv.thumb}" alt="${rv.title}" loading="lazy">
+                                        <img src="${rv.thumb}" alt="${rv.title}" loading="lazy" style="width:100%;aspect-ratio:16/9;object-fit:cover;">
                                         <div class="info">
                                             <div class="title">${rv.title}</div>
                                             <div class="views">${fmt(rv.views)}次观看</div>
@@ -2872,21 +3640,25 @@
                     `;
                 }
 
-                let menuHtml = '';
                 let menuBtnHtml = '';
                 if (collection) {
                     const collVideos = collection.videoIds.map(id => getVideo(id)).filter(Boolean);
+                    const vipLabel = collection.isVip ? ' VIP' : '';
                     menuBtnHtml = `
                         <div class="collection-menu-btn show" id="collectionMenuBtn" onclick="toggleCollectionMenu()">
-                            📂 合集
+                            📂 合集${vipLabel}
                         </div>
                         <div class="collection-menu-panel" id="collectionMenuPanel">
-                            ${collVideos.map((cv, idx) => `
+                            ${collVideos.map((cv, idx) => {
+                                const vipTag = cv.paid ? `<span style="background:#ff4757;color:#fff;font-size:9px;padding:0 6px;border-radius:10px;margin:0 4px;font-weight:700;display:inline-block;line-height:18px;">VIP</span>` : '';
+                                return `
                                 <div class="item ${cv.id === v.id ? 'active' : ''}" onclick="navigate('watch',{id:${cv.id}})">
                                     <span class="index">${idx+1}</span>
+                                    ${vipTag}
                                     <span class="title">${cv.title}</span>
                                 </div>
-                            `).join('')}
+                            `;
+                            }).join('')}
                         </div>
                     `;
                 }
@@ -2897,17 +3669,18 @@
                     previewLabel = `试看 ${previewDuration} 秒`;
                 }
 
-                // ---- 徽章渲染 ----
                 let badgeHtml = '';
-                if (uploader.verify && VERIFY_LABELS[uploader.verify] && VERIFY_LABELS[uploader.verify] !== '') {
-                    const verifyClass = uploader.verify;
-                    const verifyLabel = VERIFY_LABELS[verifyClass];
-                    badgeHtml = `<span class="verify-badge ${verifyClass}">${verifyLabel}</span>`;
+                if (uploader.verify) {
+                    const badgeInfo = getBadgeInfo(uploader.verify);
+                    if (badgeInfo) {
+                        badgeHtml = `<span class="verify-badge" style="background:${badgeInfo.color};">${badgeInfo.label}</span>`;
+                    }
                 }
 
                 const html = `
                     <div class="wp-wrap" id="playerWrap">
                       <video id="vidEl" preload="metadata" src="${v.video}" playsinline webkit-playsinline></video>
+                      <div class="loading-spinner" id="loadingSpinner"></div>
                       <div class="video-error-overlay" id="videoErrorOverlay">
                         <span>⚠️ 视频加载失败</span>
                         <button class="retry-btn" onclick="retryVideo()">🔄 重新加载</button>
@@ -2918,7 +3691,6 @@
                         <div class="grid" id="endedRecommendGrid"></div>
                       </div>
                       ${menuBtnHtml}
-                      ${menuHtml}
                       <div class="dm-box" id="dmBox"></div>
                       <div class="pc-center" id="centerPlay" onclick="togglePlay()">
                         <svg viewBox="0 0 24 24" fill="white">
@@ -2977,7 +3749,7 @@
                         ${paidBadge}
                       </div>
                       <div class="wi-uploader" onclick="navigate('profile',{id:${uploader.id}})">
-                        <img src="${uploader.avatar}" alt="" class="wi-uav">
+                        <img src="${uploader.avatar}" alt="" class="wi-uav" loading="lazy">
                         <div class="wi-uinfo">
                           <div class="wi-uname">
                             ${uploader.name}
@@ -2994,8 +3766,15 @@
                   `;
 
                 document.getElementById('pageWatch').innerHTML = html;
+
                 initPlayer(v.id, isVipCollection, previewDuration);
                 initDanmaku(v);
+
+                const vidEl = document.getElementById('vidEl');
+                if (vidEl) {
+                    vidEl.preload = 'metadata';
+                    vidEl.load();
+                }
 
                 let viewInterval = setInterval(() => {
                     if (player && !player.paused) {
@@ -3024,7 +3803,7 @@
         }
 
         // ============================================================
-        // 播放器控制
+        // 13. 播放器控制
         // ============================================================
         let currentVideoId = null;
         let isVipCollection = false;
@@ -3051,7 +3830,40 @@
             const errorOverlay = document.getElementById('videoErrorOverlay');
             const previewOverlay = document.getElementById('previewOverlay');
             const endedRecommend = document.getElementById('endedRecommend');
+            const loadingSpinner = document.getElementById('loadingSpinner');
             let seeking = false;
+            let isEnded = false;
+
+            function showLoading() {
+                if (loadingSpinner) loadingSpinner.classList.add('show');
+            }
+
+            function hideLoading() {
+                if (loadingSpinner) loadingSpinner.classList.remove('show');
+            }
+
+            vidEl.addEventListener('loadstart', showLoading);
+            vidEl.addEventListener('canplay', () => {
+                hideLoading();
+                errorOverlay.classList.remove('show');
+            });
+            vidEl.addEventListener('canplaythrough', hideLoading);
+            vidEl.addEventListener('waiting', showLoading);
+            vidEl.addEventListener('playing', hideLoading);
+
+            vidEl.addEventListener('error', () => {
+                hideLoading();
+                errorOverlay.classList.add('show');
+                showToast('视频加载失败，请点击重试按钮');
+            });
+
+            vidEl.addEventListener('progress', () => {
+                if (vidEl.buffered.length > 0 && vidEl.duration > 0) {
+                    const bufEnd = vidEl.buffered.end(vidEl.buffered.length - 1);
+                    const pct = (bufEnd / vidEl.duration) * 100;
+                    progBuf.style.width = Math.min(pct, 100) + '%';
+                }
+            });
 
             if (previewOverlay) {
                 if (isVipCollection && !isMember && previewDuration > 0) {
@@ -3062,80 +3874,21 @@
                 }
             }
 
-            let endedHandler = function() {
-                updatePlayBtn();
-                if (dmEngine) dmEngine.pause();
+            // ---------- rAF 驱动 UI ----------
+            function updateUI() {
+                if (!vidEl || !vidEl.duration) return;
 
-                const coll = currentCollection;
-                if (coll && currentCollectionIndex !== -1 && currentCollectionIndex < coll.videoIds.length - 1) {
-                    const nextId = coll.videoIds[currentCollectionIndex + 1];
-                    setTimeout(() => {
-                        navigate('watch', { id: nextId });
-                    }, 1500);
+                if (vidEl.ended && !isEnded) {
+                    isEnded = true;
+                    updatePlayBtn();
+                    if (dmEngine) dmEngine.pause();
+                    handleVideoEnd();
                     return;
                 }
-
-                showEndedRecommend();
-            };
-
-            function showEndedRecommend() {
-                if (!endedRecommend) return;
-                const others = VIDEOS.filter(item => item.id !== currentVideoId);
-                const topViews = [...others].sort((a, b) => b.views - a.views).slice(0, 2);
-                const sameCat = others.filter(item => item.cat === curVideo.cat && !topViews.includes(item));
-                const selected = [...topViews];
-                const need = 6;
-                for (let i = 0; i < Math.min(need, sameCat.length); i++) {
-                    selected.push(sameCat[i]);
+                if (!vidEl.ended) {
+                    isEnded = false;
                 }
-                if (selected.length < 6) {
-                    const rest = others.filter(item => !selected.includes(item));
-                    for (let i = 0; i < Math.min(6 - selected.length, rest.length); i++) {
-                        selected.push(rest[i]);
-                    }
-                }
-                const recVideos = selected.slice(0, 6);
 
-                const grid = document.getElementById('endedRecommendGrid');
-                if (grid) {
-                    grid.innerHTML = recVideos.map(rv => `
-                        <div class="item" onclick="navigate('watch',{id:${rv.id}})">
-                            <img src="${rv.thumb}" alt="${rv.title}" loading="lazy">
-                            <div class="info">
-                                <div class="title">${rv.title}</div>
-                                <div class="views">${fmt(rv.views)}次观看</div>
-                            </div>
-                        </div>
-                    `).join('');
-                }
-                endedRecommend.classList.add('show');
-            }
-
-            function hideEndedRecommend() {
-                if (endedRecommend) endedRecommend.classList.remove('show');
-            }
-
-            wrap.addEventListener('click', function(e) {
-                if (e.target.closest('.ended-recommend')) return;
-                hideEndedRecommend();
-            });
-
-            vidEl.addEventListener('error', () => {
-                errorOverlay.classList.add('show');
-                showToast('视频加载失败，请点击重试按钮');
-            });
-            vidEl.addEventListener('canplay', () => errorOverlay.classList.remove('show'));
-            if (vidEl.readyState >= 3) errorOverlay.classList.remove('show');
-
-            function formatTime(s) {
-                if (isNaN(s)) return '0:00';
-                const m = Math.floor(s / 60);
-                const sec = Math.floor(s % 60);
-                return m + ':' + String(sec).padStart(2, '0');
-            }
-
-            function updateUI() {
-                if (!vidEl.duration) return;
                 if (isVipCollection && !isMember && previewDuration > 0) {
                     const currentTime = vidEl.currentTime;
                     if (currentTime >= previewDuration && !vidEl.paused && !previewReached) {
@@ -3147,7 +3900,7 @@
                             previewOverlay.classList.add('show');
                         }
                         vidEl.currentTime = previewDuration;
-                        updateUI();
+                        updatePlayBtn();
                         return;
                     }
                 }
@@ -3156,13 +3909,19 @@
                 progPlay.style.width = pct + '%';
                 progHandle.style.left = pct + '%';
                 timeDisp.textContent = formatTime(vidEl.currentTime) + ' / ' + formatTime(vidEl.duration);
-                if (vidEl.buffered.length > 0) {
-                    const bufPct = vidEl.buffered.end(vidEl.buffered.length - 1) / vidEl.duration * 100;
-                    progBuf.style.width = bufPct + '%';
+            }
+
+            function uiLoop(timestamp) {
+                if (!player) return;
+                if (timestamp - lastTimeUpdate >= UI_UPDATE_INTERVAL) {
+                    updateUI();
+                    lastTimeUpdate = timestamp;
                 }
+                uiRAFId = requestAnimationFrame(uiLoop);
             }
 
             function updatePlayBtn() {
+                if (!btnPlay) return;
                 if (vidEl.paused) {
                     btnPlay.innerHTML = '<svg viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21"/></svg>';
                     centerPlay.classList.remove('hidden');
@@ -3172,15 +3931,18 @@
                 }
             }
 
-            vidEl.addEventListener('timeupdate', updateUI);
-            vidEl.addEventListener('loadedmetadata', updateUI);
             vidEl.addEventListener('play', updatePlayBtn);
             vidEl.addEventListener('pause', updatePlayBtn);
-            vidEl.addEventListener('ended', endedHandler);
+
+            lastTimeUpdate = 0;
+            if (uiRAFId) cancelAnimationFrame(uiRAFId);
+            uiRAFId = requestAnimationFrame(uiLoop);
 
             function seekTo(e) {
                 const rect = progBar.getBoundingClientRect();
-                let pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+                let clientX = e.clientX || (e.touches && e.touches[0].clientX);
+                if (clientX === undefined) return;
+                let pct = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
                 let targetTime = pct * vidEl.duration;
                 if (isVipCollection && !isMember && previewDuration > 0 && targetTime > previewDuration) {
                     targetTime = previewDuration;
@@ -3196,63 +3958,162 @@
             document.addEventListener('mousemove', (e) => { if (seeking) seekTo(e); });
             document.addEventListener('mouseup', () => { seeking = false; });
             progBar.addEventListener('touchstart', (e) => {
+                e.preventDefault();
                 seeking = true;
-                const touch = e.touches[0];
-                const rect = progBar.getBoundingClientRect();
-                let pct = Math.max(0, Math.min(1, (touch.clientX - rect.left) / rect.width));
-                let targetTime = pct * vidEl.duration;
-                if (isVipCollection && !isMember && previewDuration > 0 && targetTime > previewDuration) {
-                    targetTime = previewDuration;
-                    pct = previewDuration / vidEl.duration;
-                    showToast('试看模式，无法继续播放');
-                }
-                vidEl.currentTime = targetTime;
-                updateUI();
-            }, { passive: true });
+                seekTo(e);
+            }, { passive: false });
             progBar.addEventListener('touchmove', (e) => {
+                e.preventDefault();
                 if (!seeking) return;
-                const touch = e.touches[0];
-                const rect = progBar.getBoundingClientRect();
-                let pct = Math.max(0, Math.min(1, (touch.clientX - rect.left) / rect.width));
-                let targetTime = pct * vidEl.duration;
-                if (isVipCollection && !isMember && previewDuration > 0 && targetTime > previewDuration) {
-                    targetTime = previewDuration;
-                    pct = previewDuration / vidEl.duration;
-                    showToast('试看模式，无法继续播放');
-                }
-                vidEl.currentTime = targetTime;
-                updateUI();
-            }, { passive: true });
+                seekTo(e);
+            }, { passive: false });
             document.addEventListener('touchend', () => { seeking = false; });
 
             function showControls() {
+                if (endedRecommend.classList.contains('show')) return;
                 ctrl.classList.add('show');
                 document.getElementById('dmBar').classList.add('show');
                 clearTimeout(controlsTimer);
                 if (!vidEl.paused) {
                     controlsTimer = setTimeout(() => {
-                        ctrl.classList.remove('show');
-                        document.getElementById('dmBar').classList.remove('show');
+                        if (!seeking) {
+                            ctrl.classList.remove('show');
+                            document.getElementById('dmBar').classList.remove('show');
+                        }
                     }, 3000);
                 }
             }
+
             wrap.addEventListener('mousemove', showControls);
             wrap.addEventListener('touchstart', showControls, { passive: true });
+
             wrap.addEventListener('click', (e) => {
                 if (e.target.closest('.pc-btn') || e.target.closest('.pc-prog') ||
                     e.target.closest('.dm-bar') || e.target.closest('.pc-vol') ||
                     e.target.closest('.pc-center') || e.target.closest('.video-error-overlay') ||
-                    e.target.closest('.collection-menu-btn') || e.target.closest('.collection-menu-panel')) return;
+                    e.target.closest('.collection-menu-btn') || e.target.closest('.collection-menu-panel') ||
+                    e.target.closest('.ended-recommend')) return;
                 togglePlay();
+            });
+
+            function handleVideoEnd() {
+                const coll = currentCollection;
+                if (coll && currentCollectionIndex !== -1 && currentCollectionIndex < coll.videoIds.length - 1) {
+                    const nextId = coll.videoIds[currentCollectionIndex + 1];
+                    setTimeout(() => {
+                        navigate('watch', { id: nextId });
+                    }, 1500);
+                    return;
+                }
+                showEndedRecommend();
+            }
+
+function showEndedRecommend() {
+    if (!endedRecommend) return;
+    ctrl.classList.remove('show');
+    document.getElementById('dmBar').classList.remove('show');
+
+    const others = VIDEOS.filter(item => item.id !== currentVideoId);
+    const selected = [];
+    const selectedIds = new Set();
+
+    // 1. 同作者视频（同一UP主，最多3个，按热度排序）
+    const sameAuthor = others.filter(item => item.upId === curVideo?.upId);
+    sameAuthor.sort((a, b) => b.views - a.views);
+    const authorCount = Math.min(3, sameAuthor.length);
+    for (let i = 0; i < authorCount; i++) {
+        selected.push(sameAuthor[i]);
+        selectedIds.add(sameAuthor[i].id);
+    }
+
+    // 2. 同类型视频（同一分类，最多补到6个，按热度排序）
+    const need = 6 - selected.length;
+    if (need > 0) {
+        const sameCat = others.filter(item => {
+            if (selectedIds.has(item.id)) return false;
+            return item.cat === curVideo?.cat;
+        });
+        sameCat.sort((a, b) => b.views - a.views);
+        for (let i = 0; i < Math.min(need, sameCat.length); i++) {
+            selected.push(sameCat[i]);
+            selectedIds.add(sameCat[i].id);
+        }
+    }
+
+    // 3. 热门视频补充（如果还不够6个）
+    if (selected.length < 6) {
+        const rest = others.filter(item => !selectedIds.has(item.id));
+        rest.sort((a, b) => b.views - a.views);
+        const needMore = 6 - selected.length;
+        for (let i = 0; i < Math.min(needMore, rest.length); i++) {
+            selected.push(rest[i]);
+        }
+    }
+
+    const recVideos = selected.slice(0, 6);
+
+    const grid = document.getElementById('endedRecommendGrid');
+    if (grid) {
+        grid.innerHTML = recVideos.map(rv => `
+            <div class="item" onclick="navigate('watch',{id:${rv.id}})">
+                <img src="${rv.thumb}" alt="${rv.title}" loading="lazy">
+                <div class="info">
+                    <div class="title">${rv.title}</div>
+                    <div class="views">${fmt(rv.views)}次观看</div>
+                </div>
+            </div>
+        `).join('');
+    }
+    endedRecommend.classList.add('show');
+}
+
+            function hideEndedRecommend() {
+                if (endedRecommend) endedRecommend.classList.remove('show');
+                if (!vidEl.ended) {
+                    ctrl.classList.add('show');
+                    document.getElementById('dmBar').classList.add('show');
+                }
+            }
+
+            wrap.addEventListener('click', function(e) {
+                if (e.target.closest('.ended-recommend')) return;
+                hideEndedRecommend();
             });
 
             vidEl.playbackRate = speedOptions[speedIndex];
             const speedBtn = document.getElementById('speedBtn');
             if (speedBtn) speedBtn.textContent = speedOptions[speedIndex].toFixed(1) + 'x';
 
+            vidEl.volume = 1;
+            document.getElementById('volSlider').value = 1;
+
             player = vidEl;
             updatePlayBtn();
             showControls();
+
+            const cleanup = function() {
+                if (uiRAFId) {
+                    cancelAnimationFrame(uiRAFId);
+                    uiRAFId = null;
+                }
+                vidEl.removeEventListener('loadstart', showLoading);
+                vidEl.removeEventListener('canplay', hideLoading);
+                vidEl.removeEventListener('canplaythrough', hideLoading);
+                vidEl.removeEventListener('waiting', showLoading);
+                vidEl.removeEventListener('playing', hideLoading);
+                vidEl.removeEventListener('error', hideLoading);
+            };
+            window._playerCleanup = cleanup;
+        }
+
+        // ============================================================
+        // 14. 辅助播放函数
+        // ============================================================
+        function formatTime(s) {
+            if (isNaN(s) || !isFinite(s)) return '0:00';
+            const m = Math.floor(s / 60);
+            const sec = Math.floor(s % 60);
+            return m + ':' + String(sec).padStart(2, '0');
         }
 
         function toggleCollectionMenu() {
@@ -3277,7 +4138,9 @@
             player.load();
             player.src = src;
             player.load();
-            player.play().catch(() => {});
+            setTimeout(() => {
+                player.play().catch(() => {});
+            }, 300);
             showToast('正在重新加载...');
         }
         window.retryVideo = retryVideo;
@@ -3345,7 +4208,168 @@
         }
 
         // ============================================================
-        // 个人主页（徽章文字从 VERIFY_LABELS 读取，无 verify 则不显示）
+        // 15. 弹幕引擎
+        // ============================================================
+        class DanmakuEngine {
+            constructor(container, videoEl, messages) {
+                this.container = container;
+                this.video = videoEl;
+                this.messages = messages || [];
+                this.trackCount = 14;
+                this.tracks = new Array(this.trackCount).fill(0);
+                this.visible = true;
+                this.running = false;
+                this.paused = false;
+                this.timer = null;
+                this.items = [];
+                this._id = 0;
+            }
+
+            start() {
+                this.running = true;
+                this.paused = false;
+                this.loop();
+            }
+
+            stop() {
+                this.running = false;
+                clearTimeout(this.timer);
+                this.items.forEach(item => {
+                    if (item.el && item.el.parentNode) item.el.parentNode.removeChild(item.el);
+                });
+                this.items = [];
+                if (this.container) this.container.innerHTML = '';
+            }
+
+            pause() {
+                this.paused = true;
+                this.items.forEach(item => {
+                    if (item.anim) item.anim.pause();
+                });
+            }
+
+            resume() {
+                this.paused = false;
+                this.items.forEach(item => {
+                    if (item.anim) item.anim.play();
+                });
+                this.loop();
+            }
+
+            loop() {
+                if (!this.running || this.paused) return;
+                if (this.video && !this.video.paused) {
+                    const msg = this.messages[Math.floor(Math.random() * this.messages.length)];
+                    if (msg) this.send(msg);
+                }
+                const delay = 800 + Math.random() * 2500;
+                this.timer = setTimeout(() => this.loop(), delay);
+            }
+
+            send(text, color) {
+                if (!this.visible || !this.running || !this.container) return;
+                const el = document.createElement('div');
+                el.className = 'dm-item';
+                el.textContent = text;
+                const colors = ['#fff', '#fff', '#fff', '#fff', '#ffe4e1', '#e0f7fa', '#fff9c4', '#f3e5f5', '#e8f5e9',
+                    '#fce4ec'
+                ];
+                el.style.color = color || colors[Math.floor(Math.random() * colors.length)];
+
+                const containerWidth = this.container.offsetWidth || window.innerWidth;
+                const containerHeight = this.container.offsetHeight || (window.innerHeight * 0.5);
+                const track = this.findTrack();
+                const trackHeight = Math.max(20, containerHeight / this.trackCount);
+                const fontSize = 14 + Math.random() * 6;
+                el.style.top = (track * trackHeight + 2) + 'px';
+                el.style.left = containerWidth + 'px';
+                el.style.fontSize = fontSize + 'px';
+                el.style.transform = 'translateX(0)';
+                this.container.appendChild(el);
+
+                const duration = 7 + Math.random() * 5;
+                const endX = -(el.offsetWidth + containerWidth + 20);
+
+                const anim = el.animate([
+                    { transform: 'translateX(0)', opacity: 1 },
+                    { transform: `translateX(${endX}px)`, opacity: 1 }
+                ], {
+                    duration: duration * 1000,
+                    easing: 'linear',
+                    fill: 'forwards'
+                });
+
+                const item = { el, anim, id: this._id++ };
+                this.items.push(item);
+
+                if (this.paused) anim.pause();
+
+                anim.onfinish = () => {
+                    if (el.parentNode) el.parentNode.removeChild(el);
+                    const idx = this.items.indexOf(item);
+                    if (idx > -1) this.items.splice(idx, 1);
+                };
+            }
+
+            findTrack() {
+                const now = Date.now();
+                let bestTrack = 0,
+                    bestTime = Infinity;
+                for (let i = 0; i < this.trackCount; i++) {
+                    if (this.tracks[i] < now) {
+                        this.tracks[i] = now + 3000 + Math.random() * 2000;
+                        return i;
+                    }
+                    if (this.tracks[i] < bestTime) { bestTime = this.tracks[i];
+                        bestTrack = i; }
+                }
+                this.tracks[bestTrack] = now + 4000;
+                return bestTrack;
+            }
+
+            toggle() {
+                this.visible = !this.visible;
+                if (this.container) {
+                    this.container.style.display = this.visible ? 'block' : 'none';
+                }
+                return this.visible;
+            }
+        }
+
+        function initDanmaku(v) {
+            const box = document.getElementById('dmBox');
+            const vid = document.getElementById('vidEl');
+            if (!box || !vid) return;
+            dmEngine = new DanmakuEngine(box, vid, v.dm || []);
+            dmEngine.start();
+        }
+
+        function toggleDanmaku() {
+            if (!dmEngine) return;
+            const on = dmEngine.toggle();
+            document.getElementById('btnDM').classList.toggle('on', on);
+            showToast(on ? '弹幕已开启' : '弹幕已关闭');
+        }
+
+        function sendDanmaku() {
+            const input = document.getElementById('dmInput');
+            const text = input.value.trim();
+            if (!text || !dmEngine) return;
+            dmEngine.send(text, '#ffb800');
+            input.value = '';
+            showToast('弹幕已发送');
+        }
+
+        function toggleFollow() {
+            const btn = document.getElementById('followBtn');
+            if (!btn) return;
+            const isFollowed = btn.classList.toggle('followed');
+            btn.textContent = isFollowed ? '已关注' : '关注';
+            showToast(isFollowed ? '已关注' : '已取消关注');
+        }
+
+        // ============================================================
+        // 16. 个人主页
         // ============================================================
         function renderProfile(id) {
             try {
@@ -3359,12 +4383,12 @@
                 const totalViews = vids.reduce((sum, v) => sum + v.views, 0);
                 const userCollections = getCollectionsForUploader(u.id);
 
-                // ---- 徽章渲染 ----
                 let badgeHtml = '';
-                if (u.verify && VERIFY_LABELS[u.verify] && VERIFY_LABELS[u.verify] !== '') {
-                    const verifyClass = u.verify;
-                    const label = VERIFY_LABELS[verifyClass];
-                    badgeHtml = `<span class="pp-badge ${verifyClass}">${label}</span>`;
+                if (u.verify) {
+                    const badgeInfo = getBadgeInfo(u.verify);
+                    if (badgeInfo) {
+                        badgeHtml = `<span class="pp-badge" style="background:${badgeInfo.color};">${badgeInfo.label}</span>`;
+                    }
                 }
 
                 let collectionHtml = '';
@@ -3377,7 +4401,7 @@
                                     const cover = c.cover || 'https://via.placeholder.com/160x90?text=合集';
                                     return `
                                         <div class="collection-mini-card" onclick="navigate('collection',{id:${c.id}})">
-                                            <img src="${cover}" alt="${c.name}">
+                                            <img src="${cover}" alt="${c.name}" loading="lazy">
                                             <div class="info">
                                                 <div class="name">${c.name}</div>
                                                 <div class="count">${c.videoIds.length} 个视频</div>
@@ -3394,7 +4418,7 @@
                     <div class="pp-banner"></div>
                     <div class="pp-hdr">
                       <div class="pp-av-wrap">
-                        <img src="${u.avatar}" alt="" class="pp-av">
+                        <img src="${u.avatar}" alt="" class="pp-av" loading="lazy">
                       </div>
                       <div class="pp-info">
                         <div class="pp-name">${u.name}</div>
@@ -3414,12 +4438,14 @@
                     <div class="pp-vids">
                       <div class="pp-vids-t">📹 视频 (${vids.length})</div>
                       <div class="v-grid">
-                        ${vids.length > 0 ? vids.map(v => videoCardHTML(v)).join('') : '<div style="grid-column:1/-1;text-align:center;padding:40px 0;color:var(--text3)">暂无视频</div>'}
+                        ${vids.length > 0 ? vids.map(v => videoCardHTML(v, true)).join('') : '<div style="grid-column:1/-1;text-align:center;padding:40px 0;color:var(--text3)">暂无视频</div>'}
                       </div>
                     </div>
                     ${collectionHtml}
                   `;
                 document.getElementById('pageProfile').innerHTML = html;
+
+                setTimeout(() => initLazyLoading(), 100);
             } catch (err) {
                 document.getElementById('pageProfile').innerHTML = `
                     <div style="padding:40px;text-align:center;color:var(--text3);">
@@ -3431,7 +4457,7 @@
         }
 
         // ============================================================
-        // 合集页面
+        // 17. 合集页面
         // ============================================================
         function renderCollection(collectionId) {
             if (collectionId) {
@@ -3465,7 +4491,7 @@
                                 }
                                 return `
                                     <div class="video-item" onclick="navigate('watch',{id:${v.id}})">
-                                        <img src="${v.thumb}" alt="">
+                                        <img src="${v.thumb}" alt="" loading="lazy" style="width:80px;height:45px;object-fit:cover;border-radius:6px;">
                                         <div class="info">
                                             <div class="left">
                                                 <div class="title">${idx+1}. ${v.title}</div>
@@ -3491,7 +4517,7 @@
                             ${COLLECTIONS.map(c => {
                                 return `
                                     <div class="collection-card" onclick="navigate('collection',{id:${c.id}})">
-                                        <img src="${c.cover}" alt="${c.name}">
+                                        <img src="${c.cover}" alt="${c.name}" loading="lazy">
                                         <div class="info">
                                             <div class="name">${c.name}</div>
                                             <div class="count">${c.videoIds.length} 个视频</div>
@@ -3509,7 +4535,7 @@
         }
 
         // ============================================================
-        // 使用说明页面
+        // 18. 使用说明页面
         // ============================================================
         function renderHelp(activeCategory) {
             if (!activeCategory || !HELP_DATA[activeCategory]) {
@@ -3562,155 +4588,7 @@
         }
 
         // ============================================================
-        // 弹幕引擎
-        // ============================================================
-        class DanmakuEngine {
-            constructor(container, videoEl, messages) {
-                this.container = container;
-                this.video = videoEl;
-                this.messages = messages || [];
-                this.trackCount = 14;
-                this.tracks = new Array(this.trackCount).fill(0);
-                this.visible = true;
-                this.running = false;
-                this.paused = false;
-                this.timer = null;
-                this.items = [];
-            }
-
-            start() {
-                this.running = true;
-                this.paused = false;
-                this.loop();
-            }
-
-            stop() {
-                this.running = false;
-                clearTimeout(this.timer);
-                this.container.innerHTML = '';
-                this.items = [];
-            }
-
-            pause() {
-                this.paused = true;
-                this.items.forEach(item => { if (item.anim) item.anim.pause(); });
-            }
-
-            resume() {
-                this.paused = false;
-                this.items.forEach(item => { if (item.anim) item.anim.play(); });
-                this.loop();
-            }
-
-            loop() {
-                if (!this.running || this.paused) return;
-                if (this.video && !this.video.paused) {
-                    const msg = this.messages[Math.floor(Math.random() * this.messages.length)];
-                    this.send(msg);
-                }
-                const delay = 800 + Math.random() * 2500;
-                this.timer = setTimeout(() => this.loop(), delay);
-            }
-
-            send(text, color) {
-                if (!this.visible || !this.running) return;
-                const el = document.createElement('div');
-                el.className = 'dm-item';
-                el.textContent = text;
-                const colors = ['#fff', '#fff', '#fff', '#fff', '#ffe4e1', '#e0f7fa', '#fff9c4', '#f3e5f5', '#e8f5e9',
-                    '#fce4ec'
-                ];
-                el.style.color = color || colors[Math.floor(Math.random() * colors.length)];
-
-                const containerWidth = this.container.offsetWidth;
-                const track = this.findTrack();
-                const trackHeight = this.container.offsetHeight / this.trackCount;
-                el.style.top = (track * trackHeight + 2) + 'px';
-                el.style.left = containerWidth + 'px';
-                el.style.fontSize = (14 + Math.random() * 6) + 'px';
-                this.container.appendChild(el);
-
-                const duration = 7 + Math.random() * 5;
-                const endX = -(el.offsetWidth + containerWidth + 20);
-                const anim = el.animate([
-                    { transform: 'translateX(0)' },
-                    { transform: `translateX(${endX}px)` }
-                ], {
-                    duration: duration * 1000,
-                    easing: 'linear',
-                    fill: 'forwards'
-                });
-
-                const item = { el, anim };
-                this.items.push(item);
-                if (this.paused) anim.pause();
-                anim.onfinish = () => {
-                    el.remove();
-                    const idx = this.items.indexOf(item);
-                    if (idx > -1) this.items.splice(idx, 1);
-                };
-            }
-
-            findTrack() {
-                const now = Date.now();
-                let bestTrack = 0,
-                    bestTime = Infinity;
-                for (let i = 0; i < this.trackCount; i++) {
-                    if (this.tracks[i] < now) {
-                        this.tracks[i] = now + 3000 + Math.random() * 2000;
-                        return i;
-                    }
-                    if (this.tracks[i] < bestTime) { bestTime = this.tracks[i];
-                        bestTrack = i; }
-                }
-                this.tracks[bestTrack] = now + 4000;
-                return bestTrack;
-            }
-
-            toggle() {
-                this.visible = !this.visible;
-                this.container.style.display = this.visible ? 'block' : 'none';
-                return this.visible;
-            }
-        }
-
-        // ============================================================
-        // 弹幕相关函数（修复 initDanmaku is not defined）
-        // ============================================================
-        function initDanmaku(v) {
-            const box = document.getElementById('dmBox');
-            const vid = document.getElementById('vidEl');
-            if (!box || !vid) return;
-            dmEngine = new DanmakuEngine(box, vid, v.dm || []);
-            dmEngine.start();
-        }
-
-        function toggleDanmaku() {
-            if (!dmEngine) return;
-            const on = dmEngine.toggle();
-            document.getElementById('btnDM').classList.toggle('on', on);
-            showToast(on ? '弹幕已开启' : '弹幕已关闭');
-        }
-
-        function sendDanmaku() {
-            const input = document.getElementById('dmInput');
-            const text = input.value.trim();
-            if (!text || !dmEngine) return;
-            dmEngine.send(text, '#ffb800');
-            input.value = '';
-            showToast('弹幕已发送');
-        }
-
-        function toggleFollow() {
-            const btn = document.getElementById('followBtn');
-            if (!btn) return;
-            const isFollowed = btn.classList.toggle('followed');
-            btn.textContent = isFollowed ? '已关注' : '关注';
-            showToast(isFollowed ? '已关注' : '已取消关注');
-        }
-
-        // ============================================================
-        // 设置页面
+        // 19. 设置页面
         // ============================================================
         function renderSettings() {
             try {
@@ -3754,12 +4632,27 @@
                     </div>
 
                     <div class="setting-group">
+                      <span class="setting-group-label">画质设置</span>
+                      <div class="setting-item">
+                        <div>
+                          <div class="setting-item-label">画质压缩</div>
+                          <div class="setting-item-desc">调整视频加载画质，节省流量</div>
+                        </div>
+                        <select id="qualitySelect" onchange="setQuality(this.value)" style="padding:4px 8px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:12px;">
+                          <option value="high">高清 (默认)</option>
+                          <option value="medium">中等</option>
+                          <option value="low">低画质 (省流)</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="setting-group">
                       <span class="setting-group-label">观看历史</span>
                       <div class="history-list" id="historyList">
                         ${hist.length === 0 ? '<div class="history-empty">暂无观看记录</div>' : ''}
                         ${hist.slice(0, 20).map(item => `
                           <div class="history-item" onclick="navigate('watch',{id:${item.id}})">
-                            <img src="${item.thumb}" alt="">
+                            <img src="${item.thumb}" alt="" loading="lazy" style="width:48px;height:27px;object-fit:cover;border-radius:4px;">
                             <div class="history-item-info">
                               <div class="history-item-title">${item.title}</div>
                               <div class="history-item-time">${item.time}</div>
@@ -3785,6 +4678,29 @@
                       <button onclick="navigate('home')" style="margin-top:12px;padding:6px 20px;background:var(--accent);border-radius:20px;color:#fff;border:none;">返回首页</button>
                     </div>
                   `;
+            }
+        }
+
+        let currentQuality = 'high';
+
+        function setQuality(val) {
+            currentQuality = val;
+            if (player) {
+                applyQuality(player, val);
+            }
+            showToast('画质已切换: ' + (val === 'high' ? '高清' : val === 'medium' ? '中等' : '低画质'));
+        }
+
+        function applyQuality(videoEl, quality) {
+            if (quality === 'low') {
+                videoEl.style.filter = 'blur(1px) contrast(0.9)';
+                videoEl.style.imageRendering = 'pixelated';
+            } else if (quality === 'medium') {
+                videoEl.style.filter = 'blur(0.3px)';
+                videoEl.style.imageRendering = 'auto';
+            } else {
+                videoEl.style.filter = 'none';
+                videoEl.style.imageRendering = 'auto';
             }
         }
 
@@ -3827,24 +4743,227 @@
         }
 
         // ============================================================
-        // 搜索
+        // 20. 搜索页面（新设计：相关创作者 + 相关视频）
         // ============================================================
-        let searchTimer;
+        function renderSearch(query) {
+            const allTags = getAllTags();
+            const tagHeatmap = getTagHeatmap();
 
-        function onSearch(val) {
-            clearTimeout(searchTimer);
-            searchTimer = setTimeout(() => {
-                searchQ = val.trim();
-                if (curPage === 'home') {
-                    renderHome('');
-                } else {
-                    navigate('home');
+            const sortedTags = allTags.sort((a, b) => (tagHeatmap[b] || 0) - (tagHeatmap[a] || 0));
+            const hotTags = sortedTags.slice(0, 10);
+
+            const q = query ? query.trim().toLowerCase() : '';
+
+            // ----- 搜索逻辑 -----
+            let matchedUploaders = [];
+            let relatedUploaders = [];
+            let matchedVideos = [];
+
+            if (q) {
+                const matchedUpIds = new Set();
+                UPLOADERS.forEach(u => {
+                    const name = u.name.toLowerCase();
+                    if (name === q) {
+                        matchedUploaders.push(u);
+                        matchedUpIds.add(u.id);
+                    } else if (name.includes(q)) {
+                        relatedUploaders.push(u);
+                        matchedUpIds.add(u.id);
+                    }
+                });
+
+                matchedVideos = VIDEOS.filter(v => {
+                    const titleMatch = v.title.toLowerCase().includes(q);
+                    const tagMatch = v.tags && v.tags.some(t => t.toLowerCase().includes(q));
+                    const up = getUploader(v.upId);
+                    const upNameMatch = up && up.name.toLowerCase().includes(q);
+                    return titleMatch || tagMatch || upNameMatch;
+                });
+                matchedVideos.sort((a, b) => b.views - a.views);
+
+                const videoUpIds = new Set(matchedVideos.map(v => v.upId));
+                const extraUpIds = [...videoUpIds].filter(id => !matchedUpIds.has(id));
+                extraUpIds.slice(0, 5).forEach(id => {
+                    const u = getUploader(id);
+                    if (u && !relatedUploaders.find(r => r.id === u.id) && !matchedUploaders.find(m => m.id === u.id)) {
+                        relatedUploaders.push(u);
+                    }
+                });
+
+                const seen = new Set();
+                matchedUploaders = matchedUploaders.filter(u => { const k = u.id; if (seen.has(k)) return false; seen.add(k);
+                    return true; });
+                relatedUploaders = relatedUploaders.filter(u => { const k = u.id; if (seen.has(k)) return false; seen.add(k);
+                    return true; });
+                relatedUploaders = relatedUploaders.slice(0, 5);
+            }
+
+            const totalResults = matchedUploaders.length + relatedUploaders.length + matchedVideos.length;
+
+            // ----- 构建 HTML -----
+            let html = `
+                <div class="search-header">
+                    <div class="keyword">
+                        ${q ? `“${q}”` : '🔍 搜索'}
+                        ${q ? `<span class="count">找到 ${totalResults} 个结果</span>` : ''}
+                    </div>
+                    <div class="sub">${q ? '相关创作者与视频' : '输入关键词搜索视频、UP主或标签'}</div>
+                </div>
+
+                <div class="search-input-wrap">
+                    <input type="text" id="searchPageInput" placeholder="输入关键词..." value="${q}"
+                           onkeydown="if(event.key==='Enter'){const val=document.getElementById('searchPageInput').value;navigate('search',{query:val});}">
+                    <button onclick="const val=document.getElementById('searchPageInput').value;navigate('search',{query:val});">搜索</button>
+                </div>
+            `;
+
+            // 如果没有搜索词，显示热搜和标签
+            if (!q) {
+                if (hotTags.length > 0) {
+                    html += `
+                        <div class="hot-tags-section">
+                            <div class="hot-tags-title">🔥 热搜词排行 <span class="badge">实时</span></div>
+                            <div class="hot-tags-list">
+                                ${hotTags.map((tag, idx) => {
+                                    const rankClass = idx === 0 ? 'gold' : (idx === 1 ? 'silver' : (idx === 2 ? 'bronze' : ''));
+                                    const count = tagHeatmap[tag] || 0;
+                                    return `<span class="hot-tag-item" onclick="navigate('search',{query:'${tag}')}">
+                                        <span class="rank ${rankClass}">${idx + 1}</span>
+                                        ${tag} <span class="count">(${count}个视频)</span>
+                                    </span>`;
+                                }).join('')}
+                            </div>
+                        </div>
+                    `;
                 }
-            }, 300);
+                if (allTags.length > 0) {
+                    html += `
+                        <div class="all-tags-section">
+                            <div class="all-tags-title">🏷️ 全部标签 (${allTags.length})</div>
+                            <div class="all-tags-scroll">
+                                ${allTags.map(tag => `
+                                    <span class="tag-item" onclick="navigate('search',{query:'${tag}')}">${tag}</span>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+                // 显示全站热门榜（没有搜索词时）
+                const top10 = [...VIDEOS].sort((a, b) => b.views - a.views).slice(0, 10);
+                if (top10.length > 0) {
+                    html += `
+                        <div style="margin-top:20px;">
+                            <div style="font-family:var(--font-d);font-size:18px;font-weight:700;margin-bottom:12px;">🏆 全站热门榜 <span style="background:var(--accent);color:#fff;font-size:10px;padding:0 10px;border-radius:12px;line-height:20px;font-weight:700;">Top 10</span></div>
+                            ${top10.map((v, idx) => {
+                                const u = getUploader(v.upId);
+                                const rankClass = idx === 0 ? 'gold' : (idx === 1 ? 'silver' : (idx === 2 ? 'bronze' : ''));
+                                return `
+                                    <div class="hot-item" onclick="navigate('watch',{id:${v.id}})">
+                                        <div class="rank-num ${rankClass}">${idx + 1}</div>
+                                        <img src="${v.thumb}" alt="" style="width:64px;height:36px;object-fit:cover;border-radius:6px;" loading="lazy">
+                                        <div class="info">
+                                            <div class="title">${v.title}</div>
+                                            <div class="views">${fmt(v.views)}次观看 · ${u.name}</div>
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    `;
+                }
+                document.getElementById('pageSearch').innerHTML = html;
+                // 聚焦输入框
+                const input = document.getElementById('searchPageInput');
+                if (input) input.focus();
+                return;
+            }
+
+            // ---- 有搜索词：显示结果 ----
+            if (totalResults === 0) {
+                html += `
+                    <div class="search-empty">
+                        <div class="icon">🔍</div>
+                        <p>没有找到与 "<strong>${q}</strong>" 相关的内容</p>
+                        <div class="hint">试试其他关键词，或点击上方标签浏览</div>
+                    </div>
+                `;
+                document.getElementById('pageSearch').innerHTML = html;
+                return;
+            }
+
+            // 1. 相关创作者
+            const allCreators = [...matchedUploaders, ...relatedUploaders];
+            if (allCreators.length > 0) {
+                html += `<div class="section-title">👤 相关创作者 <span class="badge">${allCreators.length}</span></div>`;
+                html += `<div class="creator-list">`;
+                allCreators.forEach(u => {
+                    const badgeInfo = getBadgeInfo(u.verify);
+                    const badgeHtml = badgeInfo ?
+                        `<span class="badge-tag ${u.verify}" style="background:${badgeInfo.color};">${badgeInfo.label}</span>` :
+                        '';
+                    html += `
+                        <div class="creator-item" onclick="navigate('profile',{id:${u.id}})">
+                            <img class="avatar" src="${u.avatar}" alt="" onerror="this.src='https://i.pravatar.cc/44?u=${u.id}'">
+                            <div class="info">
+                                <div class="name">${u.name} ${badgeHtml}</div>
+                                <div class="handle">${u.handle || ''}</div>
+                                <div class="stats">${fmt(u.followers)} 粉丝</div>
+                            </div>
+                            <div class="arrow">›</div>
+                        </div>
+                    `;
+                });
+                html += `</div>`;
+            }
+
+            // 2. 相关视频
+            if (matchedVideos.length > 0) {
+                html += `
+                    <div class="search-results-title" style="margin-top:28px;">
+                        🎬 相关视频 <span class="badge">${matchedVideos.length}</span>
+                    </div>
+                    <div class="search-results-grid">
+                        ${matchedVideos.map(v => {
+                            const u = getUploader(v.upId);
+                            const paidBadge = v.paid ? `<span class="paid-badge">会员专享</span>` : '';
+                            const tagsHtml2 = v.tags && v.tags.length ?
+                                `<div class="tags" style="position:absolute;bottom:32px;left:6px;display:flex;gap:4px;z-index:2;flex-wrap:wrap;">
+                                    ${v.tags.slice(0, 3).map(t => `<span class="tag" style="font-size:8px;padding:1px 6px;border-radius:6px;background:rgba(0,0,0,0.65);color:#fff;backdrop-filter:blur(4px);white-space:nowrap;">${t}</span>`).join('')}
+                                </div>` :
+                                '';
+                            const duration = v.duration || '00:00';
+                            return `
+                                <div class="search-result-item" onclick="navigate('watch',{id:${v.id}})">
+                                    <div class="thumb-wrap">
+                                        <img src="${v.thumb}" alt="${v.title}" loading="lazy" onerror="this.style.display='none'">
+                                        <div class="dur">${duration}</div>
+                                        ${paidBadge}
+                                        ${tagsHtml2}
+                                    </div>
+                                    <div class="info">
+                                        <div class="title">${v.title}</div>
+                                        <div class="author">${u ? u.name : '未知UP主'}</div>
+                                        <div style="font-size:10px;color:var(--text3);">${fmt(v.views)}次观看</div>
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                `;
+            }
+
+            document.getElementById('pageSearch').innerHTML = html;
+
+            // 聚焦输入框
+            const input = document.getElementById('searchPageInput');
+            if (input && q) {
+                input.focus();
+                input.setSelectionRange(q.length, q.length);
+            }
         }
 
         // ============================================================
-        // 启动
+        // 21. 启动
         // ============================================================
         window.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
