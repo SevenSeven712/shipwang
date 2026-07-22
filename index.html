@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>七七视频网</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet" />
 
     <style>
         /* ==================== 全局设计 ==================== */
@@ -317,6 +317,39 @@
             gap: 10px;
             margin-left: auto;
             flex-shrink: 0;
+        }
+        /* 发布按钮 - 跳转到作者端 */
+        .header-actions .publish-btn {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 6px 14px;
+            border-radius: 18px;
+            background: var(--accent);
+            color: #1e1e2a;
+            font-family: var(--font-d);
+            font-weight: 700;
+            font-size: 12px;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+            white-space: nowrap;
+        }
+        .header-actions .publish-btn:hover {
+            box-shadow: 0 0 20px var(--accent-glow);
+            transform: scale(1.04);
+        }
+        .header-actions .publish-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+        @media (max-width: 480px) {
+            .header-actions .publish-btn span {
+                display: none;
+            }
+            .header-actions .publish-btn {
+                padding: 6px 10px;
+            }
         }
 
         /* ==================== PC 侧边栏 ==================== */
@@ -2534,7 +2567,7 @@
         </div>
     </div>
 
-    <!-- ==================== 顶部导航（搜索框为入口，点击跳转） ==================== -->
+    <!-- ==================== 顶部导航 ==================== -->
     <header class="header">
         <div class="header-logo" onclick="navigate('home')">
             <span class="dot"></span>七七视频网
@@ -2546,7 +2579,17 @@
             </svg>
             <input type="text" placeholder="搜索视频、UP主、标签..." readonly>
         </div>
-        <div class="header-actions"></div>
+        <div class="header-actions">
+            <!-- 发布按钮 → 跳转到作者端.html -->
+            <button class="publish-btn" onclick="window.location.href='作者端.html'">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 5v14M5 12h14" stroke="currentColor" />
+                    <path d="M12 3l-3 3 3-3z" fill="currentColor" />
+                    <path d="M12 21l3-3-3 3z" fill="currentColor" />
+                </svg>
+                <span>发布</span>
+            </button>
+        </div>
     </header>
 
     <!-- ==================== PC 侧边栏 ==================== -->
@@ -2660,6 +2703,9 @@
     <!-- Toast -->
     <div class="toast" id="toast"></div>
 
+    <!-- ==================== 引入数据文件 ==================== -->
+    <script src="data.js"></script>
+
     <script>
         // ============================================================
         // 1. 徽章系统配置
@@ -2678,440 +2724,7 @@
         }
 
         // ============================================================
-        // 2. 数据 - UP主
-        // ============================================================
-        const UPLOADERS = [
-            { id: 1, name: 'Seven戚', handle: '2103686588@qq.com', avatar: 'https://i.ibb.co/Y4rD6F2Y/b-8ee0f1b16f3c823eeff690735ca17e1f.jpg', bio: '你们好，我是Seven戚，网站开发以及小说创作。', followers: 6528, verify: 'gold' },
-            { id: 2, name: '是延不是廷_Yan', handle: '@light_notes', avatar: 'https://i.ibb.co/GZfvfFM/3849bcb84a99582f0d1a242c52993ccf.jpg', bio: '一个喜欢音乐的画渣', followers: 876, verify: null },
-            { id: 3, name: '双逆足的入', handle: '15755318794', avatar: 'https://i.ibb.co/r2wsHtCw/cf86e4e756a62729abe9244be90ce411.jpg', bio: '做足球视频的入', followers: 1320, verify: 'blue' },
-            { id: 4, name: '三角洲小剧场', handle: '素材由互联网提供', avatar: 'https://i.ibb.co/Xk7W8FMb/QQ20260719-173437.png', bio: '', followers: 4532, verify: null },
-            { id: 5, name: '凑企鹅', handle: '素材由互联网提供', avatar: 'https://i.ibb.co/5XFFMWmC/QQ20260719-151323.png', bio: '', followers: 238, verify: null },
-            { id: 6, name: '搞笑影视', handle: '素材由互联网提供', avatar: 'https://i.ibb.co/FLqt79T3/QQ20260719-173729.png', bio: '', followers: 2, verify: null },
-            { id: 7, name: '车轱辘二世', handle: '无内容', avatar: 'https://i.ibb.co/N6zrf8g2/707240a8adb7c3e89608704b06153b37.jpg', bio: '', followers: 0, verify: null },
-            { id: 8, name: '霜庭落樱', handle: '无内容', avatar: 'https://i.ibb.co/G4XxbYZ5/QQ20260720-132601.png', bio: '我是你们的快乐源泉，每天分享新鲜快乐！', followers: 211, verify: null },
-            { id: 9, name: '哈吉洲', handle: '无内容', avatar: 'https://i.ibb.co/Bhh16Cn/QQ20260720-124319.png', bio: '视频来源于网络', followers: 5211, verify: null },
-        ];
-
-        // ============================================================
-        // 3. 视频数据
-        // ============================================================
-        const VIDEOS = [{
-            id: 1,
-            title: '【雾都冥域】第二章·奇怪的规则（上）',
-            thumb: 'https://i.ibb.co/dwxFtwHc/QQ20260718-123128.png',
-            video: 'https://s.snappable.media/9241e69af6a73a4b8b4931f4ff011996.mp4',
-            duration: '04:18',
-            views: 3432,
-            date: '2026-07-17',
-            upId: 1,
-            cat: '书籍',
-            paid: false,
-            collaborators: [],
-            tags: ['雾都冥域', '小说推文', '奇幻', '悬疑'],
-            dm: ['Seven7牛逼！', '画质真好', '循环播放中...', '吓到我了', '你们好', '收藏了', 'BGM叫什么？', '太棒了', '第一', '打卡', '空瓶', '推荐来的',
-                '制作精良', '神作', 'Seven戚的处女座说是',
-            ]
-        }, {
-            id: 2,
-            title: '《面包烤焦了》我和亲友的描改手书',
-            thumb: 'https://i.ibb.co/SDPKf7M3/2e4ab293d3b10c075b992912555cd9ed.png',
-            video: 'https://s.snappable.media/15430d0f869748a58e9a133a1c90912c.mp4',
-            duration: '00:45',
-            views: 1203,
-            date: '2026-07-17',
-            upId: 2,
-            cat: '动画',
-            paid: false,
-            collaborators: [],
-            tags: ['手书', '描改', '亲友', '治愈'],
-            dm: ['恭喜视频上线!!!!', '老师画的好好看！！', '加个wx']
-        }, {
-            id: 3,
-            title: '小说推文幕后',
-            thumb: 'https://i.ibb.co/39TsK854/QQ20260718-103525.png',
-            video: 'https://s.snappable.media/07ee0776546297b8a3a8d93e67bd9c72.mp4',
-            duration: '00:09',
-            views: 43,
-            date: '2026-07-18',
-            upId: 1,
-            cat: '书籍',
-            paid: false,
-            collaborators: [],
-            tags: ['幕后', '推文', '创作过程'],
-            dm: ['辛苦了', '正文也很好！', '推荐']
-        }, {
-            id: 4,
-            title: '【雾都冥域】第二章·奇怪的规则（下）',
-            thumb: 'https://i.ibb.co/0Rb0Rj40/QQ20260718-123305.png',
-            video: 'https://s.snappable.media/383a407e6c3d8ef184726ca3f5521ad5.mp4',
-            duration: '04:18',
-            views: 2748,
-            date: '2026-07-17',
-            upId: 1,
-            cat: '书籍',
-            paid: true,
-            collaborators: [],
-            tags: ['雾都冥域', '小说推文', '奇幻', '悬疑'],
-            dm: ['Seven7牛逼！', '画质真好', '循环播放中...', '吓到我了', '你们好', '收藏了', 'BGM叫什么？', '太棒了', '第一', '打卡', '空瓶', '推荐来的',
-                '制作精良', '神作', 'Seven戚的处女座说是', '下一集', '好', '我是Seven7', '乐乐'
-            ]
-        }, {
-            id: 5,
-            title: '【雾都冥域】第一章·冰壶风波（上）',
-            thumb: 'https://i.ibb.co/0pyYGNwS/QQ20260718-123051.png',
-            video: 'https://s.snappable.media/8d186680135b1774e80e9a0ffc2da5be.mp4',
-            duration: '05:43',
-            views: 29184,
-            date: '2026-07-18',
-            upId: 1,
-            cat: '书籍',
-            paid: false,
-            collaborators: [],
-            tags: ['雾都冥域', '小说推文', '奇幻', '冒险', '冰壶'],
-            dm: ['Seven7牛逼！', '画质真好', '循环播放中...', '吓到我了', '你们好', '收藏了', 'BGM叫什么？', '太棒了', '第一', '打卡', '空瓶', '推荐来的',
-                '制作精良', '神作', 'Seven戚的处女座说是', '下一集', '好', '我是Seven7', '乐乐', '第一集', '梦开始的地方', '打卡第一集', '荟萃7班实名', '网差的看着就卡  5G网还好',
-                '网络不行当然卡', '后面就要VIP了', '666', '说啥呢', '3个人出来', '2.9万人', '一万播放量叫我', '百万UP', '火钳刘明', '火钳刘明', '优质',
-            ]
-        }, {
-            id: 6,
-            title: '【雾都冥域】第一章·冰壶风波（下）',
-            thumb: 'https://i.ibb.co/23VTGLt8/QQ20260718-123114.png',
-            video: 'https://s.snappable.media/509e273091f65ff35a006b9372e01de8.mp4',
-            duration: '05:14',
-            views: 10483,
-            date: '2026-07-18',
-            upId: 1,
-            cat: '书籍',
-            paid: false,
-            collaborators: [],
-            tags: ['雾都冥域', '小说推文', '奇幻', '冒险'],
-            dm: ['Seven7牛逼！', '画质真好', '循环播放中...', '吓到我了', '你们好', '收藏了', 'BGM叫什么？', '太棒了', '第一', '打卡', '空瓶', '推荐来的',
-                '制作精良', '神作', 'Seven戚的处女座说是', '下一集', '好', '我是Seven7', '乐乐'
-            ]
-        }, {
-            id: 7,
-            title: '英格兰加油 下届世界杯把足球带回家',
-            thumb: 'https://i.ibb.co/YBdkPcc7/QQ20260718-140450.png',
-            video: 'https://s.snappable.media/aa4a24961947e8fdd70a24dd18a32287.mp4',
-            duration: '01:10',
-            views: 1943,
-            date: '2026-07-18',
-            upId: 3,
-            cat: '书籍',
-            paid: false,
-            collaborators: [],
-            tags: ['足球', '英格兰', '世界杯', '体育'],
-            dm: ['加油', '英格兰必胜', '我是皇马粉丝', '666', '火箭流氓', '？', '优质！', '火箭流氓何意味', '？何意味', '英格兰也有皇马的别叫'
-            ]
-        }, {
-            id: 9,
-            title: '如此足球你怎能不爱',
-            thumb: 'https://i.ibb.co/3Y14YTWk/QQ20260718-151402.png',
-            video: 'https://s.snappable.media/a42ca44fc5cbf88794b60ca1925472ba.mp4',
-            duration: '00:19',
-            views: 2993,
-            date: '2026-07-18',
-            upId: 3,
-            cat: '书籍',
-            paid: false,
-            collaborators: [],
-            tags: ['足球', '英超', '曼城', '阿森纳', '皇马'],
-            dm: ['我们阿森纳是不可战胜', '曼城NB', '火钳刘明', 'b席要去皇马了[哭😭]'
-            ]
-        },{
-            id: 10,
-            title: '曼啵来碗忘情牛肉面',
-            thumb: 'https://i.ibb.co/RGfyJkjP/QQ20260719-152007.png',
-            video: 'https://pixhub.ro/i/ryrubw8m.mp4',
-            duration: '00:14',
-            views: 2342,
-            date: '2026-07-19',
-            upId: 5,
-            cat: '书籍',
-            paid: false,
-            collaborators: [],
-            tags: ['抽象', '搞笑', '曼波'],
-            dm: []
-        },{
-            id: 11,
-            title: '野人偷吃保险？',
-            thumb: 'https://i.ibb.co/6JfRPnnQ/QQ20260719-174129.png',
-            video: 'https://pixhub.ro/i/ft0ru8f6.mp4',
-            duration: '00:16',
-            views: 2342,
-            date: '2026-07-19',
-            upId: 4,
-            cat: '书籍',
-            paid: false,
-            collaborators: [],
-            tags: ['抽象', '搞笑', '三角洲'],
-            dm: []
-        },{
-            id: 12,
-            title: '我和兄弟的变脸速度',
-            thumb: 'https://i.ibb.co/dsm3chtf/QQ20260719-174040.png',
-            video: 'https://pixhub.ro/i/fqa9e5fe.mp4',
-            duration: '00:30',
-            views: 2342,
-            date: '2026-07-19',
-            upId: 6,
-            cat: '书籍',
-            paid: false,
-            collaborators: [],
-            tags: ['抽象', '兄弟', '搞笑'],
-            dm: []
-        }, {
-            id: 13,
-            title: '《真·电死小子》',
-            thumb: 'https://i.ibb.co/JW7p2fJb/QQ20260719-153430.png',
-            video: 'https://pixhub.ro/i/rjexdpyj.mp4',
-            duration: '00:33',
-            views: 14,
-            date: '2026-07-19',
-            upId: 6,
-            cat: '书籍',
-            paid: false,
-            collaborators: [],
-            tags: ['电机小子', '影视', ],
-            dm: []
-        }, {
-            id: 14,
-            title: '可怜的鸟撸撸',
-            thumb: 'https://i.ibb.co/7ttcF7sc/QQ20260719-154357.png',
-            video: 'https://pixhub.ro/i/uzeoad8y.mp4',
-            duration: '00:10',
-            views: 8392,
-            date: '2026-07-19',
-            upId: 4,
-            cat: '书籍',
-            paid: false,
-            collaborators: [],
-            tags: ['豆包', '三角洲'],
-            dm: []
-        }, {
-            id: 15,
-            title: '《各显神通》',
-            thumb: 'https://i.ibb.co/qMt5tHw8/QQ20260719-154428.png',
-            video: 'https://pixhub.ro/i/ij1pjoly.mp4',
-            duration: '00:20',
-            views: 4859,
-            date: '2026-07-19',
-            upId: 6,
-            cat: '书籍',
-            paid: false,
-            collaborators: [],
-            tags: ['嘉豪', '逆天', ],
-            dm: []
-        },{
-            id: 16,
-            title: '人民的黄瓜',
-            thumb: 'https://i.ibb.co/kgnC2k4b/QQ20260719-173944.png',
-            video: 'https://pixhub.ro/i/qw5j0fz8.mp4',
-            duration: '00:45',
-            views: 9573,
-            date: '2026-07-19',
-            upId: 4,
-            cat: '书籍',
-            paid: false,
-            collaborators: [],
-            tags: ['抽象', '三角洲', '猛攻'],
-            dm: []
-        },{
-            id: 17,
-            title: '杂鱼~杂鱼',
-            thumb: 'https://i.ibb.co/cc1Fss2n/QQ20260720-114110.png',
-            video: 'https://pixhub.ro/i/0god6yfs.mp4',
-            duration: '00:33',
-            views: 3843,
-            date: '2026-07-20',
-            upId: 8,
-            cat: '书籍',
-            paid: false,
-            collaborators: [],
-            tags: ['二次元', '动漫'],
-            dm: [],
-            desc: '杂鱼~杂鱼~'
-},{
-            id: 18,
-            title: '茶啊二中三幻神',
-            thumb: 'https://i.ibb.co/G49m4rCW/QQ20260720-122445.png',
-            video: 'https://pixhub.ro/i/qcy6yed1.mp4',
-            duration: '00:39',
-            views: 4821,
-            date: '2026-07-20',
-            upId: 8,
-            cat: '书籍',
-            paid: false,
-            collaborators: [],
-            tags: ['茶啊二中', '动漫', '剪映'],
-            dm: [],
-            desc: ''
-},{
-            id: 19,
-            title: '你已受到强大的电离辐射，请尽快撤离放射半径以外',
-            thumb: 'https://i.ibb.co/xrpbNRb/QQ20260720-123205.png"',
-            video: 'https://pixhub.ro/i/i0hfgawq.mp4',
-            duration: '00:15',
-            views: 4821,
-            date: '2026-07-20',
-            upId: 8,
-            cat: '书籍',
-            paid: false,
-            collaborators: [],
-            tags: ['抽象', '搞笑', '三角洲'],
-            dm: [],
-            desc: ''
-},{
-            id: 20,
-            title: '感恩的心',
-            thumb: 'https://i.ibb.co/WN1GsJ8Q/QQ20260720-130632.png"',
-            video: 'https://pixhub.ro/i/cuwgr1l0.mp4',
-            duration: '05:47',
-            views: 12000,
-            date: '2026-07-20',
-            upId: 9,
-            cat: '书籍',
-            paid: false,
-            collaborators: [{ id: 1, role: '赞助' }],
-            tags: ['抽象', '搞笑', '三角洲'],
-            dm: [],
-            desc: ['神作','666','火钳刘明'],
-},{
-            id: 21,
-            title: '突如其来的惊喜',
-            thumb: 'https://i.ibb.co/5gC1BvHg/QQ20260720-135615.png',
-            video: 'https://pixhub.ro/i/vcm8xcgp.mp4',
-            duration: '00:09',
-            views: 920,
-            date: '2026-07-20',
-            upId: 8,
-            cat: '书籍',
-            paid: false,
-            collaborators: [],
-            tags: ['AI', '搞笑', '抽象'],
-            dm: [],
-            desc: ['这是AI吧','惊不惊喜意不意外？'
-            ]
-},{
-            id: 22,
-            title: '《抓赌的来了》',
-            thumb: 'https://i.ibb.co/93mLdhTp/QQ20260720-155643.png',
-            video: 'https://pixhub.ro/i/qszg8ljk.mp4',
-            duration: '00:41',
-            views: 3254,
-            date: '2026-07-20',
-            upId: 8,
-            cat: '书籍',
-            paid: false,
-            collaborators: [],
-            tags: ['搞笑', '茶啊二中', '剪映'],
-            dm: ['3班一锅shi', '我去不早说', '蚌埠住了', '我是野绷先生', '如果你绷住了，我将给你100万绷币！', '还有野人先生', '《抓赌的来了》'],
-            desc: ''
-},{
-            id: 23,
-            title: '？？？',
-            thumb: 'https://i.ibb.co/FLQHFjP5/QQ20260720-160748.png',
-            video: 'https://pixhub.ro/i/z6yjsxxj.mp4',
-            duration: '00:12',
-            views: 1332,
-            date: '2026-07-20',
-            upId: 8,
-            cat: '书籍',
-            paid: false,
-            collaborators: [],
-            tags: ['抽象', '猎奇'],
-            dm: ['？？？', '？？？', '？？？', '？？？', '？？？', '？？？', '？？？', '我的眼睛！！', '蘑菇吃多了'],
-            desc: ''
-}];
-
-        // ============================================================
-        // 4. 合集数据
-        // ============================================================
-        const COLLECTIONS = [
-            { id: 1, name: '《雾都冥域》推文', cover: VIDEOS[0].thumb, videoIds: [5, 6, 1, 4], isVip: true,
-                freePreviewDuration: 30 },
-        ];
-
-        // ============================================================
-        // 5. 使用说明内容
-        // ============================================================
-        const HELP_DATA = {
-            'about': {
-                label: '关于本站',
-                icon: '🏠',
-                qa: [
-                    { q: '七七视频网是什么？', a: '七七视频网是一个轻量级的视频分享与创作平台，支持视频播放、弹幕互动、合集管理、创作者认证等功能。' },
-                    { q: '网站是免费的吗？', a: '大部分功能免费使用，部分VIP内容需要开通会员（会员价格单QQ私聊）。' },
-                    { q: '如何联系管理员？', a: '您可以通过站内信或联系站主 "Seven戚" 获取帮助。站主QQ：2103686588' },
-                ]
-            },
-            'play': {
-                label: '视频播放',
-                icon: '▶️',
-                qa: [
-                    { q: '如何播放视频？', a: '点击视频卡片即可进入播放页，支持播放/暂停、进度拖拽、音量调节、全屏观看。' },
-                    { q: '弹幕怎么发送？', a: '在播放页底部输入框输入内容，点击发送即可。弹幕会从右向左飘过。' },
-                    { q: '倍速播放怎么用？', a: '播放器控制栏中有倍速按钮（1.0x），点击可循环切换 0.5x → 0.75x → 1.0x → 1.25x → 1.5x → 2.0x。' },
-                    { q: '视频加载失败怎么办？', a: '点击播放器上的"重新加载"按钮重试，或检查网络连接后刷新页面。' },
-                ]
-            },
-            'vip': {
-                label: '会员制度',
-                icon: '👑',
-                qa: [
-                    { q: '如何开通会员？', a: '在"设置"页面点击"开通会员"，输入密码即可开通。' },
-                    { q: '会员有什么权益？', a: '会员可以观看VIP专享视频（标注"会员专享"），以及VIP合集中的完整内容。' },
-                    { q: '试看是什么？', a: '部分VIP合集提供试看时长（如30秒），非会员可试看前N秒，超时后需开通会员。' },
-                    { q: '如何取消会员？', a: '在"设置"页面点击"取消会员"即可取消，会员状态实时生效。' },
-                ]
-            },
-            'creator': {
-                label: '创作者相关',
-                icon: '✍️',
-                qa: [
-                    { q: '如何认证创作者？', a: '目前认证为手动授予，分为金、蓝、白三个等级，在个人主页显示徽章。' },
-                    { q: '合作标签是什么？', a: '视频如有合作创作者，会在封面显示"合作"标签，并在播放页展示合作者信息。' },
-                    { q: '如何创建合集？', a: '目前合集由管理员创建，您可以通过联系UP主申请创建合集。' },
-                    { q: '个人主页有什么用？', a: '展示您的视频、合集、粉丝数、总播放量，以及认证等级。' },
-                    { q: '创作者中心入口', a: '到现在为止还是没有后台管理页面，创建创作者账号和发布视频请联系我' },
-                    { q: '认证申请通道', a: '如需申请认证，请发送邮件至 2103686588n@qq.com 或联系站内管理员。' },
-                ]
-            },
-            'faq': {
-                label: '常见问题',
-                icon: '❓',
-                qa: [
-                    { q: '页面加载很慢怎么办？', a: '请检查网络连接，或尝试刷新页面。部分视频源为外部链接，加载速度受网络影响。' },
-                    { q: '如何返回上一页？', a: '在视频页或个人主页，左上角有返回按钮（←），点击即可返回。' },
-                    { q: '历史记录在哪里？', a: '在"设置"页面可以看到您的观看历史记录，支持一键清空。' },
-                    { q: '为什么有些视频没有封面？', a: '如果视频未设置封面，系统会显示"暂无封面"占位图。' },
-                ]
-            }
-        };
-        const HELP_CATEGORIES = Object.keys(HELP_DATA);
-
-        // ============================================================
-        // 6. 全局状态
-        // ============================================================
-        let curPage = 'home';
-        let curVideo = null;
-        let searchQ = '';
-        let player = null;
-        let dmEngine = null;
-        let controlsTimer = null;
-        let isMember = false;
-        let historyStack = ['home'];
-        let previewLimitReached = false;
-        let currentCollection = null;
-        let currentCollectionIndex = -1;
-        let welcomeShown = false;
-        let lazyObserver = null;
-        let uiRAFId = null;
-        let lastTimeUpdate = 0;
-        const UI_UPDATE_INTERVAL = 250;
-
-        // ============================================================
-        // 7. 工具函数
+        // 2. 工具函数 (依赖全局 VIDEOS, UPLOADERS, COLLECTIONS)
         // ============================================================
         function fmt(n) {
             if (n >= 10000) return (n / 10000).toFixed(1).replace(/\.0$/, '') + '万';
@@ -3221,8 +2834,10 @@
         }
 
         // ============================================================
-        // 8. 启动弹窗
+        // 3. 启动弹窗
         // ============================================================
+        let welcomeShown = false;
+
         function showWelcomeModal() {
             if (welcomeShown) return;
             welcomeShown = true;
@@ -3242,9 +2857,21 @@
         }
 
         // ============================================================
-        // 9. 页面路由
+        // 4. 页面路由
         // ============================================================
-        let isInternalNav = false;
+        let curPage = 'home';
+        let curVideo = null;
+        let player = null;
+        let dmEngine = null;
+        let controlsTimer = null;
+        let isMember = false;
+        let previewLimitReached = false;
+        let currentCollection = null;
+        let currentCollectionIndex = -1;
+        let lazyObserver = null;
+        let uiRAFId = null;
+        let lastTimeUpdate = 0;
+        const UI_UPDATE_INTERVAL = 250;
 
         function navigate(page, params = {}, pushHistory = true) {
             if (player) {
@@ -3350,12 +2977,7 @@
                 返回
             `;
             btn.onclick = function() {
-                if (historyStack.length > 0) {
-                    const prev = historyStack.pop();
-                    navigate(prev || 'home', {}, false);
-                } else {
-                    navigate('home', {}, false);
-                }
+                navigate('home', {}, false);
             };
             document.getElementById('pageSearch').prepend(btn);
         }
@@ -3373,10 +2995,6 @@
         }
 
         function onHashChange() {
-            if (isInternalNav) {
-                isInternalNav = false;
-                return;
-            }
             const hash = window.location.hash;
             const { page, id } = parseHash(hash);
             if (page === 'home') {
@@ -3392,7 +3010,6 @@
             } else if (page === 'settings') {
                 navigate('settings', {}, false);
             } else if (page === 'search') {
-                // 从hash中解析查询词
                 const query = id !== undefined ? id : '';
                 navigate('search', { query: query }, false);
             } else {
@@ -3404,7 +3021,7 @@
         window.addEventListener('hashchange', onHashChange);
 
         // ============================================================
-        // 10. 图片懒加载
+        // 5. 图片懒加载
         // ============================================================
         function initLazyLoading() {
             if (lazyObserver) {
@@ -3444,7 +3061,7 @@
         }
 
         // ============================================================
-        // 11. 首页渲染
+        // 6. 首页渲染
         // ============================================================
         function renderHome(activeCat) {
             const allCats = ['全部', '🔥 热门', '🎬 动画', '🎮 游戏', '📚 书籍', '💻 科技'];
@@ -3460,8 +3077,8 @@
                     filtered = sorted.filter(v => v.cat === activeCat);
                 }
             }
-            if (searchQ) {
-                const q = searchQ.toLowerCase();
+            if (window.searchQ) {
+                const q = window.searchQ.toLowerCase();
                 filtered = sorted.filter(v =>
                     v.title.toLowerCase().includes(q) ||
                     getUploader(v.upId).name.toLowerCase().includes(q) ||
@@ -3505,7 +3122,7 @@
                         <div class="cat-dropdown" id="catDropdown"></div>
                     </div>`;
 
-            const title = searchQ ? '搜索: ' + searchQ : (activeCat || '推荐视频');
+            const title = window.searchQ ? '搜索: ' + window.searchQ : (activeCat || '推荐视频');
             html += `<div style="font-family:var(--font-d);font-size:18px;font-weight:800;margin-bottom:14px">${title}</div>`;
 
             html += `<div class="v-grid" id="videoGrid"></div>`;
@@ -3516,7 +3133,8 @@
             if (!grid) return;
 
             if (filtered.length === 0) {
-                grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--text3)">没有找到相关视频</div>';
+                grid.innerHTML =
+                    '<div style="grid-column:1/-1;text-align:center;padding:60px 0;color:var(--text3)">没有找到相关视频</div>';
                 return;
             }
 
@@ -3641,7 +3259,7 @@
         }
 
         // ============================================================
-        // 12. 播放页渲染
+        // 7. 播放页渲染
         // ============================================================
         function renderWatch(vid) {
             try {
@@ -3911,7 +3529,7 @@
         }
 
         // ============================================================
-        // 13. 播放器控制
+        // 8. 播放器控制
         // ============================================================
         let currentVideoId = null;
         let isVipCollection = false;
@@ -4034,7 +3652,8 @@
                     btnPlay.innerHTML = '<svg viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21"/></svg>';
                     centerPlay.classList.remove('hidden');
                 } else {
-                    btnPlay.innerHTML = '<svg viewBox="0 0 24 24" fill="white"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
+                    btnPlay.innerHTML =
+                        '<svg viewBox="0 0 24 24" fill="white"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
                     centerPlay.classList.add('hidden');
                 }
             }
@@ -4116,64 +3735,61 @@
                 showEndedRecommend();
             }
 
-function showEndedRecommend() {
-    if (!endedRecommend) return;
-    ctrl.classList.remove('show');
-    document.getElementById('dmBar').classList.remove('show');
+            function showEndedRecommend() {
+                if (!endedRecommend) return;
+                ctrl.classList.remove('show');
+                document.getElementById('dmBar').classList.remove('show');
 
-    const others = VIDEOS.filter(item => item.id !== currentVideoId);
-    const selected = [];
-    const selectedIds = new Set();
+                const others = VIDEOS.filter(item => item.id !== currentVideoId);
+                const selected = [];
+                const selectedIds = new Set();
 
-    // 1. 同作者视频（同一UP主，最多3个，按热度排序）
-    const sameAuthor = others.filter(item => item.upId === curVideo?.upId);
-    sameAuthor.sort((a, b) => b.views - a.views);
-    const authorCount = Math.min(3, sameAuthor.length);
-    for (let i = 0; i < authorCount; i++) {
-        selected.push(sameAuthor[i]);
-        selectedIds.add(sameAuthor[i].id);
-    }
+                const sameAuthor = others.filter(item => item.upId === curVideo?.upId);
+                sameAuthor.sort((a, b) => b.views - a.views);
+                const authorCount = Math.min(3, sameAuthor.length);
+                for (let i = 0; i < authorCount; i++) {
+                    selected.push(sameAuthor[i]);
+                    selectedIds.add(sameAuthor[i].id);
+                }
 
-    // 2. 同类型视频（同一分类，最多补到6个，按热度排序）
-    const need = 6 - selected.length;
-    if (need > 0) {
-        const sameCat = others.filter(item => {
-            if (selectedIds.has(item.id)) return false;
-            return item.cat === curVideo?.cat;
-        });
-        sameCat.sort((a, b) => b.views - a.views);
-        for (let i = 0; i < Math.min(need, sameCat.length); i++) {
-            selected.push(sameCat[i]);
-            selectedIds.add(sameCat[i].id);
-        }
-    }
+                const need = 6 - selected.length;
+                if (need > 0) {
+                    const sameCat = others.filter(item => {
+                        if (selectedIds.has(item.id)) return false;
+                        return item.cat === curVideo?.cat;
+                    });
+                    sameCat.sort((a, b) => b.views - a.views);
+                    for (let i = 0; i < Math.min(need, sameCat.length); i++) {
+                        selected.push(sameCat[i]);
+                        selectedIds.add(sameCat[i].id);
+                    }
+                }
 
-    // 3. 热门视频补充（如果还不够6个）
-    if (selected.length < 6) {
-        const rest = others.filter(item => !selectedIds.has(item.id));
-        rest.sort((a, b) => b.views - a.views);
-        const needMore = 6 - selected.length;
-        for (let i = 0; i < Math.min(needMore, rest.length); i++) {
-            selected.push(rest[i]);
-        }
-    }
+                if (selected.length < 6) {
+                    const rest = others.filter(item => !selectedIds.has(item.id));
+                    rest.sort((a, b) => b.views - a.views);
+                    const needMore = 6 - selected.length;
+                    for (let i = 0; i < Math.min(needMore, rest.length); i++) {
+                        selected.push(rest[i]);
+                    }
+                }
 
-    const recVideos = selected.slice(0, 6);
+                const recVideos = selected.slice(0, 6);
 
-    const grid = document.getElementById('endedRecommendGrid');
-    if (grid) {
-        grid.innerHTML = recVideos.map(rv => `
-            <div class="item" onclick="navigate('watch',{id:${rv.id}})">
-                <img src="${rv.thumb}" alt="${rv.title}" loading="lazy">
-                <div class="info">
-                    <div class="title">${rv.title}</div>
-                    <div class="views">${fmt(rv.views)}次观看</div>
-                </div>
-            </div>
-        `).join('');
-    }
-    endedRecommend.classList.add('show');
-}
+                const grid = document.getElementById('endedRecommendGrid');
+                if (grid) {
+                    grid.innerHTML = recVideos.map(rv => `
+                            <div class="item" onclick="navigate('watch',{id:${rv.id}})">
+                                <img src="${rv.thumb}" alt="${rv.title}" loading="lazy">
+                                <div class="info">
+                                    <div class="title">${rv.title}</div>
+                                    <div class="views">${fmt(rv.views)}次观看</div>
+                                </div>
+                            </div>
+                        `).join('');
+                }
+                endedRecommend.classList.add('show');
+            }
 
             function hideEndedRecommend() {
                 if (endedRecommend) endedRecommend.classList.remove('show');
@@ -4215,7 +3831,7 @@ function showEndedRecommend() {
         }
 
         // ============================================================
-        // 14. 辅助播放函数
+        // 9. 辅助播放函数
         // ============================================================
         function formatTime(s) {
             if (isNaN(s) || !isFinite(s)) return '0:00';
@@ -4316,7 +3932,7 @@ function showEndedRecommend() {
         }
 
         // ============================================================
-        // 15. 弹幕引擎
+        // 10. 弹幕引擎
         // ============================================================
         class DanmakuEngine {
             constructor(container, videoEl, messages) {
@@ -4477,7 +4093,7 @@ function showEndedRecommend() {
         }
 
         // ============================================================
-        // 16. 个人主页
+        // 11. 个人主页
         // ============================================================
         function renderProfile(id) {
             try {
@@ -4565,7 +4181,7 @@ function showEndedRecommend() {
         }
 
         // ============================================================
-        // 17. 合集页面
+        // 12. 合集页面
         // ============================================================
         function renderCollection(collectionId) {
             if (collectionId) {
@@ -4643,8 +4259,63 @@ function showEndedRecommend() {
         }
 
         // ============================================================
-        // 18. 使用说明页面
+        // 13. 使用说明页面
         // ============================================================
+        const HELP_DATA = {
+            'about': {
+                label: '关于本站',
+                icon: '🏠',
+                qa: [
+                    { q: '七七视频网是什么？', a: '七七视频网是一个轻量级的视频分享与创作平台，支持视频播放、弹幕互动、合集管理、创作者认证等功能。' },
+                    { q: '网站是免费的吗？', a: '大部分功能免费使用，部分VIP内容需要开通会员（会员价格单QQ私聊）。' },
+                    { q: '如何联系管理员？', a: '您可以通过站内信或联系站主 "Seven戚" 获取帮助。站主QQ：2103686588' },
+                ]
+            },
+            'play': {
+                label: '视频播放',
+                icon: '▶️',
+                qa: [
+                    { q: '如何播放视频？', a: '点击视频卡片即可进入播放页，支持播放/暂停、进度拖拽、音量调节、全屏观看。' },
+                    { q: '弹幕怎么发送？', a: '在播放页底部输入框输入内容，点击发送即可。弹幕会从右向左飘过。' },
+                    { q: '倍速播放怎么用？', a: '播放器控制栏中有倍速按钮（1.0x），点击可循环切换 0.5x → 0.75x → 1.0x → 1.25x → 1.5x → 2.0x。' },
+                    { q: '视频加载失败怎么办？', a: '点击播放器上的"重新加载"按钮重试，或检查网络连接后刷新页面。' },
+                ]
+            },
+            'vip': {
+                label: '会员制度',
+                icon: '👑',
+                qa: [
+                    { q: '如何开通会员？', a: '在"设置"页面点击"开通会员"，输入密码即可开通。' },
+                    { q: '会员有什么权益？', a: '会员可以观看VIP专享视频（标注"会员专享"），以及VIP合集中的完整内容。' },
+                    { q: '试看是什么？', a: '部分VIP合集提供试看时长（如30秒），非会员可试看前N秒，超时后需开通会员。' },
+                    { q: '如何取消会员？', a: '在"设置"页面点击"取消会员"即可取消，会员状态实时生效。' },
+                ]
+            },
+            'creator': {
+                label: '创作者相关',
+                icon: '✍️',
+                qa: [
+                    { q: '如何认证创作者？', a: '目前认证为手动授予，分为金、蓝、白三个等级，在个人主页显示徽章。' },
+                    { q: '合作标签是什么？', a: '视频如有合作创作者，会在封面显示"合作"标签，并在播放页展示合作者信息。' },
+                    { q: '如何创建合集？', a: '目前合集由管理员创建，您可以通过联系UP主申请创建合集。' },
+                    { q: '个人主页有什么用？', a: '展示您的视频、合集、粉丝数、总播放量，以及认证等级。' },
+                    { q: '创作者中心入口', a: '到现在为止还是没有后台管理页面，创建创作者账号和发布视频请联系我' },
+                    { q: '认证申请通道', a: '如需申请认证，请发送邮件至 2103686588n@qq.com 或联系站内管理员。' },
+                ]
+            },
+            'faq': {
+                label: '常见问题',
+                icon: '❓',
+                qa: [
+                    { q: '页面加载很慢怎么办？', a: '请检查网络连接，或尝试刷新页面。部分视频源为外部链接，加载速度受网络影响。' },
+                    { q: '如何返回上一页？', a: '在视频页或个人主页，左上角有返回按钮（←），点击即可返回。' },
+                    { q: '历史记录在哪里？', a: '在"设置"页面可以看到您的观看历史记录，支持一键清空。' },
+                    { q: '为什么有些视频没有封面？', a: '如果视频未设置封面，系统会显示"暂无封面"占位图。' },
+                ]
+            }
+        };
+        const HELP_CATEGORIES = Object.keys(HELP_DATA);
+
         function renderHelp(activeCategory) {
             if (!activeCategory || !HELP_DATA[activeCategory]) {
                 activeCategory = HELP_CATEGORIES[0];
@@ -4696,7 +4367,7 @@ function showEndedRecommend() {
         }
 
         // ============================================================
-        // 19. 设置页面
+        // 14. 设置页面
         // ============================================================
         function renderSettings() {
             try {
@@ -4851,7 +4522,7 @@ function showEndedRecommend() {
         }
 
         // ============================================================
-        // 20. 搜索页面（新设计：相关创作者 + 相关视频）
+        // 15. 搜索页面（新设计：相关创作者 + 相关视频）
         // ============================================================
         function renderSearch(query) {
             const allTags = getAllTags();
@@ -4862,7 +4533,6 @@ function showEndedRecommend() {
 
             const q = query ? query.trim().toLowerCase() : '';
 
-            // ----- 搜索逻辑 -----
             let matchedUploaders = [];
             let relatedUploaders = [];
             let matchedVideos = [];
@@ -4908,7 +4578,6 @@ function showEndedRecommend() {
 
             const totalResults = matchedUploaders.length + relatedUploaders.length + matchedVideos.length;
 
-            // ----- 构建 HTML -----
             let html = `
                 <div class="search-header">
                     <div class="keyword">
@@ -4925,7 +4594,6 @@ function showEndedRecommend() {
                 </div>
             `;
 
-            // 如果没有搜索词，显示热搜和标签
             if (!q) {
                 if (hotTags.length > 0) {
                     html += `
@@ -4935,7 +4603,7 @@ function showEndedRecommend() {
                                 ${hotTags.map((tag, idx) => {
                                     const rankClass = idx === 0 ? 'gold' : (idx === 1 ? 'silver' : (idx === 2 ? 'bronze' : ''));
                                     const count = tagHeatmap[tag] || 0;
-                                    return `<span class="hot-tag-item" onclick="navigate('search',{query:'${tag}')}">
+                                    return `<span class="hot-tag-item" onclick="navigate('search',{query:'${tag}'})">
                                         <span class="rank ${rankClass}">${idx + 1}</span>
                                         ${tag} <span class="count">(${count}个视频)</span>
                                     </span>`;
@@ -4950,13 +4618,12 @@ function showEndedRecommend() {
                             <div class="all-tags-title">🏷️ 全部标签 (${allTags.length})</div>
                             <div class="all-tags-scroll">
                                 ${allTags.map(tag => `
-                                    <span class="tag-item" onclick="navigate('search',{query:'${tag}')}">${tag}</span>
+                                    <span class="tag-item" onclick="navigate('search',{query:'${tag}'})">${tag}</span>
                                 `).join('')}
                             </div>
                         </div>
                     `;
                 }
-                // 显示全站热门榜（没有搜索词时）
                 const top10 = [...VIDEOS].sort((a, b) => b.views - a.views).slice(0, 10);
                 if (top10.length > 0) {
                     html += `
@@ -4980,13 +4647,11 @@ function showEndedRecommend() {
                     `;
                 }
                 document.getElementById('pageSearch').innerHTML = html;
-                // 聚焦输入框
                 const input = document.getElementById('searchPageInput');
                 if (input) input.focus();
                 return;
             }
 
-            // ---- 有搜索词：显示结果 ----
             if (totalResults === 0) {
                 html += `
                     <div class="search-empty">
@@ -4999,7 +4664,6 @@ function showEndedRecommend() {
                 return;
             }
 
-            // 1. 相关创作者
             const allCreators = [...matchedUploaders, ...relatedUploaders];
             if (allCreators.length > 0) {
                 html += `<div class="section-title">👤 相关创作者 <span class="badge">${allCreators.length}</span></div>`;
@@ -5024,7 +4688,6 @@ function showEndedRecommend() {
                 html += `</div>`;
             }
 
-            // 2. 相关视频
             if (matchedVideos.length > 0) {
                 html += `
                     <div class="search-results-title" style="margin-top:28px;">
@@ -5062,7 +4725,6 @@ function showEndedRecommend() {
 
             document.getElementById('pageSearch').innerHTML = html;
 
-            // 聚焦输入框
             const input = document.getElementById('searchPageInput');
             if (input && q) {
                 input.focus();
@@ -5071,7 +4733,7 @@ function showEndedRecommend() {
         }
 
         // ============================================================
-        // 21. 启动
+        // 16. 启动
         // ============================================================
         window.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
@@ -5092,6 +4754,16 @@ function showEndedRecommend() {
                 navigate('home', {}, true);
             }
         });
+
+        // 暴露全局变量供其他脚本使用
+        window.navigate = navigate;
+        window.VIDEOS = VIDEOS;
+        window.UPLOADERS = UPLOADERS;
+        window.COLLECTIONS = COLLECTIONS;
+        window.isMember = isMember;
+        window.getVideo = getVideo;
+        window.getUploader = getUploader;
+        window.showToast = showToast;
     </script>
 </body>
 </html>
