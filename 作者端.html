@@ -1,0 +1,626 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>视频数据导出 - 七七视频网</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'DM Mono', monospace;
+            background: #f0f2f8;
+            color: #1e1e2a;
+            padding: 20px;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 14px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+            padding: 32px 28px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .header .logo {
+            font-family: 'Syne', sans-serif;
+            font-size: 22px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .header .logo .dot {
+            width: 12px;
+            height: 12px;
+            background: #ffb800;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .header .sub {
+            font-size: 12px;
+            color: #4a4d66;
+            margin-top: 4px;
+        }
+        .header .notice {
+            margin-top: 10px;
+            padding: 10px 16px;
+            background: #fff3cd;
+            border-radius: 8px;
+            font-size: 12px;
+            color: #856404;
+            border: 1px solid #ffc107;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #4a4d66;
+            margin-bottom: 4px;
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            border-radius: 8px;
+            background: #f8f9fc;
+            font-family: inherit;
+            font-size: 13px;
+            transition: border-color 0.2s;
+            outline: none;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #ffb800;
+            background: #ffffff;
+        }
+        .form-group input:disabled {
+            background: #e9ecef;
+            color: #6c757d;
+            cursor: not-allowed;
+        }
+        .form-group .hint {
+            font-size: 10px;
+            color: #8a8da8;
+            margin-top: 2px;
+        }
+        .form-group .required {
+            color: #ff4757;
+        }
+
+        .tag-input-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+        .tag-input-group input {
+            flex: 1;
+            min-width: 120px;
+        }
+        .tag-input-group .tag-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 4px;
+        }
+        .tag-input-group .tag-item {
+            background: #ffb800;
+            color: #1e1e2a;
+            padding: 2px 10px;
+            border-radius: 14px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .tag-input-group .tag-item .remove {
+            cursor: pointer;
+            font-weight: 700;
+            opacity: 0.6;
+        }
+        .tag-input-group .tag-item .remove:hover {
+            opacity: 1;
+        }
+        .tag-limit {
+            font-size: 10px;
+            color: #8a8da8;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 4px;
+        }
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        .checkbox-group label {
+            font-size: 13px;
+            color: #4a4d66;
+            cursor: pointer;
+        }
+
+        .collab-input {
+            margin-top: 8px;
+            display: none;
+        }
+        .collab-input.show {
+            display: block;
+        }
+
+        .btn {
+            padding: 10px 28px;
+            border-radius: 24px;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-primary {
+            background: #ffb800;
+            color: #1e1e2a;
+        }
+        .btn-primary:hover {
+            box-shadow: 0 0 20px rgba(255, 184, 0, 0.3);
+            transform: scale(1.02);
+        }
+        .btn-secondary {
+            background: #f0f2f8;
+            color: #4a4d66;
+        }
+        .btn-secondary:hover {
+            background: #e2e5ed;
+        }
+        .btn-success {
+            background: #2ecc71;
+            color: #fff;
+        }
+        .btn-success:hover {
+            background: #27ae60;
+        }
+        .btn-block {
+            width: 100%;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(80px);
+            background: #ffffff;
+            color: #1e1e2a;
+            padding: 10px 24px;
+            border-radius: 12px;
+            font-size: 13px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            z-index: 9999;
+            transition: transform 0.3s ease;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 9998;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay.show {
+            display: flex;
+        }
+        .modal-box {
+            background: #ffffff;
+            border-radius: 14px;
+            padding: 28px 32px;
+            max-width: 560px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 0.25s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .modal-box h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .modal-box p {
+            font-size: 12px;
+            color: #4a4d66;
+            margin-bottom: 12px;
+        }
+        .modal-box textarea {
+            width: 100%;
+            height: 200px;
+            padding: 12px;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            border-radius: 8px;
+            font-family: 'DM Mono', monospace;
+            font-size: 12px;
+            resize: vertical;
+            outline: none;
+            background: #f8f9fc;
+        }
+        .modal-box textarea:focus {
+            border-color: #ffb800;
+            background: #ffffff;
+        }
+        .modal-box .modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 14px;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px 16px;
+            }
+            .actions {
+                flex-direction: column;
+            }
+            .actions .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div class="logo">
+            <span class="dot"></span> 视频数据导出
+        </div>
+        <div class="sub">填写基本信息，导出的数据需站长补充媒体资源</div>
+        <div class="notice">
+            ⚠️ 视频文件与封面图请直接发给站长 <strong>Seven戚 (QQ: 2103686588)</strong><br>
+            以下导出数据中，视频链接、封面图、分类等字段会用括号标记，由站长统一填写
+        </div>
+    </div>
+
+    <!-- 表单 -->
+    <form id="videoForm">
+        <!-- 标题 -->
+        <div class="form-group">
+            <label><span class="required">*</span> 视频标题</label>
+            <input type="text" id="title" placeholder="例如：【雾都冥域】第二章·奇怪的规则（上）" required>
+        </div>
+
+        <!-- 视频链接（不可填） -->
+        <div class="form-group">
+            <label>视频链接</label>
+            <input type="text" id="video" value="(请站长填写视频链接)" disabled>
+            <div class="hint">📹 视频文件请单独发给站长</div>
+        </div>
+
+        <!-- 封面图链接（不可填） -->
+        <div class="form-group">
+            <label>封面图链接</label>
+            <input type="text" id="thumb" value="(请站长填写封面图链接)" disabled>
+            <div class="hint">🖼️ 封面图请单独发给站长</div>
+        </div>
+
+        <!-- 分类（不可选，默认"其他"） -->
+        <div class="form-group">
+            <label>分类</label>
+            <input type="text" id="cat" value="(请站长选择分类)" disabled>
+        </div>
+
+        <!-- 观看数量（不可写） -->
+        <div class="form-group">
+            <label>观看数量</label>
+            <input type="text" id="views" value="(由站长设定)" disabled>
+        </div>
+
+        <!-- 发布日期（不可更改，自动当前日期） -->
+        <div class="form-group">
+            <label>发布日期</label>
+            <input type="text" id="date" disabled>
+        </div>
+
+        <!-- 标签（最多3个，每个最多4个字） -->
+        <div class="form-group">
+            <label>标签 <span class="hint">（最多3个，每个最多4个字）</span></label>
+            <div class="tag-input-group">
+                <input type="text" id="tagInput" placeholder="输入标签" maxlength="4">
+                <button type="button" class="btn btn-secondary" id="addTagBtn" style="padding:6px 14px;font-size:12px;">添加</button>
+            </div>
+            <div class="tag-list" id="tagList"></div>
+            <div class="tag-limit" id="tagLimit">已添加 0 / 3</div>
+        </div>
+
+        <!-- 是否合作 -->
+        <div class="form-group">
+            <label>合作者</label>
+            <div class="checkbox-group">
+                <input type="checkbox" id="isCollaboration">
+                <label for="isCollaboration">此视频为合作作品</label>
+            </div>
+            <div class="collab-input" id="collabInput">
+                <label style="font-size:12px;color:#4a4d66;">合作者名字</label>
+                <input type="text" id="collaboratorName" placeholder="例如：双逆足的入">
+            </div>
+        </div>
+
+        <div class="actions">
+            <button type="submit" class="btn btn-success btn-block">📤 导出数据给站长</button>
+            <button type="button" class="btn btn-secondary btn-block" id="resetBtn">↻ 重置</button>
+        </div>
+    </form>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- 导出预览弹窗 -->
+<div class="modal-overlay" id="exportModal">
+    <div class="modal-box">
+        <h3>📤 导出数据</h3>
+        <p>以下 JSON 数据已自动标记需站长补充的字段（括号内容），请复制并发送给站长 Seven戚。</p>
+        <textarea id="exportTextarea" readonly></textarea>
+        <div class="modal-actions">
+            <button class="btn btn-secondary" id="closeModalBtn">关闭</button>
+            <button class="btn btn-primary" id="copyExportBtn">📋 复制</button>
+            <button class="btn btn-success" id="downloadExportBtn">⬇ 下载 JSON</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ============================================================
+    // 1. 状态
+    // ============================================================
+    const MAX_TAGS = 3;
+    const MAX_TAG_LENGTH = 4;
+    let tags = [];
+    let isCollaborating = false;
+
+    // ============================================================
+    // 2. DOM 引用
+    // ============================================================
+    const titleInput = document.getElementById('title');
+    const videoInput = document.getElementById('video');
+    const thumbInput = document.getElementById('thumb');
+    const catInput = document.getElementById('cat');
+    const viewsInput = document.getElementById('views');
+    const dateInput = document.getElementById('date');
+    const tagInput = document.getElementById('tagInput');
+    const addTagBtn = document.getElementById('addTagBtn');
+    const tagList = document.getElementById('tagList');
+    const tagLimit = document.getElementById('tagLimit');
+    const isCollabCheck = document.getElementById('isCollaboration');
+    const collabInput = document.getElementById('collabInput');
+    const collaboratorNameInput = document.getElementById('collaboratorName');
+    const form = document.getElementById('videoForm');
+    const resetBtn = document.getElementById('resetBtn');
+
+    // 弹窗
+    const exportModal = document.getElementById('exportModal');
+    const exportTextarea = document.getElementById('exportTextarea');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const copyExportBtn = document.getElementById('copyExportBtn');
+    const downloadExportBtn = document.getElementById('downloadExportBtn');
+
+    // ============================================================
+    // 3. 工具函数
+    // ============================================================
+    function showToast(msg) {
+        const el = document.getElementById('toast');
+        el.textContent = msg;
+        el.classList.add('show');
+        clearTimeout(el._timer);
+        el._timer = setTimeout(() => el.classList.remove('show'), 2500);
+    }
+
+    function updateTagList() {
+        tagList.innerHTML = tags.map(t =>
+            `<span class="tag-item">${t} <span class="remove" data-tag="${t}">×</span></span>`
+        ).join('');
+        tagLimit.textContent = `已添加 ${tags.length} / ${MAX_TAGS}`;
+        tagInput.disabled = tags.length >= MAX_TAGS;
+        addTagBtn.disabled = tags.length >= MAX_TAGS;
+        // 绑定删除事件
+        document.querySelectorAll('.tag-item .remove').forEach(el => {
+            el.addEventListener('click', function() {
+                const tag = this.dataset.tag;
+                tags = tags.filter(t => t !== tag);
+                updateTagList();
+            });
+        });
+    }
+
+    function addTag() {
+        const val = tagInput.value.trim();
+        if (!val) return showToast('请输入标签');
+        if (val.length > MAX_TAG_LENGTH) return showToast(`标签最多 ${MAX_TAG_LENGTH} 个字`);
+        if (tags.includes(val)) return showToast('标签已存在');
+        if (tags.length >= MAX_TAGS) return showToast(`最多 ${MAX_TAGS} 个标签`);
+        tags.push(val);
+        tagInput.value = '';
+        updateTagList();
+    }
+
+    // ============================================================
+    // 4. 事件绑定
+    // ============================================================
+    addTagBtn.addEventListener('click', addTag);
+    tagInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') { e.preventDefault();
+            addTag(); }
+    });
+
+    isCollabCheck.addEventListener('change', function() {
+        isCollaborating = this.checked;
+        collabInput.classList.toggle('show', isCollaborating);
+        if (!isCollaborating) collaboratorNameInput.value = '';
+    });
+
+    // 设置当前日期
+    dateInput.value = new Date().toISOString().slice(0, 10);
+
+    // ============================================================
+    // 5. 表单提交 - 导出
+    // ============================================================
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const title = titleInput.value.trim();
+        if (!title) {
+            showToast('请填写视频标题');
+            return;
+        }
+
+        // 构建导出数据
+        const exportData = {
+            id: Date.now(), // 临时ID，站长会重新分配
+            title: title,
+            thumb: thumbInput.value, // 已经是带括号的
+            video: videoInput.value, // 已经是带括号的
+            duration: "00:00", // 站长可改
+            views: viewsInput.value, // 带括号
+            date: dateInput.value,
+            upId: 1, // 默认，站长可改
+            upName: "创作者", // 可改
+            cat: catInput.value, // 带括号
+            paid: false,
+            collaborators: isCollaborating ? [collaboratorNameInput.value.trim()] : [],
+            tags: tags,
+            dm: [],
+            desc: ""
+        };
+
+        // 转换为 JSON 字符串
+        const jsonStr = JSON.stringify(exportData, null, 2);
+
+        // 显示弹窗
+        exportTextarea.value = jsonStr;
+        exportModal.classList.add('show');
+    });
+
+    // ============================================================
+    // 6. 弹窗操作
+    // ============================================================
+    closeModalBtn.addEventListener('click', function() {
+        exportModal.classList.remove('show');
+    });
+    exportModal.addEventListener('click', function(e) {
+        if (e.target === this) this.classList.remove('show');
+    });
+
+    // 复制
+    copyExportBtn.addEventListener('click', function() {
+        const text = exportTextarea.value;
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('✅ 已复制到剪贴板');
+            }).catch(() => {
+                fallbackCopy(text);
+            });
+        } else {
+            fallbackCopy(text);
+        }
+    });
+
+    function fallbackCopy(text) {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.left = '-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+            document.execCommand('copy');
+            showToast('✅ 已复制到剪贴板');
+        } catch (e) {
+            showToast('❌ 复制失败，请手动复制');
+        }
+        document.body.removeChild(ta);
+    }
+
+    // 下载
+    downloadExportBtn.addEventListener('click', function() {
+        const text = exportTextarea.value;
+        const blob = new Blob([text], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'video_data.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showToast('✅ 下载成功');
+    });
+
+    // ============================================================
+    // 7. 重置
+    // ============================================================
+    resetBtn.addEventListener('click', function() {
+        if (!confirm('重置所有输入？')) return;
+        titleInput.value = '';
+        tags = [];
+        updateTagList();
+        isCollabCheck.checked = false;
+        collabInput.classList.remove('show');
+        collaboratorNameInput.value = '';
+        // 其他禁用字段不变
+        showToast('已重置');
+    });
+
+    // ============================================================
+    // 8. 初始化
+    // ============================================================
+    updateTagList();
+    console.log('📦 视频数据导出工具已启动');
+</script>
+</body>
+</html>
