@@ -1,13 +1,14 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>视频数据导出 - 七七视频网</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>数据导出工具 - 七七视频网</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet" />
     <style>
+        /* ===== 全局重置 ===== */
         * {
             margin: 0;
             padding: 0;
@@ -25,16 +26,20 @@
             justify-content: center;
         }
         .container {
-            max-width: 600px;
+            max-width: 640px;
             width: 100%;
             background: #ffffff;
             border-radius: 14px;
             box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
-            padding: 32px 28px;
+            padding: 28px 24px 32px;
+            position: relative;
         }
+
+        /* ===== 头部 ===== */
         .header {
             text-align: center;
-            margin-bottom: 24px;
+            margin-bottom: 16px;
+            position: relative;
         }
         .header .logo {
             font-family: 'Syne', sans-serif;
@@ -55,18 +60,124 @@
         .header .sub {
             font-size: 12px;
             color: #4a4d66;
-            margin-top: 4px;
+            margin-top: 2px;
         }
-        .header .notice {
-            margin-top: 10px;
-            padding: 10px 16px;
-            background: #fff3cd;
-            border-radius: 8px;
-            font-size: 12px;
-            color: #856404;
-            border: 1px solid #ffc107;
+        /* 返回首页链接 */
+        .back-home {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 13px;
+            color: #8a8da8;
+            text-decoration: none;
+            font-family: 'Syne', sans-serif;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: color 0.2s;
+        }
+        .back-home:hover {
+            color: #1e1e2a;
+        }
+        .back-home .arrow {
+            font-size: 16px;
+        }
+        @media (max-width: 480px) {
+            .back-home {
+                position: static;
+                transform: none;
+                justify-content: center;
+                margin-bottom: 6px;
+            }
+            .header .logo {
+                font-size: 19px;
+            }
         }
 
+        /* ===== 二级导航 ===== */
+        .nav-tabs {
+            display: flex;
+            gap: 4px;
+            background: #f0f2f8;
+            border-radius: 10px;
+            padding: 4px;
+            margin: 6px 0 18px;
+            border: 1px solid rgba(0, 0, 0, 0.04);
+        }
+        .nav-tabs .tab-btn {
+            flex: 1;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 8px;
+            background: transparent;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            color: #4a4d66;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            text-align: center;
+        }
+        .nav-tabs .tab-btn:hover {
+            color: #1e1e2a;
+            background: rgba(255, 184, 0, 0.12);
+        }
+        .nav-tabs .tab-btn.active {
+            background: #ffffff;
+            color: #1e1e2a;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+        .nav-tabs .tab-btn .icon {
+            margin-right: 6px;
+        }
+
+        /* ===== Tab 内容容器 ===== */
+        .tab-content {
+            display: block;
+        }
+        .tab-pane {
+            display: none;
+            animation: fadeIn 0.25s ease;
+        }
+        .tab-pane.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(6px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== 通知条 ===== */
+        .notice {
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 12px;
+            margin-bottom: 18px;
+            border: 1px solid;
+        }
+        .notice-warning {
+            background: #fff3cd;
+            color: #856404;
+            border-color: #ffc107;
+        }
+        .notice-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border-color: #bee5eb;
+        }
+        .notice strong {
+            font-weight: 700;
+        }
+
+        /* ===== 表单 ===== */
         .form-group {
             margin-bottom: 18px;
         }
@@ -78,7 +189,8 @@
             margin-bottom: 4px;
         }
         .form-group input,
-        .form-group textarea {
+        .form-group textarea,
+        .form-group select {
             width: 100%;
             padding: 8px 12px;
             border: 1px solid rgba(0, 0, 0, 0.06);
@@ -86,15 +198,19 @@
             background: #f8f9fc;
             font-family: inherit;
             font-size: 13px;
-            transition: border-color 0.2s;
+            transition: border-color 0.2s, background 0.2s;
             outline: none;
+            color: #1e1e2a;
         }
         .form-group input:focus,
-        .form-group textarea:focus {
+        .form-group textarea:focus,
+        .form-group select:focus {
             border-color: #ffb800;
             background: #ffffff;
         }
-        .form-group input:disabled {
+        .form-group input:disabled,
+        .form-group textarea:disabled,
+        .form-group select:disabled {
             background: #e9ecef;
             color: #6c757d;
             cursor: not-allowed;
@@ -108,6 +224,7 @@
             color: #ff4757;
         }
 
+        /* ===== 标签（视频专用） ===== */
         .tag-input-group {
             display: flex;
             flex-wrap: wrap;
@@ -123,6 +240,7 @@
             flex-wrap: wrap;
             gap: 6px;
             margin-top: 4px;
+            width: 100%;
         }
         .tag-input-group .tag-item {
             background: #ffb800;
@@ -147,7 +265,12 @@
             font-size: 10px;
             color: #8a8da8;
         }
+        .btn-sm {
+            padding: 6px 14px;
+            font-size: 12px;
+        }
 
+        /* ===== 复选框（视频专用） ===== */
         .checkbox-group {
             display: flex;
             align-items: center;
@@ -158,13 +281,13 @@
             width: 18px;
             height: 18px;
             cursor: pointer;
+            accent-color: #ffb800;
         }
         .checkbox-group label {
             font-size: 13px;
             color: #4a4d66;
             cursor: pointer;
         }
-
         .collab-input {
             margin-top: 8px;
             display: none;
@@ -173,6 +296,7 @@
             display: block;
         }
 
+        /* ===== 按钮 ===== */
         .btn {
             padding: 10px 28px;
             border-radius: 24px;
@@ -182,6 +306,10 @@
             border: none;
             cursor: pointer;
             transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
         }
         .btn-primary {
             background: #ffb800;
@@ -208,6 +336,11 @@
         .btn-block {
             width: 100%;
         }
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
 
         .actions {
             display: flex;
@@ -215,7 +348,12 @@
             margin-top: 20px;
             flex-wrap: wrap;
         }
+        .actions .btn {
+            flex: 1;
+            min-width: 120px;
+        }
 
+        /* ===== Toast ===== */
         .toast {
             position: fixed;
             bottom: 30px;
@@ -232,11 +370,13 @@
             transition: transform 0.3s ease;
             pointer-events: none;
             white-space: nowrap;
+            font-family: 'DM Mono', monospace;
         }
         .toast.show {
             transform: translateX(-50%) translateY(0);
         }
 
+        /* ===== 导出弹窗 ===== */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -249,6 +389,7 @@
             display: none;
             align-items: center;
             justify-content: center;
+            padding: 20px;
         }
         .modal-overlay.show {
             display: flex;
@@ -257,22 +398,18 @@
             background: #ffffff;
             border-radius: 14px;
             padding: 28px 32px;
-            max-width: 560px;
-            width: 90%;
+            max-width: 580px;
+            width: 100%;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
             animation: fadeIn 0.25s ease;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
         }
         .modal-box h3 {
             font-family: 'Syne', sans-serif;
             font-size: 18px;
             font-weight: 700;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
-        .modal-box p {
+        .modal-box .modal-sub {
             font-size: 12px;
             color: #4a4d66;
             margin-bottom: 12px;
@@ -288,6 +425,7 @@
             resize: vertical;
             outline: none;
             background: #f8f9fc;
+            color: #1e1e2a;
         }
         .modal-box textarea:focus {
             border-color: #ffb800;
@@ -300,327 +438,546 @@
             justify-content: flex-end;
             flex-wrap: wrap;
         }
+        .modal-box .modal-actions .btn {
+            min-width: 80px;
+        }
 
+        /* ===== 响应式 ===== */
         @media (max-width: 480px) {
             .container {
-                padding: 20px 16px;
+                padding: 16px 12px;
             }
             .actions {
                 flex-direction: column;
             }
             .actions .btn {
                 width: 100%;
+                flex: none;
+            }
+            .modal-box {
+                padding: 20px 16px;
+            }
+            .modal-box .modal-actions .btn {
+                flex: 1;
+                min-width: 60px;
+                font-size: 12px;
+                padding: 8px 16px;
+            }
+            .nav-tabs .tab-btn {
+                font-size: 13px;
+                padding: 6px 8px;
+            }
+            .header .logo {
+                font-size: 19px;
+            }
+        }
+        @media (max-width: 380px) {
+            .nav-tabs .tab-btn {
+                font-size: 11px;
+                padding: 6px 4px;
+            }
+            .nav-tabs .tab-btn .icon {
+                margin-right: 2px;
             }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="header">
-        <div class="logo">
-            <span class="dot"></span> 视频数据导出
+    <div class="container">
+
+        <!-- ===== 头部 ===== -->
+        <div class="header">
+            <!-- 返回首页链接 -->
+            <a href="index.html" class="back-home">
+                <span class="arrow">←</span> 返回首页
+            </a>
+            <div class="logo">
+                <span class="dot"></span> 七七视频网 · 数据导出
+            </div>
+            <div class="sub">填写信息，导出数据给站长 <strong>Seven戚</strong> (QQ: 2103686588)</div>
         </div>
-        <div class="sub">填写基本信息，导出的数据需站长补充媒体资源</div>
-        <div class="notice">
-            ⚠️ 视频文件与封面图请直接发给站长 <strong>Seven戚 (QQ: 2103686588)</strong><br>
-            以下导出数据中，视频链接、封面图、分类等字段会用括号标记，由站长统一填写
+
+        <!-- ===== 二级导航 ===== -->
+        <div class="nav-tabs" role="tablist">
+            <button class="tab-btn active" data-tab="publish" role="tab" aria-selected="true">
+                <span class="icon">🎬</span> 发布视频
+            </button>
+            <button class="tab-btn" data-tab="account" role="tab" aria-selected="false">
+                <span class="icon">👤</span> 创建账户
+            </button>
+        </div>
+
+        <!-- ===== Tab 内容 ===== -->
+        <div class="tab-content">
+
+            <!-- ============================================================ -->
+            <!-- TAB 1: 发布视频 -->
+            <!-- ============================================================ -->
+            <div class="tab-pane active" id="publishTab" role="tabpanel">
+                <div class="notice notice-warning">
+                    ⚠️ 视频文件与封面图请<strong>直接发给站长 Seven戚 (QQ: 2103686588)</strong><br />
+                    以下导出数据中，视频链接、封面图、分类等字段会用括号标记，由站长统一填写。
+                </div>
+
+                <form id="videoForm">
+                    <!-- 标题 -->
+                    <div class="form-group">
+                        <label><span class="required">*</span> 视频标题</label>
+                        <input type="text" id="v_title" placeholder="例如：【雾都冥域】第二章·奇怪的规则（上）" required />
+                    </div>
+
+                    <!-- 视频链接（禁用） -->
+                    <div class="form-group">
+                        <label>视频链接</label>
+                        <input type="text" id="v_video" value="(请站长填写视频链接)" disabled />
+                        <div class="hint">📹 视频文件请单独发给站长</div>
+                    </div>
+
+                    <!-- 封面图链接（禁用） -->
+                    <div class="form-group">
+                        <label>封面图链接</label>
+                        <input type="text" id="v_thumb" value="(请站长填写封面图链接)" disabled />
+                        <div class="hint">🖼️ 封面图请单独发给站长</div>
+                    </div>
+
+                    <!-- 分类（禁用） -->
+                    <div class="form-group">
+                        <label>分类</label>
+                        <input type="text" id="v_cat" value="(请站长选择分类)" disabled />
+                    </div>
+
+                    <!-- 观看数量（禁用） -->
+                    <div class="form-group">
+                        <label>观看数量</label>
+                        <input type="text" id="v_views" value="(由站长设定)" disabled />
+                    </div>
+
+                    <!-- 发布日期（自动） -->
+                    <div class="form-group">
+                        <label>发布日期</label>
+                        <input type="text" id="v_date" disabled />
+                    </div>
+
+                    <!-- 标签 -->
+                    <div class="form-group">
+                        <label>标签 <span class="hint">（最多3个，每个最多4个字）</span></label>
+                        <div class="tag-input-group">
+                            <input type="text" id="v_tagInput" placeholder="输入标签" maxlength="4" />
+                            <button type="button" class="btn btn-secondary btn-sm" id="v_addTagBtn">添加</button>
+                        </div>
+                        <div class="tag-list" id="v_tagList"></div>
+                        <div class="tag-limit" id="v_tagLimit">已添加 0 / 3</div>
+                    </div>
+
+                    <!-- 合作者 -->
+                    <div class="form-group">
+                        <label>合作者</label>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="v_isCollaboration" />
+                            <label for="v_isCollaboration">此视频为合作作品</label>
+                        </div>
+                        <div class="collab-input" id="v_collabInput">
+                            <label style="font-size:12px;color:#4a4d66;">合作者名字</label>
+                            <input type="text" id="v_collaboratorName" placeholder="例如：双逆足的入" />
+                        </div>
+                    </div>
+
+                    <div class="actions">
+                        <button type="submit" class="btn btn-success">📤 导出数据给站长</button>
+                        <button type="button" class="btn btn-secondary" id="v_resetBtn">↻ 重置</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- TAB 2: 创建账户 （认证等级已改为不可选） -->
+            <!-- ============================================================ -->
+            <div class="tab-pane" id="accountTab" role="tabpanel">
+                <div class="notice notice-info">
+                    ⚠️ 头像图片请<strong>直接发给站长 Seven戚 (QQ: 2103686588)</strong><br />
+                    以下导出数据中，ID 和 头像 字段会用括号标记，由站长统一填写。
+                </div>
+
+                <form id="accountForm">
+                    <!-- ID（禁用） -->
+                    <div class="form-group">
+                        <label>用户 ID</label>
+                        <input type="text" id="a_id" value="(由站长分配)" disabled />
+                        <div class="hint">🔑 ID 由站长统一分配，不可更改</div>
+                    </div>
+
+                    <!-- 用户名 -->
+                    <div class="form-group">
+                        <label><span class="required">*</span> 用户名</label>
+                        <input type="text" id="a_name" placeholder="例如：Seven戚" required />
+                    </div>
+
+                    <!-- 联系方式（handle） -->
+                    <div class="form-group">
+                        <label><span class="required">*</span> 联系方式</label>
+                        <input type="text" id="a_handle" placeholder="例如：2103686588@qq.com 或 手机号" required />
+                        <div class="hint">📧 用于联系和登录，请确保准确</div>
+                    </div>
+
+                    <!-- 头像（禁用） -->
+                    <div class="form-group">
+                        <label>头像</label>
+                        <input type="text" id="a_avatar" value="(请单独发给站长)" disabled />
+                        <div class="hint">🖼️ 头像图片请单独发给站长</div>
+                    </div>
+
+                    <!-- 个人简介 -->
+                    <div class="form-group">
+                        <label>个人简介</label>
+                        <textarea id="a_bio" rows="3" placeholder="一句话介绍自己，例如：网站开发以及小说创作。"></textarea>
+                    </div>
+
+                    <!-- 粉丝数（禁用） -->
+                    <div class="form-group">
+                        <label>粉丝数</label>
+                        <input type="text" id="a_followers" value="(由站长设定)" disabled />
+                    </div>
+
+                    <!-- 认证等级：不可选择，需参加活动 -->
+                    <div class="form-group">
+                        <label>认证等级</label>
+                        <input type="text" id="a_verify" value="需参加活动获取" disabled />
+                        <div class="hint">🏅 认证等级需通过参加官方活动获取，暂不可自行选择</div>
+                    </div>
+
+                    <div class="actions">
+                        <button type="submit" class="btn btn-success">📤 导出账户数据</button>
+                        <button type="button" class="btn btn-secondary" id="a_resetBtn">↻ 重置</button>
+                    </div>
+                </form>
+            </div>
+
+        </div><!-- /tab-content -->
+    </div><!-- /container -->
+
+    <!-- ===== Toast ===== -->
+    <div class="toast" id="toast"></div>
+
+    <!-- ===== 导出弹窗 ===== -->
+    <div class="modal-overlay" id="exportModal">
+        <div class="modal-box">
+            <h3 id="modalTitle">📤 导出数据</h3>
+            <p class="modal-sub" id="modalSub">以下 JSON 数据已自动标记需站长补充的字段（括号内容），请复制并发送给站长 Seven戚。</p>
+            <textarea id="exportTextarea" readonly></textarea>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" id="closeModalBtn">关闭</button>
+                <button class="btn btn-primary" id="copyExportBtn">📋 复制</button>
+                <button class="btn btn-success" id="downloadExportBtn">⬇ 下载 JSON</button>
+            </div>
         </div>
     </div>
 
-    <!-- 表单 -->
-    <form id="videoForm">
-        <!-- 标题 -->
-        <div class="form-group">
-            <label><span class="required">*</span> 视频标题</label>
-            <input type="text" id="title" placeholder="例如：【雾都冥域】第二章·奇怪的规则（上）" required>
-        </div>
-
-        <!-- 视频链接（不可填） -->
-        <div class="form-group">
-            <label>视频链接</label>
-            <input type="text" id="video" value="(请站长填写视频链接)" disabled>
-            <div class="hint">📹 视频文件请单独发给站长</div>
-        </div>
-
-        <!-- 封面图链接（不可填） -->
-        <div class="form-group">
-            <label>封面图链接</label>
-            <input type="text" id="thumb" value="(请站长填写封面图链接)" disabled>
-            <div class="hint">🖼️ 封面图请单独发给站长</div>
-        </div>
-
-        <!-- 分类（不可选，默认"其他"） -->
-        <div class="form-group">
-            <label>分类</label>
-            <input type="text" id="cat" value="(请站长选择分类)" disabled>
-        </div>
-
-        <!-- 观看数量（不可写） -->
-        <div class="form-group">
-            <label>观看数量</label>
-            <input type="text" id="views" value="(由站长设定)" disabled>
-        </div>
-
-        <!-- 发布日期（不可更改，自动当前日期） -->
-        <div class="form-group">
-            <label>发布日期</label>
-            <input type="text" id="date" disabled>
-        </div>
-
-        <!-- 标签（最多3个，每个最多4个字） -->
-        <div class="form-group">
-            <label>标签 <span class="hint">（最多3个，每个最多4个字）</span></label>
-            <div class="tag-input-group">
-                <input type="text" id="tagInput" placeholder="输入标签" maxlength="4">
-                <button type="button" class="btn btn-secondary" id="addTagBtn" style="padding:6px 14px;font-size:12px;">添加</button>
-            </div>
-            <div class="tag-list" id="tagList"></div>
-            <div class="tag-limit" id="tagLimit">已添加 0 / 3</div>
-        </div>
-
-        <!-- 是否合作 -->
-        <div class="form-group">
-            <label>合作者</label>
-            <div class="checkbox-group">
-                <input type="checkbox" id="isCollaboration">
-                <label for="isCollaboration">此视频为合作作品</label>
-            </div>
-            <div class="collab-input" id="collabInput">
-                <label style="font-size:12px;color:#4a4d66;">合作者名字</label>
-                <input type="text" id="collaboratorName" placeholder="例如：双逆足的入">
-            </div>
-        </div>
-
-        <div class="actions">
-            <button type="submit" class="btn btn-success btn-block">📤 导出数据给站长</button>
-            <button type="button" class="btn btn-secondary btn-block" id="resetBtn">↻ 重置</button>
-        </div>
-    </form>
-</div>
-
-<!-- Toast -->
-<div class="toast" id="toast"></div>
-
-<!-- 导出预览弹窗 -->
-<div class="modal-overlay" id="exportModal">
-    <div class="modal-box">
-        <h3>📤 导出数据</h3>
-        <p>以下 JSON 数据已自动标记需站长补充的字段（括号内容），请复制并发送给站长 Seven戚。</p>
-        <textarea id="exportTextarea" readonly></textarea>
-        <div class="modal-actions">
-            <button class="btn btn-secondary" id="closeModalBtn">关闭</button>
-            <button class="btn btn-primary" id="copyExportBtn">📋 复制</button>
-            <button class="btn btn-success" id="downloadExportBtn">⬇ 下载 JSON</button>
-        </div>
-    </div>
-</div>
-
-<script>
-    // ============================================================
-    // 1. 状态
-    // ============================================================
-    const MAX_TAGS = 3;
-    const MAX_TAG_LENGTH = 4;
-    let tags = [];
-    let isCollaborating = false;
-
-    // ============================================================
-    // 2. DOM 引用
-    // ============================================================
-    const titleInput = document.getElementById('title');
-    const videoInput = document.getElementById('video');
-    const thumbInput = document.getElementById('thumb');
-    const catInput = document.getElementById('cat');
-    const viewsInput = document.getElementById('views');
-    const dateInput = document.getElementById('date');
-    const tagInput = document.getElementById('tagInput');
-    const addTagBtn = document.getElementById('addTagBtn');
-    const tagList = document.getElementById('tagList');
-    const tagLimit = document.getElementById('tagLimit');
-    const isCollabCheck = document.getElementById('isCollaboration');
-    const collabInput = document.getElementById('collabInput');
-    const collaboratorNameInput = document.getElementById('collaboratorName');
-    const form = document.getElementById('videoForm');
-    const resetBtn = document.getElementById('resetBtn');
-
-    // 弹窗
-    const exportModal = document.getElementById('exportModal');
-    const exportTextarea = document.getElementById('exportTextarea');
-    const closeModalBtn = document.getElementById('closeModalBtn');
-    const copyExportBtn = document.getElementById('copyExportBtn');
-    const downloadExportBtn = document.getElementById('downloadExportBtn');
-
-    // ============================================================
-    // 3. 工具函数
-    // ============================================================
-    function showToast(msg) {
-        const el = document.getElementById('toast');
-        el.textContent = msg;
-        el.classList.add('show');
-        clearTimeout(el._timer);
-        el._timer = setTimeout(() => el.classList.remove('show'), 2500);
-    }
-
-    function updateTagList() {
-        tagList.innerHTML = tags.map(t =>
-            `<span class="tag-item">${t} <span class="remove" data-tag="${t}">×</span></span>`
-        ).join('');
-        tagLimit.textContent = `已添加 ${tags.length} / ${MAX_TAGS}`;
-        tagInput.disabled = tags.length >= MAX_TAGS;
-        addTagBtn.disabled = tags.length >= MAX_TAGS;
-        // 绑定删除事件
-        document.querySelectorAll('.tag-item .remove').forEach(el => {
-            el.addEventListener('click', function() {
-                const tag = this.dataset.tag;
-                tags = tags.filter(t => t !== tag);
-                updateTagList();
-            });
-        });
-    }
-
-    function addTag() {
-        const val = tagInput.value.trim();
-        if (!val) return showToast('请输入标签');
-        if (val.length > MAX_TAG_LENGTH) return showToast(`标签最多 ${MAX_TAG_LENGTH} 个字`);
-        if (tags.includes(val)) return showToast('标签已存在');
-        if (tags.length >= MAX_TAGS) return showToast(`最多 ${MAX_TAGS} 个标签`);
-        tags.push(val);
-        tagInput.value = '';
-        updateTagList();
-    }
-
-    // ============================================================
-    // 4. 事件绑定
-    // ============================================================
-    addTagBtn.addEventListener('click', addTag);
-    tagInput.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') { e.preventDefault();
-            addTag(); }
-    });
-
-    isCollabCheck.addEventListener('change', function() {
-        isCollaborating = this.checked;
-        collabInput.classList.toggle('show', isCollaborating);
-        if (!isCollaborating) collaboratorNameInput.value = '';
-    });
-
-    // 设置当前日期
-    dateInput.value = new Date().toISOString().slice(0, 10);
-
-    // ============================================================
-    // 5. 表单提交 - 导出
-    // ============================================================
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const title = titleInput.value.trim();
-        if (!title) {
-            showToast('请填写视频标题');
-            return;
+    <script>
+        // ================================================================
+        // 0. 工具函数
+        // ================================================================
+        function showToast(msg) {
+            const el = document.getElementById('toast');
+            el.textContent = msg;
+            el.classList.add('show');
+            clearTimeout(el._timer);
+            el._timer = setTimeout(() => el.classList.remove('show'), 2500);
         }
 
-        // 构建导出数据
-        const exportData = {
-            id: Date.now(), // 临时ID，站长会重新分配
-            title: title,
-            thumb: thumbInput.value, // 已经是带括号的
-            video: videoInput.value, // 已经是带括号的
-            duration: "00:00", // 站长可改
-            views: viewsInput.value, // 带括号
-            date: dateInput.value,
-            upId: 1, // 默认，站长可改
-            upName: "创作者", // 可改
-            cat: catInput.value, // 带括号
-            paid: false,
-            collaborators: isCollaborating ? [collaboratorNameInput.value.trim()] : [],
-            tags: tags,
-            dm: [],
-            desc: ""
+        function fallbackCopy(text) {
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.position = 'fixed';
+            ta.style.left = '-9999px';
+            document.body.appendChild(ta);
+            ta.select();
+            try {
+                document.execCommand('copy');
+                showToast('✅ 已复制到剪贴板');
+            } catch (_) {
+                showToast('❌ 复制失败，请手动复制');
+            }
+            document.body.removeChild(ta);
+        }
+
+        function copyText(text) {
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text).then(() => {
+                    showToast('✅ 已复制到剪贴板');
+                }).catch(() => {
+                    fallbackCopy(text);
+                });
+            } else {
+                fallbackCopy(text);
+            }
+        }
+
+        function downloadJson(text, filename) {
+            const blob = new Blob([text], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename || 'data.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast('✅ 下载成功');
+        }
+
+        // ================================================================
+        // 1. Tab 切换
+        // ================================================================
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const panes = {
+            publish: document.getElementById('publishTab'),
+            account: document.getElementById('accountTab'),
         };
 
-        // 转换为 JSON 字符串
-        const jsonStr = JSON.stringify(exportData, null, 2);
+        let currentTab = 'publish';
 
-        // 显示弹窗
-        exportTextarea.value = jsonStr;
-        exportModal.classList.add('show');
-    });
+        tabBtns.forEach((btn) => {
+            btn.addEventListener('click', function() {
+                const tab = this.dataset.tab;
+                if (tab === currentTab) return;
 
-    // ============================================================
-    // 6. 弹窗操作
-    // ============================================================
-    closeModalBtn.addEventListener('click', function() {
-        exportModal.classList.remove('show');
-    });
-    exportModal.addEventListener('click', function(e) {
-        if (e.target === this) this.classList.remove('show');
-    });
+                // 更新按钮状态
+                tabBtns.forEach((b) => {
+                    b.classList.remove('active');
+                    b.setAttribute('aria-selected', 'false');
+                });
+                this.classList.add('active');
+                this.setAttribute('aria-selected', 'true');
 
-    // 复制
-    copyExportBtn.addEventListener('click', function() {
-        const text = exportTextarea.value;
-        if (navigator.clipboard) {
-            navigator.clipboard.writeText(text).then(() => {
-                showToast('✅ 已复制到剪贴板');
-            }).catch(() => {
-                fallbackCopy(text);
+                // 更新面板
+                Object.keys(panes).forEach((key) => {
+                    panes[key].classList.toggle('active', key === tab);
+                });
+
+                currentTab = tab;
             });
-        } else {
-            fallbackCopy(text);
+        });
+
+        // ================================================================
+        // 2. 视频表单逻辑
+        // ================================================================
+        const V = {
+            MAX_TAGS: 3,
+            MAX_TAG_LENGTH: 4,
+            tags: [],
+
+            title: document.getElementById('v_title'),
+            video: document.getElementById('v_video'),
+            thumb: document.getElementById('v_thumb'),
+            cat: document.getElementById('v_cat'),
+            views: document.getElementById('v_views'),
+            date: document.getElementById('v_date'),
+            tagInput: document.getElementById('v_tagInput'),
+            addTagBtn: document.getElementById('v_addTagBtn'),
+            tagList: document.getElementById('v_tagList'),
+            tagLimit: document.getElementById('v_tagLimit'),
+            isCollab: document.getElementById('v_isCollaboration'),
+            collabInput: document.getElementById('v_collabInput'),
+            collabName: document.getElementById('v_collaboratorName'),
+            form: document.getElementById('videoForm'),
+            resetBtn: document.getElementById('v_resetBtn'),
+        };
+
+        // 设置日期
+        V.date.value = new Date().toISOString().slice(0, 10);
+
+        // 更新标签UI
+        function updateVideoTags() {
+            V.tagList.innerHTML = V.tags.map(t =>
+                `<span class="tag-item">${t} <span class="remove" data-tag="${t}">×</span></span>`
+            ).join('');
+            V.tagLimit.textContent = `已添加 ${V.tags.length} / ${V.MAX_TAGS}`;
+            V.tagInput.disabled = V.tags.length >= V.MAX_TAGS;
+            V.addTagBtn.disabled = V.tags.length >= V.MAX_TAGS;
+
+            document.querySelectorAll('#v_tagList .tag-item .remove').forEach(el => {
+                el.addEventListener('click', function() {
+                    const tag = this.dataset.tag;
+                    V.tags = V.tags.filter(t => t !== tag);
+                    updateVideoTags();
+                });
+            });
         }
-    });
 
-    function fallbackCopy(text) {
-        const ta = document.createElement('textarea');
-        ta.value = text;
-        ta.style.position = 'fixed';
-        ta.style.left = '-9999px';
-        document.body.appendChild(ta);
-        ta.select();
-        try {
-            document.execCommand('copy');
-            showToast('✅ 已复制到剪贴板');
-        } catch (e) {
-            showToast('❌ 复制失败，请手动复制');
+        // 添加视频标签
+        function addVideoTag() {
+            const val = V.tagInput.value.trim();
+            if (!val) return showToast('请输入标签');
+            if (val.length > V.MAX_TAG_LENGTH) return showToast(`标签最多 ${V.MAX_TAG_LENGTH} 个字`);
+            if (V.tags.includes(val)) return showToast('标签已存在');
+            if (V.tags.length >= V.MAX_TAGS) return showToast(`最多 ${V.MAX_TAGS} 个标签`);
+            V.tags.push(val);
+            V.tagInput.value = '';
+            updateVideoTags();
         }
-        document.body.removeChild(ta);
-    }
 
-    // 下载
-    downloadExportBtn.addEventListener('click', function() {
-        const text = exportTextarea.value;
-        const blob = new Blob([text], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'video_data.json';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-        showToast('✅ 下载成功');
-    });
+        V.addTagBtn.addEventListener('click', addVideoTag);
+        V.tagInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') { e.preventDefault();
+                addVideoTag(); }
+        });
 
-    // ============================================================
-    // 7. 重置
-    // ============================================================
-    resetBtn.addEventListener('click', function() {
-        if (!confirm('重置所有输入？')) return;
-        titleInput.value = '';
-        tags = [];
-        updateTagList();
-        isCollabCheck.checked = false;
-        collabInput.classList.remove('show');
-        collaboratorNameInput.value = '';
-        // 其他禁用字段不变
-        showToast('已重置');
-    });
+        // 合作者
+        V.isCollab.addEventListener('change', function() {
+            V.collabInput.classList.toggle('show', this.checked);
+            if (!this.checked) V.collabName.value = '';
+        });
 
-    // ============================================================
-    // 8. 初始化
-    // ============================================================
-    updateTagList();
-    console.log('📦 视频数据导出工具已启动');
-</script>
+        // 视频表单提交
+        V.form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const title = V.title.value.trim();
+            if (!title) {
+                showToast('请填写视频标题');
+                return;
+            }
+
+            const exportData = {
+                id: Date.now(),
+                title: title,
+                thumb: V.thumb.value,
+                video: V.video.value,
+                duration: "00:00",
+                views: V.views.value,
+                date: V.date.value,
+                upId: 1,
+                upName: "创作者",
+                cat: V.cat.value,
+                paid: false,
+                collaborators: V.isCollab.checked ? [V.collabName.value.trim()] : [],
+                tags: V.tags,
+                dm: [],
+                desc: ""
+            };
+
+            const jsonStr = JSON.stringify(exportData, null, 2);
+            showExportModal('📤 导出视频数据', '以下 JSON 为视频数据，已标记需站长补充的字段。', jsonStr);
+        });
+
+        // 视频重置
+        V.resetBtn.addEventListener('click', function() {
+            if (!confirm('重置所有视频输入？')) return;
+            V.title.value = '';
+            V.tags = [];
+            updateVideoTags();
+            V.isCollab.checked = false;
+            V.collabInput.classList.remove('show');
+            V.collabName.value = '';
+            showToast('视频表单已重置');
+        });
+
+        // 初始化视频标签
+        updateVideoTags();
+
+        // ================================================================
+        // 3. 账户表单逻辑（调整：不再校验认证等级）
+        // ================================================================
+        const A = {
+            id: document.getElementById('a_id'),
+            name: document.getElementById('a_name'),
+            handle: document.getElementById('a_handle'),
+            avatar: document.getElementById('a_avatar'),
+            bio: document.getElementById('a_bio'),
+            followers: document.getElementById('a_followers'),
+            verify: document.getElementById('a_verify'), // 现在是禁用的输入框
+            form: document.getElementById('accountForm'),
+            resetBtn: document.getElementById('a_resetBtn'),
+        };
+
+        // 账户表单提交
+        A.form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = A.name.value.trim();
+            const handle = A.handle.value.trim();
+
+            if (!name) { showToast('请填写用户名'); return; }
+            if (!handle) { showToast('请填写联系方式'); return; }
+
+            const exportData = {
+                id: A.id.value,
+                name: name,
+                handle: handle,
+                avatar: A.avatar.value,
+                bio: A.bio.value.trim(),
+                followers: A.followers.value,
+                verify: A.verify.value, // 输出 "需参加活动获取"
+            };
+
+            const jsonStr = JSON.stringify(exportData, null, 2);
+            showExportModal('📤 导出账户数据', '以下 JSON 为账户数据，ID 和头像已标记需站长补充，认证等级需站长后台激活。', jsonStr);
+        });
+
+        // 账户重置
+        A.resetBtn.addEventListener('click', function() {
+            if (!confirm('重置所有账户输入？')) return;
+            A.name.value = '';
+            A.handle.value = '';
+            A.bio.value = '';
+            // 认证等级保持固定值，无需重置
+            showToast('账户表单已重置');
+        });
+
+        // ================================================================
+        // 4. 导出弹窗（共用）
+        // ================================================================
+        const modal = document.getElementById('exportModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalSub = document.getElementById('modalSub');
+        const exportTextarea = document.getElementById('exportTextarea');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const copyExportBtn = document.getElementById('copyExportBtn');
+        const downloadExportBtn = document.getElementById('downloadExportBtn');
+
+        let currentExportJson = '';
+
+        function showExportModal(title, sub, jsonStr) {
+            modalTitle.textContent = title;
+            modalSub.textContent = sub;
+            exportTextarea.value = jsonStr;
+            currentExportJson = jsonStr;
+            modal.classList.add('show');
+        }
+
+        // 关闭弹窗
+        closeModalBtn.addEventListener('click', function() {
+            modal.classList.remove('show');
+        });
+        modal.addEventListener('click', function(e) {
+            if (e.target === this) this.classList.remove('show');
+        });
+
+        // 复制
+        copyExportBtn.addEventListener('click', function() {
+            copyText(currentExportJson);
+        });
+
+        // 下载
+        downloadExportBtn.addEventListener('click', function() {
+            const filename = currentTab === 'publish' ? 'video_data.json' : 'account_data.json';
+            downloadJson(currentExportJson, filename);
+        });
+
+        // ================================================================
+        // 5. 键盘快捷键：ESC 关闭弹窗
+        // ================================================================
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modal.classList.contains('show')) {
+                modal.classList.remove('show');
+            }
+        });
+
+        // ================================================================
+        // 6. 启动
+        // ================================================================
+        console.log('📦 七七视频网 · 数据导出工具已启动');
+        console.log('   🎬 发布视频  |  👤 创建账户 (认证等级已锁定)');
+    </script>
 </body>
 </html>
