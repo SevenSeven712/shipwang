@@ -495,8 +495,42 @@
         .history-empty { text-align: center; color: var(--text3); padding: 20px 0; }
         .clear-history-btn { margin-top: 12px; padding: 6px 16px; border-radius: 16px; background: #ff4757; color: #fff; font-size: 12px; border: none; cursor: pointer; }
 
+        /* Toast */
         .toast { position: fixed; bottom: calc(var(--bottom-h) + 14px); left: 50%; transform: translateX(-50%) translateY(80px); background: var(--surface-el); color: var(--text); padding: 10px 20px; border-radius: var(--radius); font-size: 12px; border: 1px solid var(--border); box-shadow: var(--shadow); z-index: 3000; transition: transform 0.3s ease; pointer-events: none; white-space: nowrap; }
         .toast.show { transform: translateX(-50%) translateY(0); }
+
+        /* VIP 授权模态框 (新增) */
+        .vip-modal-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(6px);
+            z-index: 99998; display: none; align-items: center; justify-content: center;
+        }
+        .vip-modal-overlay.show { display: flex; }
+        .vip-modal {
+            background: var(--surface); border-radius: var(--radius-lg);
+            padding: 32px 28px 28px; max-width: 400px; width: 92%;
+            box-shadow: 0 24px 64px rgba(0,0,0,0.25);
+            animation: fadeInModal 0.25s ease;
+            text-align: center;
+        }
+        @keyframes fadeInModal { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        .vip-modal .icon { font-size: 48px; margin-bottom: 8px; }
+        .vip-modal h3 { font-family: var(--font-d); font-size: 20px; font-weight: 800; margin-bottom: 6px; }
+        .vip-modal p { font-size: 13px; color: var(--text2); margin-bottom: 16px; line-height: 1.5; }
+        .vip-modal input {
+            width: 100%; padding: 10px 14px; border: 1px solid var(--border);
+            border-radius: var(--radius); font-size: 14px; outline: none;
+            transition: border-color 0.2s; margin-bottom: 16px;
+            background: var(--bg); color: var(--text);
+        }
+        .vip-modal input:focus { border-color: var(--accent); background: var(--surface); }
+        .vip-modal .vip-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+        .vip-modal .vip-actions button { padding: 10px 28px; border-radius: 24px; font-family: var(--font-d); font-weight: 700; font-size: 14px; border: none; cursor: pointer; transition: all 0.2s; }
+        .vip-modal .vip-actions .btn-primary { background: var(--accent); color: #1e1e2a; }
+        .vip-modal .vip-actions .btn-primary:hover { box-shadow: 0 0 20px var(--accent-glow); transform: scale(1.02); }
+        .vip-modal .vip-actions .btn-secondary { background: var(--surface-hover); color: var(--text2); border: 1px solid var(--border); }
+        .vip-modal .vip-actions .btn-secondary:hover { background: var(--border); }
+        .vip-modal .error-msg { color: #ff4757; font-size: 12px; margin-top: -8px; margin-bottom: 12px; display: none; }
 
         .loading-spinner { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2; display: none; width: 48px; height: 48px; border: 4px solid rgba(255,255,255,0.2); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; }
         .loading-spinner.show { display: block; }
@@ -528,6 +562,21 @@
         </div>
     </div>
 
+    <!-- VIP 授权模态框 (新增) -->
+    <div class="vip-modal-overlay" id="vipModal">
+        <div class="vip-modal">
+            <div class="icon">👑</div>
+            <h3>开通会员</h3>
+            <p>请输入会员授权密码，解锁全部VIP内容。</p>
+            <input type="password" id="vipPassword" placeholder="请输入密码" />
+            <div class="error-msg" id="vipError">❌ 密码错误，请重试</div>
+            <div class="vip-actions">
+                <button class="btn-secondary" onclick="closeVipModal()">取消</button>
+                <button class="btn-primary" onclick="verifyVip()">确认</button>
+            </div>
+        </div>
+    </div>
+
     <!-- 头部 -->
     <header class="header">
         <div class="header-logo" onclick="navigate('home')"><span class="dot"></span>七七视频网</div>
@@ -536,7 +585,8 @@
             <input type="text" placeholder="搜索视频、UP主、标签..." readonly>
         </div>
         <div class="header-actions">
-            <button class="publish-btn" onclick="handlePublish()">
+            <!-- 发布按钮：不再需要密码，直接跳转 -->
+            <button class="publish-btn" onclick="window.location.href='作者端.html'">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14" stroke="currentColor" /><path d="M12 3l-3 3 3-3z" fill="currentColor" /><path d="M12 21l3-3-3 3z" fill="currentColor" /></svg>
                 <span>发布</span>
             </button>
@@ -621,16 +671,51 @@
     function goToHelp() { closeWelcomeModal(); navigate('help'); }
 
     // ============================================================
-    // 4. 发布密码锁
+    // 4. VIP 授权模态框 (新增)
     // ============================================================
-    function handlePublish() {
-        var pwd = prompt('请输入发布密码：');
+    let isMember = false;  // 全局会员状态
+
+    function openVipModal() {
+        document.getElementById('vipModal').classList.add('show');
+        document.getElementById('vipPassword').value = '';
+        document.getElementById('vipError').style.display = 'none';
+        // 自动聚焦
+        setTimeout(() => document.getElementById('vipPassword').focus(), 100);
+    }
+
+    function closeVipModal() {
+        document.getElementById('vipModal').classList.remove('show');
+    }
+
+    function verifyVip() {
+        const pwd = document.getElementById('vipPassword').value.trim();
         if (pwd === '7592') {
-            window.location.href = '作者端.html';
-        } else if (pwd !== null) {
-            alert('❌ 密码错误，无权限访问');
+            isMember = true;
+            closeVipModal();
+            showToast('✅ 会员开通成功！');
+            // 刷新当前页面以更新界面（如设置页面显示状态，或播放页重新加载）
+            // 如果是播放页，可以重新渲染当前视频
+            if (curPage === 'watch' && curVideo) {
+                renderWatch(curVideo.id);
+            } else if (curPage === 'settings') {
+                renderSettings();
+            }
+        } else {
+            document.getElementById('vipError').style.display = 'block';
+            document.getElementById('vipPassword').value = '';
+            document.getElementById('vipPassword').focus();
         }
     }
+
+    // 回车键确认
+    document.getElementById('vipPassword').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') verifyVip();
+    });
+
+    // 点击蒙层关闭
+    document.getElementById('vipModal').addEventListener('click', function(e) {
+        if (e.target === this) closeVipModal();
+    });
 
     // ============================================================
     // 5. 页面路由核心
@@ -640,7 +725,6 @@
     let player = null;
     let dmEngine = null;
     let controlsTimer = null;
-    let isMember = false;
     let previewLimitReached = false;
     let currentCollection = null;
     let currentCollectionIndex = -1;
@@ -745,7 +829,12 @@
 
             let isVipCollection = false; let previewDuration = 0;
             if (v.paid === true) { if (collection && collection.isVip) { isVipCollection = true; previewDuration = collection.freePreviewDuration || 0; } else { isVipCollection = true; previewDuration = 0; } } else { isVipCollection = false; previewDuration = 0; }
-            if (isVipCollection && !isMember && previewDuration === 0) { showToast('该视频为VIP内容，请开通会员'); navigate('settings'); return; }
+            if (isVipCollection && !isMember && previewDuration === 0) {
+                // 弹出 VIP 授权模态框
+                showToast('该视频为VIP内容，请开通会员');
+                openVipModal();
+                return;
+            }
             curVideo = v;
             const u = getUploader(v.upId);
             const uploader = u || { id: 0, name: '未知UP主', avatar: 'https://i.pravatar.cc/150?u=unknown', followers: 0 };
@@ -812,7 +901,7 @@
     function toggleCollectionMenu() { const panel = document.getElementById('collectionMenuPanel'); if (panel) panel.classList.toggle('show'); }
     document.addEventListener('click', function(e) { const btn = document.getElementById('collectionMenuBtn'); const panel = document.getElementById('collectionMenuPanel'); if (btn && panel && !btn.contains(e.target) && !panel.contains(e.target)) { panel.classList.remove('show'); } });
     function retryVideo() { if (!player) return; const errorOverlay = document.getElementById('videoErrorOverlay'); errorOverlay.classList.remove('show'); const src = player.src; player.src = ''; player.load(); player.src = src; player.load(); setTimeout(() => { player.play().catch(() => {}); }, 300); showToast('正在重新加载...'); } window.retryVideo = retryVideo;
-    function togglePlay() { if (!player) return; if (isVipCollection && !isMember && previewDuration > 0 && previewReached) { showToast('试看已结束，请开通会员'); return; } if (player.paused) { player.play().catch(() => showToast('视频播放失败，请尝试重试')); if (dmEngine) dmEngine.resume(); } else { player.pause(); if (dmEngine) dmEngine.pause(); } }
+    function togglePlay() { if (!player) return; if (isVipCollection && !isMember && previewDuration > 0 && previewReached) { showToast('试看已结束，请开通会员'); openVipModal(); return; } if (player.paused) { player.play().catch(() => showToast('视频播放失败，请尝试重试')); if (dmEngine) dmEngine.resume(); } else { player.pause(); if (dmEngine) dmEngine.pause(); } }
     function toggleMute() { if (!player) return; player.muted = !player.muted; document.getElementById('volSlider').value = player.muted ? 0 : player.volume; const btn = document.getElementById('btnVol'); if (player.muted) { btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19" fill="white"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>`; } else { btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19" fill="white"/><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.08"/></svg>`; } }
     function setVolume(val) { if (!player) return; player.volume = val; player.muted = (val == 0); }
     function toggleFullscreen() { const wrap = document.getElementById('playerWrap'); if (!document.fullscreenElement) { (wrap.requestFullscreen || wrap.webkitRequestFullscreen || wrap.msRequestFullscreen).call(wrap); } else { (document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen).call(document); } }
@@ -895,20 +984,34 @@
     function switchHelpCategory(category) { document.querySelectorAll('.help-nav .nav-item').forEach(el => { el.classList.toggle('active', el.textContent.includes(HELP_DATA[category].label)); }); document.querySelectorAll('.help-content .section').forEach(el => { el.classList.toggle('active', el.dataset.category === category); }); }
 
     // ============================================================
-    // 14. 设置
+    // 14. 设置 (修改: 点击"开通会员"弹出VIP模态框)
     // ============================================================
     function renderSettings() {
         try {
             const hist = getHistory();
-            const html = `<div class="settings-title">⚙️ 设置</div><div class="setting-group"><span class="setting-group-label">帮助</span><div class="setting-item" onclick="navigate('help')" style="cursor:pointer;"><div><div class="setting-item-label">📖 使用说明</div><div class="setting-item-desc">查看平台功能、会员制度与创作规则</div></div><span style="color:var(--text3);font-size:18px;">›</span></div></div><div class="setting-group"><span class="setting-group-label">会员状态</span><div class="setting-item"><div><div class="setting-item-label">会员身份</div><div class="setting-item-desc">${isMember ? '✅ 已开通会员' : '❌ 未开通会员'}</div></div><button onclick="toggleMembership()" style="padding:6px 16px;background:${isMember ? '#ff4757' : 'var(--accent)'};color:#fff;border-radius:16px;font-weight:700;">${isMember ? '取消会员' : '开通会员'}</button></div></div><div class="setting-group"><span class="setting-group-label">弹幕</span><div class="setting-item"><div><div class="setting-item-label">弹幕开关</div><div class="setting-item-desc">显示/隐藏所有弹幕</div></div><div class="switch on" id="dmSwitch" onclick="toggleDanmakuSwitch()"></div></div></div><div class="setting-group"><span class="setting-group-label">画质设置</span><div class="setting-item"><div><div class="setting-item-label">画质压缩</div><div class="setting-item-desc">调整视频加载画质，节省流量</div></div><select id="qualitySelect" onchange="setQuality(this.value)" style="padding:4px 8px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:12px;"><option value="high">高清 (默认)</option><option value="medium">中等</option><option value="low">低画质 (省流)</option></select></div></div><div class="setting-group"><span class="setting-group-label">观看历史</span><div class="history-list" id="historyList">${hist.length === 0 ? '<div class="history-empty">暂无观看记录</div>' : ''}${hist.slice(0, 20).map(item => `<div class="history-item" onclick="navigate('watch',{id:${item.id}})"><img src="${item.thumb}" alt="" loading="lazy" style="width:48px;height:27px;object-fit:cover;border-radius:4px;"><div class="history-item-info"><div class="history-item-title">${item.title}</div><div class="history-item-time">${item.time}</div></div></div>`).join('')}</div>${hist.length > 0 ? `<button class="clear-history-btn" onclick="clearHistory()">清空全部历史</button>` : ''}</div>`;
+            const html = `<div class="settings-title">⚙️ 设置</div><div class="setting-group"><span class="setting-group-label">帮助</span><div class="setting-item" onclick="navigate('help')" style="cursor:pointer;"><div><div class="setting-item-label">📖 使用说明</div><div class="setting-item-desc">查看平台功能、会员制度与创作规则</div></div><span style="color:var(--text3);font-size:18px;">›</span></div></div><div class="setting-group"><span class="setting-group-label">会员状态</span><div class="setting-item"><div><div class="setting-item-label">会员身份</div><div class="setting-item-desc">${isMember ? '✅ 已开通会员' : '❌ 未开通会员'}</div></div><button onclick="handleVipAction()" style="padding:6px 16px;background:${isMember ? '#ff4757' : 'var(--accent)'};color:#fff;border-radius:16px;font-weight:700;">${isMember ? '取消会员' : '开通会员'}</button></div></div><div class="setting-group"><span class="setting-group-label">弹幕</span><div class="setting-item"><div><div class="setting-item-label">弹幕开关</div><div class="setting-item-desc">显示/隐藏所有弹幕</div></div><div class="switch on" id="dmSwitch" onclick="toggleDanmakuSwitch()"></div></div></div><div class="setting-group"><span class="setting-group-label">画质设置</span><div class="setting-item"><div><div class="setting-item-label">画质压缩</div><div class="setting-item-desc">调整视频加载画质，节省流量</div></div><select id="qualitySelect" onchange="setQuality(this.value)" style="padding:4px 8px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:12px;"><option value="high">高清 (默认)</option><option value="medium">中等</option><option value="low">低画质 (省流)</option></select></div></div><div class="setting-group"><span class="setting-group-label">观看历史</span><div class="history-list" id="historyList">${hist.length === 0 ? '<div class="history-empty">暂无观看记录</div>' : ''}${hist.slice(0, 20).map(item => `<div class="history-item" onclick="navigate('watch',{id:${item.id}})"><img src="${item.thumb}" alt="" loading="lazy" style="width:48px;height:27px;object-fit:cover;border-radius:4px;"><div class="history-item-info"><div class="history-item-title">${item.title}</div><div class="history-item-time">${item.time}</div></div></div>`).join('')}</div>${hist.length > 0 ? `<button class="clear-history-btn" onclick="clearHistory()">清空全部历史</button>` : ''}</div>`;
             document.getElementById('pageSettings').innerHTML = html;
             const dmSwitch = document.getElementById('dmSwitch'); if (dmSwitch) { const dmVisible = dmEngine ? dmEngine.visible : true; dmSwitch.classList.toggle('on', dmVisible); }
         } catch (e) { document.getElementById('pageSettings').innerHTML = `<div class="settings-title">⚙️ 设置</div><div style="padding:20px;background:var(--surface);border-radius:var(--radius-lg);box-shadow:var(--shadow);text-align:center;color:var(--text3);"><p>设置页面加载失败</p><button onclick="navigate('home')" style="margin-top:12px;padding:6px 20px;background:var(--accent);border-radius:20px;color:#fff;border:none;">返回首页</button></div>`; }
     }
+
+    function handleVipAction() {
+        if (isMember) {
+            // 取消会员
+            if (confirm('确定要取消会员吗？')) {
+                isMember = false;
+                showToast('已取消会员');
+                renderSettings();
+            }
+        } else {
+            // 开通会员 - 弹出VIP授权模态框
+            openVipModal();
+        }
+    }
+
     let currentQuality = 'high';
     function setQuality(val) { currentQuality = val; if (player) { applyQuality(player, val); } showToast('画质已切换: ' + (val === 'high' ? '高清' : val === 'medium' ? '中等' : '低画质')); }
     function applyQuality(videoEl, quality) { if (quality === 'low') { videoEl.style.filter = 'blur(1px) contrast(0.9)'; videoEl.style.imageRendering = 'pixelated'; } else if (quality === 'medium') { videoEl.style.filter = 'blur(0.3px)'; videoEl.style.imageRendering = 'auto'; } else { videoEl.style.filter = 'none'; videoEl.style.imageRendering = 'auto'; } }
-    function toggleMembership() { if (isMember) { isMember = false; showToast('已取消会员'); renderSettings(); return; } const pwd = prompt('请输入会员开通密码：'); if (pwd === '7592') { isMember = true; showToast('✅ 会员开通成功！'); renderSettings(); } else if (pwd !== null) { showToast('❌ 密码错误，开通失败'); } }
     function toggleDanmakuSwitch() { const sw = document.getElementById('dmSwitch'); if (!sw) return; const isOn = sw.classList.toggle('on'); if (dmEngine) { const visible = dmEngine.toggle(); sw.classList.toggle('on', visible); showToast(visible ? '弹幕已开启' : '弹幕已关闭'); } else { showToast(isOn ? '弹幕已开启' : '弹幕已关闭'); } }
     function clearHistory() { if (confirm('确定清空所有观看历史吗？')) { saveHistory([]); renderSettings(); showToast('已清空历史记录'); } }
 
@@ -949,6 +1052,8 @@
     window.getUploader = getUploader;
     window.showToast = showToast;
     window.switchView = switchView;
+    window.openVipModal = openVipModal;
+    window.closeVipModal = closeVipModal;
     </script>
 </body>
 </html>
