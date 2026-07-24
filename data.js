@@ -1,4 +1,4 @@
-﻿// ============================================================
+// ============================================================
 // 数据文件 - 视频、作者、合集
 // 请将此文件与 index.html 放在同一目录
 // ============================================================
@@ -11,7 +11,7 @@ const UPLOADERS = [
     { id: 4, name: '三角洲小剧场', handle: '素材由互联网提供', avatar: 'https://i.ibb.co/Xk7W8FMb/QQ20260719-173437.png', bio: '', followers: 4532, verify: null },
     { id: 5, name: '凑企鹅', handle: '素材由互联网提供', avatar: 'https://i.ibb.co/5XFFMWmC/QQ20260719-151323.png', bio: '', followers: 238, verify: null },
     { id: 6, name: '搞笑影视', handle: '素材由互联网提供', avatar: 'https://i.ibb.co/FLqt79T3/QQ20260719-173729.png', bio: '', followers: 2, verify: null },
-    { id: 7, name: '车轱辘二世', handle: '无内容', avatar: 'https://i.ibb.co/N6zrf8g2/707240a8adb7c3e89608704b06153b37.jpg', bio: '', followers: 0, verify: null },
+    { id: 7, name: '车轱辘二世', handle: '无内容', avatar: 'https://i.ibb.co/N6zrf8g2/707240a8adb7c3e89608704b06153b37.jpg', bio: '', followers: 31, verify: null },
     { id: 8, name: '霜庭落樱', handle: '无内容', avatar: 'https://i.ibb.co/G4XxbYZ5/QQ20260720-132601.png', bio: '我是你们的快乐源泉，每天分享新鲜快乐！', followers: 211, verify: null },
     { id: 9, name: '哈吉洲', handle: '无内容', avatar: 'https://i.ibb.co/Bhh16Cn/QQ20260720-124319.png', bio: '视频来源于网络', followers: 5211, verify: null },
 ];
@@ -354,7 +354,71 @@ const VIDEOS = [
         tags: ['抽象', '猎奇'],
         dm: ['？？？', '？？？', '？？？', '？？？', '？？？', '？？？', '？？？', '我的眼睛！！', '蘑菇吃多了'],
         desc: ''
-    }
+    },
+    {
+            id: 24,
+            title: '不抽通讯录',
+            thumb: 'https://i.ibb.co/G32NrQ2t/QQ20260724-121948.png',
+            video: 'https://pixhub.ro/i/lgzyqzla.mp4',
+            duration: '00:30',
+            views: 3901,
+            date: '2026-07-24',
+            upId: 7,
+            cat: '书籍',
+            paid: false,
+            collaborators: [],
+            tags: ['二次元', '游戏'],
+            dm: ['这是啥', '不抽', '不抽通讯录', '6', '飘过', '676767', '推', '省流'],
+            desc: ''
+   },
+   {
+            id: 25,
+            title: '哎？大狗',
+            thumb: 'https://i.ibb.co/RGLvrkWs/QQ20260724-124029.png',
+            video: 'https://pixhub.ro/i/h6h9zprl.mp4',
+            duration: '00:38',
+            views: 8391,
+            date: '2026-07-24',
+            upId: 5,
+            cat: '书籍',
+            paid: false,
+            collaborators: [],
+            tags: ['猫meme', '梗'],
+            dm: ['大狗', '不叫', '叫!!!!!', 'dagoujiao', '叫叫叫', '大狗嚼嚼嚼'],
+            desc: ''
+   },
+   {
+            id: 26,
+            title: '结局意想不到',
+            thumb: 'https://i.ibb.co/KxY64gSw/QQ20260724-125217.png',
+            video: 'https://pixhub.ro/i/3r7h2fay.mp4',
+            duration: '01:13',
+            views: 3948,
+            date: '2026-07-24',
+            upId: 6,
+            cat: '书籍',
+            paid: false,
+            collaborators: [],
+            tags: ['搞笑', '抽象'],
+            dm: ['绷住了', '破崩了', '666', '笑死我了', '乐乐', '细节', '哈哈哈', '呵呵呵呵', '意想不到说是', '我是崩崩先生', '还有崩币'],
+            desc: ''
+   },
+   {
+            id: 27,
+            title: '刺激战场的老玩家已经看哭了',
+            thumb: 'https://i.ibb.co/VpcN9L0x/QQ20260724-125636.png',
+            video: 'https://pixhub.ro/i/ynssjvpf.mp4',
+            duration: '00:29',
+            views: 3948,
+            date: '2026-07-24',
+            upId: 6,
+            cat: '书籍',
+            paid: false,
+            collaborators: [],
+            tags: ['搞笑', '抽象'],
+            dm: ['绷住了', '破崩了', '666', '笑死我了', '乐乐', '细节', '哈哈哈', '呵呵呵呵', '意想不到说是', '我是崩崩先生', '还有崩币'],
+            desc: ''
+   }
 ];
 
 // ----- 合集数据 -----
