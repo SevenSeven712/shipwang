@@ -3,20 +3,127 @@
 // 请将此文件与 index.html 放在同一目录
 // ============================================================
 
-// ----- 作者数据 -----
+// ----- 作者数据（新增 bgImage 背景图，categories 自定义分类） -----
 const UPLOADERS = [
-    { id: 1, name: 'Seven戚', handle: '2103686588@qq.com', avatar: 'https://i.ibb.co/Y4rD6F2Y/b-8ee0f1b16f3c823eeff690735ca17e1f.jpg', bio: '你们好，我是Seven戚，网站开发以及小说创作。', followers: 6528, verify: 'gold' },
-    { id: 2, name: '是延不是廷_Yan', handle: '@light_notes', avatar: 'https://i.ibb.co/GZfvfFM/3849bcb84a99582f0d1a242c52993ccf.jpg', bio: '一个喜欢音乐的画渣', followers: 876, verify: null },
-    { id: 3, name: '双逆足的入', handle: '15755318794', avatar: 'https://i.ibb.co/r2wsHtCw/cf86e4e756a62729abe9244be90ce411.jpg', bio: '做足球视频的入', followers: 1320, verify: 'blue' },
-    { id: 4, name: '三角洲小剧场', handle: '素材由互联网提供', avatar: 'https://i.ibb.co/Xk7W8FMb/QQ20260719-173437.png', bio: '', followers: 4532, verify: null },
-    { id: 5, name: '凑企鹅', handle: '素材由互联网提供', avatar: 'https://i.ibb.co/5XFFMWmC/QQ20260719-151323.png', bio: '', followers: 238, verify: null },
-    { id: 6, name: '搞笑影视', handle: '素材由互联网提供', avatar: 'https://i.ibb.co/FLqt79T3/QQ20260719-173729.png', bio: '', followers: 2, verify: null },
-    { id: 7, name: '车轱辘二世', handle: '无内容', avatar: 'https://i.ibb.co/N6zrf8g2/707240a8adb7c3e89608704b06153b37.jpg', bio: '', followers: 31, verify: null },
-    { id: 8, name: '霜庭落樱', handle: '无内容', avatar: 'https://i.ibb.co/G4XxbYZ5/QQ20260720-132601.png', bio: '我是你们的快乐源泉，每天分享新鲜快乐！', followers: 211, verify: null },
-    { id: 9, name: '哈吉洲', handle: '无内容', avatar: 'https://i.ibb.co/Bhh16Cn/QQ20260720-124319.png', bio: '视频来源于网络', followers: 5211, verify: null },
+    {
+        id: 1,
+        name: 'Seven戚',
+        handle: '2103686588@qq.com',
+        avatar: 'https://i.ibb.co/Y4rD6F2Y/b-8ee0f1b16f3c823eeff690735ca17e1f.jpg',
+        bio: '你们好，我是Seven戚，网站开发以及小说创作。',
+        followers: 6528,
+        verify: 'gold',
+        bgImage: 'https://picsum.photos/seed/seven/1200/400',
+        categories: [
+            { id: 'novel', name: '小说推文', icon: '' },
+            { id: 'behind', name: '幕后花絮', icon: '🎬' }
+        ]
+    },
+    {
+        id: 2,
+        name: '是延不是廷_Yan',
+        handle: '@light_notes',
+        avatar: 'https://i.ibb.co/GZfvfFM/3849bcb84a99582f0d1a242c52993ccf.jpg',
+        bio: '一个喜欢音乐的画渣',
+        followers: 876,
+        verify: null,
+        bgImage: 'https://picsum.photos/seed/yan/1200/400',
+        categories: []
+    },
+    {
+        id: 3,
+        name: '双逆足的入',
+        handle: '15755318794',
+        avatar: 'https://i.ibb.co/r2wsHtCw/cf86e4e756a62729abe9244be90ce411.jpg',
+        bio: '做足球视频的入',
+        followers: 1320,
+        verify: 'blue',
+        bgImage: 'https://picsum.photos/seed/football/1200/400',
+        categories: []
+    },
+    {
+        id: 4,
+        name: '三角洲小剧场',
+        handle: '素材由互联网提供',
+        avatar: 'https://i.ibb.co/Xk7W8FMb/QQ20260719-173437.png',
+        bio: '三角洲行动整活区',
+        followers: 4532,
+        verify: null,
+        bgImage: 'https://picsum.photos/seed/delta/1200/400',
+        categories: [
+            { id: 'delta', name: '三角洲整活', icon: '🎯' },
+            { id: 'funny', name: '搞笑日常', icon: '😂' }
+        ]
+    },
+    {
+        id: 5,
+        name: '凑企鹅',
+        handle: '素材由互联网提供',
+        avatar: 'https://i.ibb.co/5XFFMWmC/QQ20260719-151323.png',
+        bio: '',
+        followers: 238,
+        verify: null,
+        bgImage: 'https://picsum.photos/seed/penguin/1200/400',
+        categories: []
+    },
+    {
+        id: 6,
+        name: '搞笑影视',
+        handle: '素材由互联网提供',
+        avatar: 'https://i.ibb.co/FLqt79T3/QQ20260719-173729.png',
+        bio: '',
+        followers: 2132,
+        verify: null,
+        bgImage: 'https://picsum.photos/seed/movie/1200/400',
+        categories: []
+    },
+    {
+        id: 7,
+        name: '车轱辘二世',
+        handle: '无内容',
+        avatar: 'https://i.ibb.co/N6zrf8g2/707240a8adb7c3e89608704b06153b37.jpg',
+        bio: '',
+        followers: 31,
+        verify: null,
+        bgImage: 'https://picsum.photos/seed/car/1200/400',
+        categories: []
+    },
+    {
+        id: 8,
+        name: '霜庭落樱',
+        handle: '无内容',
+        avatar: 'https://i.ibb.co/G4XxbYZ5/QQ20260720-132601.png',
+        bio: '我是你们的快乐源泉，每天分享新鲜快乐！',
+        followers: 211,
+        verify: null,
+        bgImage: 'https://picsum.photos/seed/sakura/1200/400',
+        categories: []
+    },
+    {
+        id: 9,
+        name: '哈吉洲',
+        handle: '无内容',
+        avatar: 'https://i.ibb.co/Bhh16Cn/QQ20260720-124319.png',
+        bio: '视频来源于网络',
+        followers: 5211,
+        verify: null,
+        bgImage: 'https://picsum.photos/seed/haji/1200/400',
+        categories: []
+    },
+    
+    { id: 10, name: '我的刀钝', handle: '素材来源AI', avatar: 'https://i.ibb.co/35gD4D0d/QQ20260725-195331.png', bio: '视频来源于网络', followers: 425, verify: null },
 ];
 
-// ----- 视频数据 -----
+
+
+
+
+
+
+
+
+
+// ----- 视频数据（新增 customCat 字段，desc 简介） -----
 const VIDEOS = [
     {
         id: 1,
@@ -31,7 +138,9 @@ const VIDEOS = [
         paid: false,
         collaborators: [],
         tags: ['雾都冥域', '小说推文', '奇幻', '悬疑'],
-        dm: ['Seven7牛逼！', '画质真好', '循环播放中...', '吓到我了', '你们好', '收藏了', 'BGM叫什么？', '太棒了', '第一', '打卡', '空瓶', '推荐来的', '制作精良', '神作', 'Seven戚的处女座说是']
+        dm: ['Seven7牛逼！', '画质真好', '循环播放中...', '吓到我了', '你们好', '收藏了', 'BGM叫什么？', '太棒了', '第一', '打卡', '空瓶', '推荐来的', '制作精良', '神作', 'Seven戚的处女座说是'],
+        customCat: 'novel',
+        desc: '第二章上集，规则怪谈开始……'
     },
     {
         id: 2,
@@ -46,7 +155,9 @@ const VIDEOS = [
         paid: false,
         collaborators: [],
         tags: ['手书', '描改', '亲友', '治愈'],
-        dm: ['恭喜视频上线!!!!', '老师画的好好看！！', '加个wx']
+        dm: ['恭喜视频上线!!!!', '老师画的好好看！！', '加个wx'],
+        customCat: null,
+        desc: '和亲友一起画的小手书，开心~'
     },
     {
         id: 3,
@@ -61,7 +172,9 @@ const VIDEOS = [
         paid: false,
         collaborators: [],
         tags: ['幕后', '推文', '创作过程'],
-        dm: ['辛苦了', '正文也很好！', '推荐']
+        dm: ['辛苦了', '正文也很好！', '推荐'],
+        customCat: 'behind',
+        desc: '小说推文的制作幕后，剪辑过程大公开！'
     },
     {
         id: 4,
@@ -76,7 +189,9 @@ const VIDEOS = [
         paid: true,
         collaborators: [],
         tags: ['雾都冥域', '小说推文', '奇幻', '悬疑'],
-        dm: ['Seven7牛逼！', '画质真好', '循环播放中...', '吓到我了', '你们好', '收藏了', 'BGM叫什么？', '太棒了', '第一', '打卡', '空瓶', '推荐来的', '制作精良', '神作', 'Seven戚的处女座说是', '下一集', '好', '我是Seven7', '乐乐']
+        dm: ['Seven7牛逼！', '画质真好', '循环播放中...', '吓到我了', '你们好', '收藏了', 'BGM叫什么？', '太棒了', '第一', '打卡', '空瓶', '推荐来的', '制作精良', '神作', 'Seven戚的处女座说是', '下一集', '好', '我是Seven7', '乐乐'],
+        customCat: 'novel',
+        desc: '第二章下集，VIP专属内容，试看30秒。'
     },
     {
         id: 5,
@@ -91,7 +206,9 @@ const VIDEOS = [
         paid: false,
         collaborators: [],
         tags: ['雾都冥域', '小说推文', '奇幻', '冒险', '冰壶'],
-        dm: ['Seven7牛逼！', '画质真好', '循环播放中...', '吓到我了', '你们好', '收藏了', 'BGM叫什么？', '太棒了', '第一', '打卡', '空瓶', '推荐来的', '制作精良', '神作', 'Seven戚的处女座说是', '下一集', '好', '我是Seven7', '乐乐', '第一集', '梦开始的地方', '打卡第一集', '荟萃7班实名', '网差的看着就卡  5G网还好', '网络不行当然卡', '后面就要VIP了', '666', '说啥呢', '3个人出来', '2.9万人', '一万播放量叫我', '百万UP', '火钳刘明', '火钳刘明', '优质']
+        dm: ['Seven7牛逼！', '画质真好', '循环播放中...', '吓到我了', '你们好', '收藏了', 'BGM叫什么？', '太棒了', '第一', '打卡', '空瓶', '推荐来的', '制作精良', '神作', 'Seven戚的处女座说是', '下一集', '好', '我是Seven7', '乐乐', '第一集', '梦开始的地方', '打卡第一集', '荟萃7班实名', '网差的看着就卡  5G网还好', '网络不行当然卡', '后面就要VIP了', '666', '说啥呢', '3个人出来', '2.9万人', '一万播放量叫我', '百万UP', '火钳刘明', '火钳刘明', '优质'],
+        customCat: 'novel',
+        desc: '第一章上集，冰壶风波拉开序幕！'
     },
     {
         id: 6,
@@ -106,7 +223,9 @@ const VIDEOS = [
         paid: false,
         collaborators: [],
         tags: ['雾都冥域', '小说推文', '奇幻', '冒险'],
-        dm: ['Seven7牛逼！', '画质真好', '循环播放中...', '吓到我了', '你们好', '收藏了', 'BGM叫什么？', '太棒了', '第一', '打卡', '空瓶', '推荐来的', '制作精良', '神作', 'Seven戚的处女座说是', '下一集', '好', '我是Seven7', '乐乐']
+        dm: ['Seven7牛逼！', '画质真好', '循环播放中...', '吓到我了', '你们好', '收藏了', 'BGM叫什么？', '太棒了', '第一', '打卡', '空瓶', '推荐来的', '制作精良', '神作', 'Seven戚的处女座说是', '下一集', '好', '我是Seven7', '乐乐'],
+        customCat: 'novel',
+        desc: '第一章下集，冰壶风波结局揭晓。'
     },
     {
         id: 7,
@@ -121,7 +240,9 @@ const VIDEOS = [
         paid: false,
         collaborators: [],
         tags: ['足球', '英格兰', '世界杯', '体育'],
-        dm: ['加油', '英格兰必胜', '我是皇马粉丝', '666', '火箭流氓', '？', '优质！', '火箭流氓何意味', '？何意味', '英格兰也有皇马的别叫']
+        dm: ['加油', '英格兰必胜', '我是皇马粉丝', '666', '火箭流氓', '？', '优质！', '火箭流氓何意味', '？何意味', '英格兰也有皇马的别叫'],
+        customCat: null,
+        desc: '英格兰队加油！把足球带回家！'
     },
     {
         id: 9,
@@ -136,7 +257,9 @@ const VIDEOS = [
         paid: false,
         collaborators: [],
         tags: ['足球', '英超', '曼城', '阿森纳', '皇马'],
-        dm: ['我们阿森纳是不可战胜', '曼城NB', '火钳刘明', 'b席要去皇马了[哭😭]']
+        dm: ['我们阿森纳是不可战胜', '曼城NB', '火钳刘明', 'b席要去皇马了[哭😭]'],
+        customCat: null,
+        desc: '如此足球，怎能不爱？'
     },
     {
         id: 10,
@@ -151,7 +274,9 @@ const VIDEOS = [
         paid: false,
         collaborators: [],
         tags: ['抽象', '搞笑', '曼波'],
-        dm: []
+        dm: [],
+        customCat: null,
+        desc: ''
     },
     {
         id: 11,
@@ -166,7 +291,9 @@ const VIDEOS = [
         paid: false,
         collaborators: [],
         tags: ['抽象', '搞笑', '三角洲'],
-        dm: []
+        dm: [],
+        customCat: 'delta',
+        desc: '野人偷吃保险？三角洲整活新高度！'
     },
     {
         id: 12,
@@ -181,7 +308,9 @@ const VIDEOS = [
         paid: false,
         collaborators: [],
         tags: ['抽象', '兄弟', '搞笑'],
-        dm: []
+        dm: [],
+        customCat: null,
+        desc: ''
     },
     {
         id: 13,
@@ -196,7 +325,9 @@ const VIDEOS = [
         paid: false,
         collaborators: [],
         tags: ['电机小子', '影视'],
-        dm: []
+        dm: [],
+        customCat: null,
+        desc: ''
     },
     {
         id: 14,
@@ -211,7 +342,9 @@ const VIDEOS = [
         paid: false,
         collaborators: [],
         tags: ['豆包', '三角洲'],
-        dm: []
+        dm: [],
+        customCat: 'delta',
+        desc: '可怜的鸟被豆包和三角洲欺负了。'
     },
     {
         id: 15,
@@ -226,7 +359,9 @@ const VIDEOS = [
         paid: false,
         collaborators: [],
         tags: ['嘉豪', '逆天'],
-        dm: []
+        dm: [],
+        customCat: null,
+        desc: ''
     },
     {
         id: 16,
@@ -241,7 +376,9 @@ const VIDEOS = [
         paid: false,
         collaborators: [],
         tags: ['抽象', '三角洲', '猛攻'],
-        dm: []
+        dm: [],
+        customCat: 'delta',
+        desc: '人民的黄瓜，三角洲的猛攻时刻！'
     },
     {
         id: 17,
@@ -257,7 +394,8 @@ const VIDEOS = [
         collaborators: [],
         tags: ['二次元', '动漫'],
         dm: [],
-        desc: '杂鱼~杂鱼~'
+        desc: '杂鱼~杂鱼~',
+        customCat: null
     },
     {
         id: 18,
@@ -273,7 +411,8 @@ const VIDEOS = [
         collaborators: [],
         tags: ['茶啊二中', '动漫', '剪映'],
         dm: [],
-        desc: ''
+        desc: '',
+        customCat: null
     },
     {
         id: 19,
@@ -289,7 +428,8 @@ const VIDEOS = [
         collaborators: [],
         tags: ['抽象', '搞笑', '三角洲'],
         dm: [],
-        desc: ''
+        desc: '',
+        customCat: null
     },
     {
         id: 20,
@@ -305,7 +445,8 @@ const VIDEOS = [
         collaborators: [{ id: 1, role: '赞助' }],
         tags: ['抽象', '搞笑', '三角洲'],
         dm: [],
-        desc: ['神作', '666', '火钳刘明']
+        desc: '神作，666，火钳刘明',
+        customCat: null
     },
     {
         id: 21,
@@ -321,7 +462,8 @@ const VIDEOS = [
         collaborators: [],
         tags: ['AI', '搞笑', '抽象'],
         dm: [],
-        desc: ['这是AI吧', '惊不惊喜意不意外？']
+        desc: '这是AI吧，惊不惊喜意不意外？',
+        customCat: null
     },
     {
         id: 22,
@@ -337,7 +479,8 @@ const VIDEOS = [
         collaborators: [],
         tags: ['搞笑', '茶啊二中', '剪映'],
         dm: ['3班一锅shi', '我去不早说', '蚌埠住了', '我是野绷先生', '如果你绷住了，我将给你100万绷币！', '还有野人先生', '《抓赌的来了》'],
-        desc: ''
+        desc: '',
+        customCat: null
     },
     {
         id: 23,
@@ -353,75 +496,234 @@ const VIDEOS = [
         collaborators: [],
         tags: ['抽象', '猎奇'],
         dm: ['？？？', '？？？', '？？？', '？？？', '？？？', '？？？', '？？？', '我的眼睛！！', '蘑菇吃多了'],
-        desc: ''
+        desc: '',
+        customCat: null
     },
     {
-            id: 24,
-            title: '不抽通讯录',
-            thumb: 'https://i.ibb.co/G32NrQ2t/QQ20260724-121948.png',
-            video: 'https://pixhub.ro/i/lgzyqzla.mp4',
-            duration: '00:30',
-            views: 3901,
-            date: '2026-07-24',
-            upId: 7,
-            cat: '书籍',
-            paid: false,
-            collaborators: [],
-            tags: ['二次元', '游戏'],
-            dm: ['这是啥', '不抽', '不抽通讯录', '6', '飘过', '676767', '推', '省流'],
-            desc: ''
-   },
-   {
-            id: 25,
-            title: '哎？大狗',
-            thumb: 'https://i.ibb.co/RGLvrkWs/QQ20260724-124029.png',
-            video: 'https://pixhub.ro/i/h6h9zprl.mp4',
-            duration: '00:38',
-            views: 8391,
-            date: '2026-07-24',
-            upId: 5,
+        id: 24,
+        title: '不抽通讯录',
+        thumb: 'https://i.ibb.co/G32NrQ2t/QQ20260724-121948.png',
+        video: 'https://pixhub.ro/i/lgzyqzla.mp4',
+        duration: '00:30',
+        views: 3901,
+        date: '2026-07-24',
+        upId: 7,
+        cat: '书籍',
+        paid: false,
+        collaborators: [],
+        tags: ['二次元', '游戏'],
+        dm: ['这是啥', '不抽', '不抽通讯录', '6', '飘过', '676767', '推', '省流'],
+        desc: '',
+        customCat: null
+    },
+    {
+        id: 25,
+        title: '哎？大狗',
+        thumb: 'https://i.ibb.co/RGLvrkWs/QQ20260724-124029.png',
+        video: 'https://pixhub.ro/i/h6h9zprl.mp4',
+        duration: '00:38',
+        views: 8391,
+        date: '2026-07-24',
+        upId: 5,
+        cat: '书籍',
+        paid: false,
+        collaborators: [],
+        tags: ['猫meme', '梗'],
+        dm: ['大狗', '不叫', '叫!!!!!', 'dagoujiao', '叫叫叫', '大狗嚼嚼嚼'],
+        desc: '',
+        customCat: null
+    },
+    {
+        id: 26,
+        title: '结局意想不到',
+        thumb: 'https://i.ibb.co/KxY64gSw/QQ20260724-125217.png',
+        video: 'https://pixhub.ro/i/3r7h2fay.mp4',
+        duration: '01:13',
+        views: 3948,
+        date: '2026-07-24',
+        upId: 6,
+        cat: '书籍',
+        paid: false,
+        collaborators: [],
+        tags: ['搞笑', '抽象'],
+        dm: ['绷住了', '破崩了', '666', '笑死我了', '乐乐', '细节', '哈哈哈', '呵呵呵呵', '意想不到说是', '我是崩崩先生', '还有崩币'],
+        desc: '',
+        customCat: null
+    },
+    {
+        id: 27,
+        title: '刺激战场的老玩家已经看哭了',
+        thumb: 'https://i.ibb.co/VpcN9L0x/QQ20260724-125636.png',
+        video: 'https://pixhub.ro/i/ynssjvpf.mp4',
+        duration: '00:29',
+        views: 3948,
+        date: '2026-07-24',
+        upId: 6,
+        cat: '书籍',
+        paid: false,
+        collaborators: [],
+        tags: ['搞笑', '抽象'],
+        dm: ['绷住了', '破崩了', '666', '笑死我了', '乐乐', '细节', '哈哈哈', '呵呵呵呵', '意想不到说是', '我是崩崩先生', '还有崩币'],
+        desc: '',
+        customCat: null
+    },
+    {
+            id: 28,
+            title: '今天带刀盾和比比拉布爬山',
+            thumb: 'https://i.ibb.co/ZzZCv9TC/QQ20260725-173014.png',
+            video: 'https://pixhub.ro/i/8ciklmpl.mp4',
+            duration: '02:14',
+            views: 4975,
+            date: '2026-07-25',
+            upId: 10,
             cat: '书籍',
             paid: false,
             collaborators: [],
             tags: ['猫meme', '梗'],
-            dm: ['大狗', '不叫', '叫!!!!!', 'dagoujiao', '叫叫叫', '大狗嚼嚼嚼'],
-            desc: ''
+            dm: ['我的我的刀盾', '比比拉布', '歪比巴卜'],
+            desc: '今天带刀盾和比比拉布爬山'
    },
    {
-            id: 26,
-            title: '结局意想不到',
-            thumb: 'https://i.ibb.co/KxY64gSw/QQ20260724-125217.png',
-            video: 'https://pixhub.ro/i/3r7h2fay.mp4',
-            duration: '01:13',
-            views: 3948,
-            date: '2026-07-24',
+            id: 29,
+            title: '看完这条视频一定要绷住啊',
+            thumb: 'https://i.ibb.co/PZYcs3bV/image.jpg',
+            video: 'https://pixhub.ro/i/kub3k8jl.mp4',
+            duration: '03:06',
+            views: 8473,
+            date: '2026-07-25',
+            upId: 6,
+            cat: '书籍',
+            paid: false,
+            collaborators: [],
+            tags: ['猫meme', '梗'],
+            dm: ['蚌埠住了', '666', '厉害', '啥玩意', '哈哈哈', '我是benben先生'],
+            desc: '看完这条视频一定要绷住啊 绷住 视觉盛宴 地狱'
+   },
+   {
+            id: 30,
+            title: '大狗？小狗！',
+            thumb: 'https://i.ibb.co/cSt4mpYt/QQ20260726-144424.png',
+            video: 'https://pixhub.ro/i/62ppvwsf.mp4',
+            duration: '00:31',
+            views: 6894,
+            date: '2026-07-26',
+            upId: 10,
+            cat: '书籍',
+            paid: false,
+            collaborators: [],
+            tags: ['猫meme', '梗'],
+            dm: ['大狗！', '叫叫叫', '歪比巴卜'],
+            desc: ''
+   },
+{
+            id: 31,
+            title: '请选择你的干员',
+            thumb: 'https://i.ibb.co/n8mj74Vz/QQ20260726-145032.png',
+            video: 'https://pixhub.ro/i/c6wgaozn.mp4',
+            duration: '00:25',
+            views: 5903,
+            date: '2026-07-26',
+            upId: 9,
+            cat: '书籍',
+            paid: false,
+            collaborators: [],
+            tags: ['可爱', '三角洲'],
+            dm: ['红狼', '你爹', '蝶', '谁懂回响'],
+            desc: '呜呜呜！~不要抢我的海鲜罐头'
+},
+{
+            id: 32,
+            title: 'GTI连续剧',
+            thumb: 'https://i.ibb.co/Nn7P4dzP/QQ20260726-150735.png',
+            video: 'https://pixhub.ro/i/d8pn5nku.mp4',
+            duration: '01:33',
+            views: 10830,
+            date: '2026-07-26',
+            upId: 4,
+            cat: '书籍',
+            paid: false,
+            collaborators: [],
+            tags: ['剪辑', '三角洲', '电影'],
+            dm: ['红狼', '你爹', '蝶', '狼队'],
+            desc: ''
+},
+{
+            id: 33,
+            title: '这不对吧',
+            thumb: 'https://i.ibb.co/svsJBygn/QQ20260726-151747.png',
+            video: 'https://pixhub.ro/i/avlbqv7m.mp4',
+            duration: '00:27',
+            views: 7382,
+            date: '2026-07-26',
+            upId: 9,
+            cat: '书籍',
+            paid: false,
+            collaborators: [],
+            tags: ['猫meme', '梗'],
+            dm: [],
+            desc: ''
+},
+{
+            id: 34,
+            title: '为什么只叫小文原名',
+            thumb: 'https://i.ibb.co/WvtqZJwh/QQ20260726-152929.png',
+            video: 'https://pixhub.ro/i/gxjsa4na.mp4',
+            duration: '00:28',
+            views: 7382,
+            date: '2026-07-26',
+            upId: 9,
+            cat: '书籍',
+            paid: false,
+            collaborators: [],
+            tags: ['搞笑', '三角洲'],
+            dm: [],
+            desc: ''
+},
+{
+            id: 36,
+            title: '绷',
+            thumb: 'https://i.ibb.co/zWk1XmSc/QQ20260726-154556.png',
+            video: 'https://pixhub.ro/i/izhuew3p.mp4',
+            duration: '00:59',
+            views: 6940,
+            date: '2026-07-26',
             upId: 6,
             cat: '书籍',
             paid: false,
             collaborators: [],
             tags: ['搞笑', '抽象'],
-            dm: ['绷住了', '破崩了', '666', '笑死我了', '乐乐', '细节', '哈哈哈', '呵呵呵呵', '意想不到说是', '我是崩崩先生', '还有崩币'],
+            dm: ['？？', '乐乐一家？', '说是'],
             desc: ''
-   },
-   {
-            id: 27,
-            title: '刺激战场的老玩家已经看哭了',
-            thumb: 'https://i.ibb.co/VpcN9L0x/QQ20260724-125636.png',
-            video: 'https://pixhub.ro/i/ynssjvpf.mp4',
-            duration: '00:29',
-            views: 3948,
-            date: '2026-07-24',
+},
+{
+            id: 37,
+            title: '绷（2）',
+            thumb: 'https://i.ibb.co/BKYJ6M9M/QQ20260726-155144.png',
+            video: 'https://pixhub.ro/i/v61ojkkc.mp4',
+            duration: '00:07',
+            views: 7483,
+            date: '2026-07-26',
             upId: 6,
             cat: '书籍',
             paid: false,
             collaborators: [],
             tags: ['搞笑', '抽象'],
-            dm: ['绷住了', '破崩了', '666', '笑死我了', '乐乐', '细节', '哈哈哈', '呵呵呵呵', '意想不到说是', '我是崩崩先生', '还有崩币'],
+            dm: ['hyw', '哈哈哈', '不不不', '我是难崩的', '绷了'],
             desc: ''
-   }
+}
 ];
 
-// ----- 合集数据 -----
+// ----- 合集数据（支持自定义封面 cover） -----
 const COLLECTIONS = [
-    { id: 1, name: '《雾都冥域》推文', cover: VIDEOS[0].thumb, videoIds: [5, 6, 1, 4], isVip: true, freePreviewDuration: 30 },
+    {
+        id: 1,
+        name: '《雾都冥域》推文',
+        cover: 'https://i.ibb.co/dwxFtwHc/QQ20260718-123128.png',
+        videoIds: [5, 6, 1, 4],
+        isVip: true,
+        freePreviewDuration: 30
+    }
 ];
+
+
+
