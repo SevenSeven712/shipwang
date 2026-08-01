@@ -112,6 +112,7 @@ const UPLOADERS = [
     },
     
     { id: 10, name: '我的刀钝', handle: '素材来源AI', avatar: 'https://i.ibb.co/35gD4D0d/QQ20260725-195331.png', bio: '视频来源于网络', followers: 425, verify: null },
+    { id: 11, name: '七七互动故事官方', handle: '官方', avatar: 'https://i.ibb.co/DXfRRm9/QQ20260801-162900.png', bio: '我是七七互动故事的官方，让我们一起做出属于我们自己的游戏吧！', followers: 9201, verify: null },
 ];
 
 
@@ -709,6 +710,22 @@ const VIDEOS = [
             collaborators: [],
             tags: ['搞笑', '抽象'],
             dm: ['hyw', '哈哈哈', '不不不', '我是难崩的', '绷了'],
+            desc: ''
+},
+{
+            id: 38,
+            title: '七七剧本杀编辑教程',
+            thumb: 'https://i.ibb.co/LdxwgvqQ/QQ20260801-182235.png',
+            video: 'https://pixhub.ro/i/q2rjrtfe.mp4',
+            duration: '13:00',
+            views: 8930,
+            date: '2026-08-01',
+            upId: 11,
+            cat: '书籍',
+            paid: false,
+            collaborators: [],
+            tags: ['编辑器', '游戏'],
+            dm: [],
             desc: ''
 }
 ];
