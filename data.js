@@ -731,9 +731,9 @@ const VIDEOS = [
 {
             id: 39,
             title: '豪到你了吗',
-            thumb: 'https://i.ibb.co/LdxwgvqQ/QQ20260801-182235.png',
+            thumb: 'https://i.ibb.co/gFmqKTvM/QQ-20260823173427.png',
             video: 'https://pixhub.ro/i/ntdpk5wv.mov',
-            duration: '13:00',
+            duration: '01:43',
             views: 5894,
             date: '2026-08-23',
             upId: 1,
