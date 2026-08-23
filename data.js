@@ -727,7 +727,24 @@ const VIDEOS = [
             tags: ['编辑器', '游戏'],
             dm: [],
             desc: ''
+},
+{
+            id: 39,
+            title: '豪到你了吗',
+            thumb: 'https://i.ibb.co/LdxwgvqQ/QQ20260801-182235.png',
+            video: 'https://pixhub.ro/i/ntdpk5wv.mov',
+            duration: '13:00',
+            views: 5894,
+            date: '2026-08-23',
+            upId: 1,
+            cat: '书籍',
+            paid: false,
+            collaborators: [],
+            tags: ['三角洲', '游戏'],
+            dm: [],
+            desc: ''
 }
+
 ];
 
 // ----- 合集数据（支持自定义封面 cover） -----
@@ -741,6 +758,3 @@ const COLLECTIONS = [
         freePreviewDuration: 30
     }
 ];
-
-
-
